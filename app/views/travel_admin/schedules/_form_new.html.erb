@@ -1,0 +1,17 @@
+<%= form_tag schedules_path, :method => :post, :remote => true do %>
+  <%= hidden_field_tag :page, params[:page] %>
+	<p>
+		Tour:<br />
+		<%= text_field_tag :tour_select, '', :style => 'width:200px' %>
+		<%= hidden_field_tag :tour_id %>
+	</p>
+	<p>
+		Departure at:<br />
+		<%= text_field_tag :departure_date %>
+    <div id='departure'></div>		
+	</p>
+	<p>
+		<%= submit_tag 'Add Schedule' %>
+	</p>
+<% end %>
+

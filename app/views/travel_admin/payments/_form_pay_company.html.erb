@@ -1,0 +1,36 @@
+<% 
+  pay_c = PayCompany.new
+%>
+<%= form_for( pay_c, :remote => true) do |f| %>
+  <%= hidden_field_tag :order_id, params[:order_id] %>
+  <table class='compact'>
+    <tr>
+      <td>Company:</td>
+      <td><%= f.text_field :company_id %></td>
+    </tr>
+    <tr>
+      <td>Company discount:</td>
+      <td><%= f.text_field :company_discount %></td>
+    </tr>
+    <tr>
+      <td>Additional discount:</td>
+      <td><%= f.text_field :additional_discount %></td>
+    </tr>
+    <tr>
+      <td>Receivable amount:</td>
+      <td><%= f.text_field :account_receivable %></td>
+    </tr>
+    <tr>
+      <td>Amount:</td>
+      <td><%= f.text_field :amount %></td>
+    </tr>
+    <tr>
+      <td>Company order# </td>
+      <td><%= f.text_field :company_order_number %></td>
+    </tr>
+  </table>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+

@@ -1,0 +1,14 @@
+  <% tt = TypeText.instance %>
+  <tr id="<%= dom_id row %>" <%= 'class=deleted' unless row.status && row.status == 1 %>>
+      <td><%= row.id %></td>
+      <td><%= row.company_id %></td>
+      <td><%= row.nickname %></td>
+      <td><%= tt.get_texts('roles', row.roles) %></td>
+      <td><%= row.default_telephone %></td>
+      <td><%= row.default_email %></td>
+      <td><%= row.status %></td>
+    <td class="actions">
+      <%= link_to_edit row %> |
+      <%= link_to 'Photos', employee_info_photos_path(row), {:target => 'edit-win'} %>
+    </td>
+  </tr>

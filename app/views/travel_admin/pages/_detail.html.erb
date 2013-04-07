@@ -1,0 +1,14 @@
+<h2><%= detail.title %></h2>
+<div class='container'>
+  <div class='span-8'>
+    <p class='strong'> ID: <%= detail.permalink %> </p>
+    <%= raw detail.description.en if detail.description %>
+  </div>
+  <div class='span-8 last'>
+    <%= raw detail.description.cn if detail.description %>
+  </div>
+</div>
+<br />
+<%= button_link_to 'Edit', edit_page_path(detail), {:icon => 'add', 'data-remote' => true} %>
+
+

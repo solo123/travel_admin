@@ -1,0 +1,27 @@
+<%= content_for :breadcrumbs do %>
+	<%= link_to '<< Back', 'javascript:history.go(-1)' %> |
+	<%= link_to 'Tours', tours_path %> &gt;
+	&gt; Routes
+<% end %>
+
+<div class='toolbar'>
+  <ul class='actions'>
+    <li id="new_spot_link">
+    <%= button_link_to 'Add Spot', new_tour_spot_path, {:remote => true, :icon => 'add', :id => 'add_spot' } %>    
+      </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<div class='route-title'>
+  <%= render 'route_title' %>
+</div>
+
+<div id="edit_div" class='dialog-normal'></div>
+
+<div id="list_spots">
+<% @collection.each do |sp| %>
+  <%= render :partial => 'row', :object => sp%> 
+<% end %>
+</div>
+

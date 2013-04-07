@@ -1,0 +1,4 @@
+$('#list_todo_workers').html('<%= j render :partial => 'row_workers', :locals => {:workers => @object.todo_workers} %>');
+
+var edit_div = "#edit_todo_worker_div";
+$(edit_div).dialog('close');

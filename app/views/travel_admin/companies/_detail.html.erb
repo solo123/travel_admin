@@ -1,0 +1,33 @@
+<h1>Company: <%= detail.company_name %>(<%= detail.short_name %>)</h1>
+<div class='container'>
+  <div class='span-8'>
+    <%= image_tag detail.title_photo.pic.url(:small) if detail.title_photo %>
+  </div>
+  <div class='span-8 last'>
+    <p>Company type: <%= detail.company_type %></p>
+    <p>Website: <%= detail.website %></p>
+    <p>Accounts:
+       <%= link_to image_tag('admin/add.gif'), new_admin_company_account_path, :class => 'hot-link', :remote => true %></h1>
+    </p>
+    <table class='border-table'>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>brief</th>
+          <th>Balance</th>
+          <th>Last updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% detail.accounts.each do |account| %>
+          <tr>
+            <td><%= account.account_type %></td>
+            <td><%= account.account_brief %></td>
+            <td><%= account.balance %></td>
+            <td><%= time_tag account.updated_at %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

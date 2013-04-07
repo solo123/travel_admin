@@ -1,0 +1,79 @@
+<% tt = TypeText.instance %>
+<div class='container'>
+<table class='border-table'>
+  <tr>
+    <td width='200'>
+      <%= image_tag detail_info.title_photo.pic.url(:small) if detail_info.title_photo %>
+    </td>
+    <td style='padding:6px;' class='border-table'>
+      <table padding='4'>
+        <tr>
+          <td width='100'>Company:</td>
+          <td width='300'><%= detail_info.company.company_name if detail_info.company %></td>
+        </tr>
+        <tr>
+          <td>Name:</td>
+          <td><%= detail_info.nickname %></td>
+        </tr>
+        <tr>
+          <td>Employ from:</td>
+          <td><%= detail_info.employ_date %></td>
+        </tr>
+        <tr>
+          <td>Age:</td>
+          <td><%= Time.now.year - detail_info.birthday.year if detail_info.birthday %> (<%= detail_info.birthday %>)</td>
+        </tr>
+      </table>
+        Created at:<%= time_tag detail_info.created_at %>
+        Last updated: <%= time_tag detail_info.updated_at if detail_info.updated_at %>
+    </td>
+  </tr>
+</table>
+<br />
+
+    Contact info:<br />
+    <table class='border-table'>
+      <% detail_info.telephones.each do |tel| %>
+        <tr>
+          <td width='200'>Tel(<%= tel.tel_type %>)</td>
+          <td width='430'><%= tel.tel %></td>
+        </tr>
+      <% end %>
+      <% detail_info.emails.each do |email| %>
+        <tr>
+          <td>Email</td>
+          <td><%= email.email_address %></td>
+        </tr>
+      <% end %>
+      <% detail_info.addresses.each do |addr| %>
+        <tr>
+          <td>Address</td>
+          <td><%= addr %></td>
+        </tr>
+      <% end %>
+    </table>
+    <br />
+    <table class='border-table'>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>brief</th>
+          <th>Balance</th>
+          <th>Last updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% detail_info.accounts.each do |account| %>
+          <tr>
+            <td><%= account.account_type %></td>
+            <td><%= account.account_brief %></td>
+            <td><%= account.balance %></td>
+            <td><%= time_tag account.updated_at %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+
+
+

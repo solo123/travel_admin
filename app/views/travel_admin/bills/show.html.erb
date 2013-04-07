@@ -1,0 +1,15 @@
+<h1>Bill</h1>
+
+<table>
+  <% @object.pay_companies.each do |pc| %>
+  <tr>
+    <td><%= pc.id %></td>
+    <td><%= pc.amount %></td>
+    <td><%= pc.company_order_number %></td>
+    <td><%= pc.company_discount %></td>
+    <td><%= pc.additional_discount %></td>
+    <td><%= pc.account_receivable %></td>
+    <td><%= pc.created_at %></td>
+  </tr>
+  <% end %>
+</table>

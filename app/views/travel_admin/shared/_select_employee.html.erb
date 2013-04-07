@@ -1,0 +1,4 @@
+      <%= f.field_container field_name do %>
+        <%= f.label field_name %><br />
+        <%= f.select(field_name, EmployeeInfo.where(:status => 1).where('roles like "%' + role + '%"').collect{|d| [d.nickname, d.id]}, {:include_blank => true }) %>  	
+      <% end %>

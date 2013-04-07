@@ -1,0 +1,52 @@
+<ul id='main_menu' class='sf-menu'>
+  <li><a href='#'>Data</a>
+  <ul>
+    <li><%= link_to t(:destinations), destinations_path %></li>
+    <li><%= link_to t(:tours), tours_path %></li>
+    <li><%= link_to t(:schedules), schedules_path %></li>
+    <li><%= link_to t(:vehicles), buses_path %></li>
+    <li><%= link_to t(:pages), pages_path %></li>
+    <li><%= link_to t(:companies), companies_path %></li>
+    <li><%= link_to t(:employees), employee_infos_path %></li>
+  </ul>
+  </li>
+  <% if has_auth('process_order') %>
+  <li><a href='#'>Orders</a>
+  <ul>
+    <li><%= link_to t(:orders), orders_path %></li>
+    <li><%= link_to t(:credit_cards), pay_credit_cards_path %></li>
+    <li><a href='#'>Users</a>
+    <ul>
+      <li><%= link_to t(:user_infos), user_infos_path %></li>
+      <li><%= link_to t(:emails), emails_path %></li>
+      <li><%= link_to t(:telephones), telephones_path %></li>
+      <li><%= link_to t(:addresses), addresses_path %></li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+  <% end %>
+  <li><a href='#'>Accounts</a>
+  <ul>
+    <li><%= link_to t(:accounts), accounts_path %></li>
+    <li><%= link_to t(:payments), payments_path %></li>
+    <li><%= link_to t(:vouchers), vouchers_path %></li>
+    <li><%= link_to t(:company_receivables), company_receivables_path %></li>
+    <li><%= link_to t(:schedule_balances), schedule_assignment_balances_path %></li>
+  </ul>
+  </li>
+  <li><a href='#'>Reports</a></li>
+  <% if has_auth('show_manage_menu') %>
+  <li><a href='#'>Manage</a>
+  <ul>
+    <li><%= link_to t(:employees), docs_employee_infos_path %></li>
+    <li><a href='#'>Data Types</a>
+    <ul>
+      <li><%= link_to t(:input_types), input_types_path %></li>
+      <li><%= link_to t(:configurations), app_configurations_path %></li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+  <% end %>
+</ul>

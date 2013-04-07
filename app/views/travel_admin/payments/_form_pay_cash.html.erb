@@ -1,0 +1,27 @@
+<% 
+  pay_cash = PayCash.new
+%>
+<%= form_for( pay_cash, :remote => true) do |f| %>
+  <%= hidden_field_tag :order_id, params[:order_id] %>
+  <table class='compact'>
+    <tr>
+      <td>Pay:</td>
+      <td><input type='text' id='recv_cash' value='0.00' class='large-amount' /></td>
+      <td>Change:
+        <label id='pay_cash_change' class='pay-amount'>0.00</label>
+        <%= f.hidden_field :amount %>
+      </td>
+    </tr>
+    <tr>
+      <td>Received by:</td>
+      <td>
+        <%= render :partial => 'travel_admin/shared/select_employee', :locals => {:f => f, :field_name => :received_by_id , :role => '5'} %>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+

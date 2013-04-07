@@ -1,0 +1,45 @@
+<%= content_for :breadcrumbs do %>
+  Admin &gt;
+  Configurations
+<% end %>
+<div class="toolbar">
+  <ul class="actions">
+  	<li>
+			<%= form_for( @search, :url => app_configurations_path ) do |f| %>
+  		<%= f.label :key_contains, "Key" %> <%= f.text_field :key_contains, :size => 15 %> &nbsp;
+  		<%= button 'Search' %>
+			<% end %>
+  	</li>
+    <li>
+    	<%= button_link_to 'Add', new_app_configuration_path, {:icon => 'add', 'data-remote' => true} %>
+    </li>
+    <li>
+    	<%= button_link_to 'Reload', app_configurations_path + '/reload', {:icon => 'add', 'data-remote' => true} %>
+    </li>
+  </ul>
+  <br class="clear">
+</div>
+
+<div class='data-pager'>
+<%= will_paginate(@collection) %>
+</div>
+<table class="data-list" id="list_app_configurations">
+  <thead>
+  <tr>
+    <th>id</th>
+	<th>key</th>
+  <th>title</th>
+	<th>val</th>
+  <th>parent</th>
+	<th>created_at</th>
+  <th>updated_at</th>
+  <th>op</th>
+  </tr>
+</thead>
+<% @collection.each do |d| %>
+	<%= render :partial => 'row', :object => d %>
+<% end %>
+</table>
+<%= will_paginate(@collection) %>
+
+

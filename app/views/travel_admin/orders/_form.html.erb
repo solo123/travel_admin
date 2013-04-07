@@ -1,0 +1,64 @@
+<% @object.build_order_detail if !@object.order_detail %>
+<%= form_for(@object, :remote => true) do |f| %>
+  <div class="container">
+    <div class='span-7'>
+      <fieldset>
+        <legend>Tour Schedule</legend>
+    <%= f.hidden_field :schedule_id %>
+    <%= f.hidden_field :schedule_assignment_id %>
+    <%= hidden_field_tag :seats, params[:seats] %>
+    <div id='div_schedule_title'>
+      <%= render 'schedule_title', :schedule => @object.schedule %>
+    </div>
+    <%= button_link_to 'Select Schdule', select_schedules_path + '?page=order', {:icon => 'add', :remote => true} %>
+        </fieldset>
+        <fieldset>
+          <legend>Detail</legend>
+          <%= f.fields_for :order_detail do |detail| %>
+            Customer id: (<%= link_to 'Change Customer', select_user_infos_path + '?id=' + (@object.order_detail.user_info ? @object.order_detail.user_info.id.to_s : '0'), {'data-remote' => true} %>) <br />
+            <%= detail.text_field :user_info_id, :readonly => true %><br />
+            Full name:<br />
+            <%= detail.text_field :full_name, :readonly => true %><br />
+            Telephone:<br />
+            <%= detail.text_field :telephone, :readonly => true %><br />
+            Email:<br />
+            <%= detail.text_field :email, :readonly => true %><br />
+            Bill address:<br />
+            <%= detail.text_field :bill_address, :readonly => true %><br />
+
+            
+            Pickup: <br />
+            <%= detail.text_field :pickup %><br />
+      </p>
+    <% end %>
+  </fieldset>
+    </div>
+    <div class='span-9 last'>
+      <fieldset>
+        <legend>Rooms</legend>
+        <div class='container'>
+          <div class='span-2'>Adult:</div>
+          <div class='span-2'>Child:</div>
+          <div class='span-2'>Amount:</div>
+          <div class='span-2'></div>
+        </div>
+        <div id='rooms'>
+        <%= f.fields_for :order_items do |item| %>
+          <%= render 'form_room', :f => item %>
+        <% end %>
+      </div>
+      <p>
+        <%= add_object_js_link 'Add room', f, :order_items, 'form_room', '#rooms'  %>
+      </p>
+    </fieldset>
+    </div>
+  <div class="actions">
+    <%= f.submit %>
+    &nbsp;
+    <%= link_to 'Payment', order_path(@object.id) if @object.id %>
+  </div>  
+<script type='text/javascript'>
+  var tmp = "<%= generate_template f, :order_items, :partial => 'form_room'  %>";
+</script>
+<% end %>
+

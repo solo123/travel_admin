@@ -1,0 +1,29 @@
+	<div class='toolbar' style='padding:4px;'>
+		Search city:<br />
+		<%= text_field_tag :city_select, '' %>
+		<%= hidden_field_tag :city_id %>
+    <%= button_link_to 'Select', select_city_path(@object.new_record? ? 0 : @object), {:icon => 'add', :remote => true, :id => 'select_city_button'} %> <br />
+	</div>
+<%= form_for( [:admin, @object], :remote => true) do |f| %>
+  <div class="container">
+  	<div class='span-7'>
+	  <%= f.field_container :city do %>
+	  	<%= f.label :city %><br />
+	  	<%= f.text_field :city %>
+	  <% end %>
+	  <%= f.field_container :state do %>
+	  	<%= f.label :state %><br />
+	  	<%= f.text_field :state %>
+	  <% end %>
+	  <%= f.field_container :country do %>
+	  	<%= f.label :country %><br />
+	  	<%= f.text_field :country %>
+	  <% end %>
+	  </div>
+	</div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

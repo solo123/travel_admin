@@ -1,0 +1,42 @@
+<div class='toolbar'>
+  <ul class='actions'>
+    <li>
+      <%= form_for( @search, :url => employee_infos_path ) do |f| %>
+      <%= f.select :company_id_eq, Company.all.map { |c| [c.short_name, c.id] }.insert(0, ['All Company', nil]), {}, :class => 'data-field', :onchange => 'this.form.submit()'  %>
+      <%= f.select :status_eq, [['All Status', nil],['active', 1], ['leaved', 0]],{}, :class => 'data-field', :onchange => 'this.form.submit()' %>
+      <%= f.text_field :nickname_contains, :size => 15, :class => 'data-field' %>
+      <%= button 'search' %>
+      <% end %>
+    </li>
+    <li>
+    <%= button_link_to 'Add Employee', new_employee_info_path, {:remote => true, :icon => 'add'} %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<div id="edit_div" class='dialog-normal'></div>
+
+<%= will_paginate(@collection) %>
+<table class="data-list" id='list_employee_infos'>
+  <thead>
+  <tr>
+      <th><%= t("id") %></th>
+      <th><%= t("Company") %></th>
+      <th><%= t("name") %></th>
+      <th><%= t("roles") %></th>
+      <th><%= t('telephone')%></th>
+      <th><%= t('email') %></th>
+      <th><%= t('status') %></th>
+      <th>op</th>
+  </tr>
+  </thead>
+  <tbody>
+<% @collection.each do |e| %>
+  <%= render :partial => 'row', :object => e %>
+<% end %>
+  </tbody>
+</table>
+<%= will_paginate(@collection) %>
+
+

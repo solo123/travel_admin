@@ -1,0 +1,4 @@
+  <% tour = Tour.find(params[:tour_id]) %>
+  <h1><%= "#{tour.description.title}/#{tour.description.title_cn}" %></h1>
+  <%= image_tag tour.title_photo.pic.url(:small), :id => 'tour_icon' if tour.title_photo %>
+  <div class='clear'></div>

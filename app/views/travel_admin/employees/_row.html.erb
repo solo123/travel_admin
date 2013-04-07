@@ -1,0 +1,14 @@
+  <tr id="<%= dom_id row %>" <%= 'class=\'deleted\'' if row.locked_at %>>
+      <td><%= row.id %></td>
+      <td><%= row.agent_id %></td>
+      <td><%= row.nickname %></td>
+      <td><%= row.employ_date %></td>
+      <td><%= row.ssn %></td>
+      <td><%= row.birthday %></td>
+      <td><%= row.locked_at %></td>
+    <td class="actions">
+      <%= link_to_show row %> |
+      <%= link_to_edit row %> |
+      <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Employee?' %>
+    </td>
+  </tr>

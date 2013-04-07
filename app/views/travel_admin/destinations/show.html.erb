@@ -1,0 +1,17 @@
+<%= content_for :breadcrumbs do %>
+  Data &gt;
+  <%= link_to 'Destinations', admin_destinations_path %> &gt;
+  <%= @object.title %>
+<% end %>
+
+<h1><%= @object.title %> / <%= @object.title_cn %></h1>
+<% if @object.description %>
+  <div class='container'>
+  <div class='span-8'>
+    <%= @object.description.en %>
+  </div>
+  <div class='span-8 last'>
+    <%= @object.description.cn %>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,13 @@
+  <tr id="<%= dom_id row %>" <%= 'class=\'deleted\'' if !row.status || row.status < 1 %>>
+      <td><%= row.id %></td>
+      <td><%= row.type_name %></td>
+      <td><%= row.type_text %></td>
+      <td><%= row.type_value %></td>
+      <td><%= row.status %></td>
+      <td><%= row.created_at %></td>
+      <td><%= row.updated_at %></td>
+    <td class="actions">
+      <%= link_to_edit row %> |
+      <%= link_to_hide row, 'data-confirm' => 'Are you sure to delete this text?' %>
+    </td>
+  </tr>

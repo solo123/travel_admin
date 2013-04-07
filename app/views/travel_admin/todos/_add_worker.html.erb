@@ -1,0 +1,9 @@
+<%= form_for(@worker, :url => todo_path(@object) + '/add_worker', :remote => true) do |f| %>
+      <%= f.field_container :employee_info_id do %>
+        <%= f.label :employee_info_id %><br />
+        <%= f.select(:employee_info_id, EmployeeInfo.where(:status => 1).collect{|d| [d.nickname, d.id]}, {:include_blank => true }) %>  	
+      <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %> 

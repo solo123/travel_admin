@@ -1,0 +1,25 @@
+<% order = Order.find(params[:order_id]) %>
+<p>
+      Paid amount:
+      <label id='paid_amount' class='pay-amount'><%= order.order_price.actual_amount - order.order_price.balance_amount %></label>
+      Paid: 
+      <label id='refund_amount' class='pay-amount'>0.00</label>
+      Paid after:
+      <label id='paid_amount_after' class='pay-amount'><%= order.order_price.actual_amount - order.order_price.balance_amount %></label>
+    </p>
+<div>
+	<ul id='tabs_refund' class='tabs'>
+		<li><a href='#'>Cash</a></li>
+		<li><a href='#'>Voucher</a></li>
+  </ul>
+  <div class='panes'>
+    <div id='tab-cash' tag='cash'>
+      <%= render 'form_refund_cash' %>
+	  </div>
+	<div id='tab-voucher' tag='voucher'>
+    <%= render 'form_refund_voucher' %>
+	</div>
+</div>
+</div>
+
+

@@ -1,0 +1,32 @@
+var edit_div_id = 'edit_city_div';
+var edit_div = "#edit_city_div";
+if ($(edit_div).length == 0){
+  $('#page_main').append("<div id='"+ edit_div_id +"'></div>");
+  $(edit_div).dialog({ autoOpen:false, width:700, dialogClass:'shadow', modal:true});
+}
+
+$(edit_div)
+	.html("<%= escape_javascript(render(:partial => "form"))%>")
+	.dialog('open');
+
+$( "#city_select" ).autocomplete({
+	source: host_path + "/cities/search",
+	minLength: 2,
+	select: function( event, ui ) {
+		if (ui.item) {
+			$('#user_id').val(ui.item.id);
+      $('#select_city_button').attr('href', host_path + '/cities/'+ui.item.id.toString()+'/select');
+		}
+	}
+});
+
+$('#city_select').click(function(){
+	$(this).select();
+});
+
+function city_after_updated(city_id){
+  set_return_city_id(city_id);
+  //refresh_customer();
+}
+
+

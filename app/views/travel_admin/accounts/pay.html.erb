@@ -1,0 +1,62 @@
+  <div class="container">
+    <div class='span-14'>
+<%
+  bill = Bill.new
+%>
+<h2>payments</h2>
+<%= form_for [:admin, bill], :remote => true do |f| %>
+  <%= f.hidden_field :company_id, :value => @object.owner.id %>
+<table class='border-table'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Amount</th>
+      <th>account</th>
+      <th>company discount</th>
+      <th>additional</th>
+      <th>receivable</th>
+      <th>created at</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @object.owner.pay_companies.new_payments.each do |ap| %>
+    <tr>
+      <td><%= check_box_tag "cb[#{ap.id}]" %></td>
+      <td><%= ap.id %></td>
+      <td><%= ap.amount %></td>
+      <td><%= ap.account_id %></td>
+      <td><%= ap.company_discount %></td>
+      <td><%= ap.additional_discount %></td>
+      <td><%= ap.account_receivable %></td>
+      <td><%= ap.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+  <div class='actions'>
+    <%= f.submit %>
+  </div>
+<% end %>
+</div>
+<div class='span-8 last'>
+  <h2>Bills</h2>
+  <table class='border-table'>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>created at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @object.owner.bills.each do |bill| %>
+      <tr>
+        <td><%= link_to bill.id, admin_bill_path(bill) %></td>
+        <td><%= bill.created_at %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

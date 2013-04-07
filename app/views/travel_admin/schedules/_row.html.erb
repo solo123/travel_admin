@@ -1,0 +1,17 @@
+<tr id="<%= dom_id row %>" >
+    <td style="font-weight:bold;text-align:center;text-decoration:underline;"><%= link_to row.id, schedule_path(row) %></td>
+    <td><span class="tour-name"><%= row.tour.description.title_cn %></span><br /><%= row.tour.description.title %></td>
+    <td><%= row.tour.days %></td>
+    <td>
+		<% if row.price %>
+		<%= row.price.price1 %>, <%= row.price.price2 %><br />
+		<%= row.price.price3 %>, <%= row.price.price4 %>
+		<% else %>
+		[no price]
+		<% end %>
+    </td>
+    <td><%= row.departure_date %></td>
+    <td><%#= row.schedule_assignment.tour_guide_id if row.schedule_assignment %></td>
+    <td><%#= row.schedule_assignment.driver_id if row.schedule_assignment %></td>
+    <td><%= row.status %></td>
+</tr>

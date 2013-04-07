@@ -1,0 +1,11 @@
+<% if flash[:error] %>
+  alert("<%= flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+  $('#edit_schedule_div').dialog('close');
+  $("#list_schedules")
+    .append("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
+    <% if flash[:notice] %>
+      alert("<%= flash[:notice] %>");
+    <% end %>
+<% end %>

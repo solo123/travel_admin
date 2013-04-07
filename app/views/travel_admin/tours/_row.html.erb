@@ -1,0 +1,19 @@
+<tr id="<%= dom_id row%>" <%= 'class=deleted' if !row.status || row.status < 1 %>>
+	<td><%= row.id %></td>
+        <td><%= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo %></td>
+	<td><%= row.description.title %><br /><%= row.description.title_cn %></td>
+	<td><%= row.tour_type_name %></td>
+	<td class='align-center'><%= row.days %></td>
+	<td class='align-center'><%= row.tour_setting.weekly if row.tour_setting %></td>
+  <td class='align-right'><%= row.tour_price.price_adult %></td>
+  <td class='align-right'><%= row.tour_price.single_charge %></td>
+  <td class='align-right'><%= row.tour_price.forth_charge %></td>
+	<td class='align-center'><%= row.tour_setting.days_in_advance if row.tour_setting %></td>
+	<td><%= row.tour_setting.last_schedule_date if row.tour_setting %></td>
+	<td class='align-center'><%= row.status_text %></td>
+	<td nowrap="nowrap">
+		<%= link_to 'Route', tour_spots_path(row) %> |
+		<%= link_to_edit row %> |
+		<%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Tour?' %>
+	</td>
+</tr>

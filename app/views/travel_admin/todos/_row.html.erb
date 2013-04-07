@@ -1,0 +1,14 @@
+<tr id="<%= dom_id row%>" <%= 'class=\'deleted\'' if !row.status || row.status < 1 %>>
+  <td><%= row.id %></td>
+  <td><%= row.level %></td>
+  <td><%= row.message %></td>
+  <td><%= row.employee_info_id %></td>
+  <td><%= row.status %>&nbsp;</td>
+  <td><%= row.created_at %></td>
+  <td><%= row.updated_at %></td>
+  <td>
+    <%= link_to_edit row %> |
+    <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Destination?' %> |
+  </td>
+</tr>
+

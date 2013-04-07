@@ -1,0 +1,5 @@
+<div class='container'>
+  <div class='span-6'><%= f.email_field :email_address %></div>
+  <div class='span-2 last'><%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %><%= f.label :_destroy, 'Del'%></div>
+</div>
+

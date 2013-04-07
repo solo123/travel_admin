@@ -1,0 +1,6 @@
+        <% workers.each do |worker| %>
+          <%= worker.employee_info.nickname %>
+          <%= icon_link_to '', todo_path(@object) + "/rm_worker?wid=#{worker.id}", {:icon => 'delete.gif', 'data-confirm' => 'Are you sure to Remove this employee from this todo?', 'data-method' => 'delete', :remote => true} %> 
+          ,
+        <% end %>
+

@@ -1,0 +1,41 @@
+      <legend>Payment</legend>
+      <table class='border-table' style='width:100%;'>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>before</th>
+            <th>Amount</th> 
+            <th>after</th> 
+            <th>account</th>
+            <th>Date</th>
+            <th>Op</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% payments.payments.each do |p| %>
+            <% order_hist = p.balance_data('Order') %>
+            <tr id='<%= dom_id(p) %>'>
+              <td><%= p.pay_method_type %></td>
+              <td><%= order_hist.balance_before %></td>
+              <td><%= p.amount %></td>
+              <td><%= order_hist.balance_after %></td>
+              <td>
+                <% if p.pay_method_type == 'PayCash' || p.pay_method_type == 'PayCheck' %>
+                  <%= p.received_by.nickname if p.received_by %>
+                <% else %>
+                  <%= p.operator.nickname if p.operator %>
+                <% end %>
+                </td>
+                <td><%= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at %></td>
+                <td>
+                  <%= link_to 'cancle', pay_credit_card_path(p.pay_method), :method => :delete, :remote => true if p.pay_method.is_a? PayCreditCard %>
+                </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p style='text-align:right;'><span class='note-text'>Current balance:</span> <span class='strong'><%= payments.order_price.balance_amount %></span></p>
+      <p>
+        <%= button_link_to 'Payment', new_payment_path(:order_id => payments.id), {:remote => true, :icon => 'add' }%>
+        <%= button_link_to 'Refund', refund_payments_path(:order_id => payments.id), {:remote => true, :icon => 'add' }%>
+      </p>

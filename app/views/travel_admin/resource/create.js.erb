@@ -1,0 +1,21 @@
+<% if flash[:error] %>
+  alert("<%= flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+<%
+  class_name = @object.class.name.underscore.pluralize 
+%>
+  $("#list_<%= class_name %>")
+    .append("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
+
+  if ($('#list_<%= class_name %>').length == 0){
+	  alert("[<%= class_name %>] Add 1 new <%= @object.class.name %> data.");
+  }
+
+var edit_div = "#edit_<%= @object.class.name.underscore %>_div";
+$(edit_div).dialog('close');
+
+var after_function_name = "<%= @object.class.name.underscore %>_after_created";
+if (typeof(window[after_function_name]) == 'function')
+  eval(after_function_name + "(<%= @object.id %>)");
+<% end %>

@@ -1,0 +1,51 @@
+<% @object.build_tour_price if !@object.tour_price %>
+<%= f.fields_for :tour_price do |s| %>
+  <fieldset>
+    <legend>PRICE</legend>
+  <div class="container">
+		<div class="span-8">
+	  <%= f.field_container :price_adult do %>
+	  	<%= s.label :price_adult %><br />
+	  	<%= s.text_field :price_adult %>
+	  <% end %>
+	  
+	  <%= f.field_container :price_child do %>
+	  	<%= s.label :price_child %><br />
+	  	<%= s.text_field :price_child %>
+	  <% end %>
+	  <%= f.field_container :single_charge do %>
+	  	<%= s.label :single_charge %><br />
+	  	<%= s.text_field :single_charge %>
+	  <% end %>
+	  <%= f.field_container :forth_charge do %>
+	  	<%= s.label :forth_charge %><br />
+	  	<%= s.text_field :forth_charge %>
+	  <% end %>
+		</div>
+		<div class='span-8 last'>
+	  <%= f.field_container :price1 do %>
+	  	<%= s.label :price1 %><br />
+	  	<%= s.text_field :price1 %>
+	  <% end %>
+	  
+	  <%= f.field_container :price2 do %>
+	  	<%= s.label :price2 %><br />
+	  	<%= s.text_field :price2 %>
+	  <% end %>
+	  
+	  <%= f.field_container :price3 do %>
+	  	<%= s.label :price3 %><br />
+	  	<%= s.text_field :price3 %>
+	  <% end %>
+	  <%= f.field_container :price4 do %>
+	  	<%= s.label :price4 %><br />
+	  	<%= s.text_field :price4 %>
+	  <% end %>
+		</div>
+  </div>
+</fieldset>
+<div class='container'>
+  <input type='button' value='Caculate to price1~4' onclick='caculate_tour_price();' class='button green medium' />
+  <input type='button' value='Caculate charge' onclick='caculate_tour_price_rev();' class='button green medium' />
+</div>
+<% end %>

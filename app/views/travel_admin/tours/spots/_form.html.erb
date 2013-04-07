@@ -1,0 +1,32 @@
+<% 
+	@object.build_description if !@object.description
+%>
+
+<%= form_for([@tour, @object], :remote => true) do |f| %>
+  <div class="container">
+  	<%= f.fields_for :destination_id do %>
+	    <%= f.label :destination_id %> : 
+   		<%= f.select(:destination_id, Destination.visible.collect{|d| [d.description.title, d.id]}, {:prompt => 'Select Destination'}) %>  	
+   	<% end %>
+	</div>
+
+  <div class="container">
+	  <div class='span-8'>
+    	<%= f.fields_for :visit_day do %>
+		    <%= f.label :visit_day %><br />
+    		<%= f.text_field :visit_day %>
+    	<% end %>
+	  </div>
+	  <div class='span-8 last'>
+      <%= f.fields_for :visit_order do %>
+        <%= f.label :visit_order %><br />
+        <%= f.text_field :visit_order %>
+      <% end %>	
+    </div>
+	</div>
+	<%= render :partial => 'travel_admin/shared/description', :locals => {:f => f} %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

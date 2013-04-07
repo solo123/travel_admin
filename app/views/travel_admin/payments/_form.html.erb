@@ -1,0 +1,36 @@
+<% order = Order.find(params[:order_id]) %>
+<p>
+      Balance before:
+      <label id='balance' class='pay-amount'><%= order.order_price.balance_amount %></label>
+      Pay Amount: 
+      <label id='paid_amount' class='pay-amount'>0.00</label>
+      Balance after:
+      <label id='balance_after' class='pay-amount'><%= order.order_price.balance_amount %></label>
+    </p>
+<div>
+	<ul id='tabs_payment' class='tabs'>
+		<li><a href='#'>Cash</a></li>
+		<li><a href='#'>Credit card</a></li>
+		<li><a href='#'>Check</a></li>
+		<li><a href='#'>Voucher</a></li>
+		<li><a href='#'>Company</a></li>
+  </ul>
+  <div class='panes'>
+    <div id='tab-cash' tag='cash'>
+      <%= render 'form_pay_cash' %>
+	  </div>
+	  <div id='tab-cc' tag='credit_card' >
+      <%= render 'form_pay_credit_card' %>
+	  </div>
+	<div id='tab-check' tag='check'>
+    <%= render 'form_pay_check' %>
+	</div>
+	<div id='tab-voucher' tag='voucher'>
+    <%= render 'form_pay_voucher' %>
+	</div>
+	<div id='tab-ap' tag='company_receivable'>
+    <%= render 'form_pay_company' %>
+  </div>
+</div>
+</div>
+

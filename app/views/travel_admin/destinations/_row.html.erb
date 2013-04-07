@@ -1,0 +1,14 @@
+<% c = row.city %>
+<tr id="<%= dom_id row%>" <%= 'class=deleted' if !row.status || row.status < 1 %>>
+  <td><%= row.id %></td>
+  <td><%= row.description.title %></td>
+  <td><%= row.description.title_cn %></td>
+  <td><%= "#{c.city}, #{c.state}, #{c.country}" if c %></td>
+  <td style='text-align:center;'><%= row.status_text %></td>
+  <td>
+    <%= website_link_to_view row %> |
+    <%= link_to_edit row %> |
+    <%= link_to 'Photos', destination_photos_path(row), {:target => 'edit-win'} %> |
+    <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Destination?' %>
+  </td>
+</tr>

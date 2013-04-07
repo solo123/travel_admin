@@ -1,0 +1,12 @@
+<tr id="<%= dom_id row %>">
+  <td><%= row.id %></td>
+  <td><%= row.reason %></td>
+  <td><%= row.from_date %></td>
+  <td><%= row.to_date %></td>
+  <td><%= formatted_shot_datetime(row.created_at) %></td>
+  <td><%= formatted_shot_datetime(row.updated_at) %></td>
+  <td class="actions">
+    <%= link_to 'edit', object_url(@parent) + "/bus_reserved_dates/#{row.id}/edit", :remote => true %> |
+    <%= link_to 'del', object_url(@parent) + "/bus_reserved_dates/#{row.id}", 'data-confirm' => 'Are you sure to hide/show this Position?', :remote => true, :method => :delete %>
+  </td>
+</tr>

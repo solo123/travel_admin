@@ -1,0 +1,9 @@
+<div class='container'>
+  <div class='span-16 large'>
+    <%= log.level %> <%= log.log_brief %>
+  </div>
+  <% log.attributes.each do |attr_name, attr_value| %>
+    <div class='span-4 border'><%= attr_name %></div>
+    <div class='span-12 underline last'><%= attr_value %>&nbsp;</div>
+  <% end %>
+</div>

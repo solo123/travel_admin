@@ -1,0 +1,43 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag 'admin/seat_table' %>
+<% end %>
+<div id='schedule_title'>
+  <%= render :partial => 'schedule_title', :locals => {:s => @object} %>
+</div>
+<div>
+  <div class='toolbar'>
+    <ul class='actions'>
+      <li>
+      <%= button_link_to 'Add bus', new_schedule_schedule_assignment_path(@object) + "?schedule_id=#{params[:id]}", { :remote => true, :icon => 'bus'} %></li>
+      <li><%= button_link_to 'Hold', 'javascript:hold()', {:icon => 'hold'} %></li>
+      <li><%= button_link_to 'Release', 'javascript:release();', {:icon => 'undo'} %></li>
+      <li><%= button_link_to 'Order', 'javascript:order();', {:icon => 'cart'} %></li>
+    </ul>
+
+
+    <br class='clear' />
+  </div>
+
+  <div id="tabs">
+    <ul class='tabs'>
+      <% @object.assignments.each do |assignment| %>
+        <li><%= link_to "#{assignment.id}:#{assignment.title}", schedule_schedule_assignment_bus_seats_path(@object, assignment) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <!-- single pane. it is always visible -->
+  <div class="panes">
+    <% @object.assignments.count.times do %>
+      <div style='display:none'></div>
+    <% end %>
+  </div>
+
+</div>
+
+<div id='unseat_orders'>
+  <%= render 'orders', :orders => @object.orders %>
+</div>
+
+<div id='select_schedule_div' class='dialog-popup'></div>
+<div id='select_customer_div' class='dialog-popup'></div>
+

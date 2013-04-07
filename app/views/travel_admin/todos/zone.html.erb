@@ -1,0 +1,16 @@
+<h1>Todo:&nbsp;&nbsp;
+  <%= link_to_function image_tag('admin/refresh.png', :size => '10x10'), 'load_todos()', :class => 'hot-link' %>
+  <%= link_to image_tag('admin/add.gif'), todos_path+'/new', :class => 'hot-link', :remote => true %></h1>
+  <table class='compact'>
+    <% @collection.each do |o| %>
+    <tr>
+      <td><%= o.level %></td>
+      <td><%= link_to o.message, todo_path(o), :remote => true %></td>
+      <td><%= o.employee_info_id %></td>
+      <td><%= o.due_date %></td>
+      <td class='note-text'><time class='timeago' datetime='<%= o.created_at.iso8601 %>'><%= o.created_at %></time></td>
+    </tr>
+    <% end %>
+  </table>
+
+

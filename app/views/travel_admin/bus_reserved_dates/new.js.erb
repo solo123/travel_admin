@@ -1,0 +1,14 @@
+var edit_div = "edit_bus_reserved_date_div";
+if ($('#'+edit_div).length == 0){
+  $('#page_main').append("<div id='"+ edit_div +"'></div>");
+  $('#'+edit_div).dialog({ autoOpen:false, width:700, dialogClass:'shadow', modal:true});
+}
+
+$('#'+edit_div)
+	.html("<%= j render 'form' %>")
+	.dialog('option', 'title', '* Add reserved date *')
+	.dialog('open');
+
+$('input[type=submit]').addClass('button green');
+
+$('.date-picker').datepicker({ showButtonPanel: true, dateFormat: 'yy-mm-dd' });

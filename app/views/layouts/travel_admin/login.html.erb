@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%#= cfg.get_config(:site_name) %></title>
+  <%= favicon_link_tag %>
+<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+<![endif]-->
+
+  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
+  <%= stylesheet_link_tag "login" %>
+  <%= javascript_include_tag "admin/admin" %>
+  <%= csrf_meta_tags %>
+
+  <%= yield :head %>
+</head>
+<body>
+
+  <div id='page_container'>
+    <div id='page_head'>
+      <%= image_tag '/pics/logo.png', :class => 'logo' %>
+    </div>
+
+    <div id='page_main'>
+      <div class='contents'>
+        <div class='login-div'>
+    <%#= flash_messages %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+
+    <div id='page_foot'>
+    </div>
+  </div>
+</body>
+</html>

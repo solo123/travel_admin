@@ -1,0 +1,7 @@
+<% if flash[:alert] %>
+  alert('CANNOT delete when seats not clear!\n\nPlease clear seat tables before delete.');
+  <% flash.discard %>
+<% else %>
+  window.location.reload();
+<% end %>
+

@@ -1,0 +1,14 @@
+<h1>Bus: <%= detail.name %></h1>
+<div class='container'>
+  <div class='span-8'>
+    <%= image_tag detail.title_photo.pic.url(:small) if detail.title_photo %>
+  </div>
+  <div class='span-8 last'>
+    <% if detail.company %>
+      <p>Company: <%= detail.company.company_name %>(<%= detail.company.short_name %>)</p>
+    <% end %>
+    <p>Bus Type: <%= detail.bus_type %></p>
+    <p>Seats number: <%= detail.seats %></p>
+  </div>
+</div>
+

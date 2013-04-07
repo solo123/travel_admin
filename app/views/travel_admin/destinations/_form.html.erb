@@ -1,0 +1,14 @@
+<%
+	if @object.new_record?
+		@object.build_description
+	end
+%>
+<%= form_for( @object, :remote => true) do |f| %>
+	<%= render :partial => 'travel_admin/shared/description', :locals => {:f => f} %>
+	<%#= render :partial => 'city', :locals => { :f => f } %>
+	<%= render :partial => 'travel_admin/shared/status', :locals => {:f => f} %>  
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

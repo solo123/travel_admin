@@ -1,0 +1,30 @@
+<%= content_for :breadcrumbs do %>
+  Data &gt;
+  Pages
+<% end %>
+<div class="toolbar">
+  <ul class="actions">
+    <li>
+      <%= button_link_to 'New Page', new_page_path, {:remote => true, :icon => 'add'} %>
+    </li>
+  </ul>
+  <br class="clear">
+</div>
+
+<h1><%= "Pages List" %></h1>
+
+<table class="data-list" id='list_pages'>
+  <thead>
+  <tr>
+      <th>permalink</th>
+      <th>title</th>
+      <th>updated</th>
+	    <th>Action</th>
+    </tr>
+  </thead>
+<% @collection.each do |page| %>
+	<%= render :partial => 'row', :object => page %>
+<% end %>
+</table>
+<%= will_paginate(@collection) %>
+

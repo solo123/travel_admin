@@ -1,0 +1,44 @@
+<% content_for :head do %>
+  <script type='text/javascript'>
+    var vds = '<%= @datelist %>';
+    var aa = null;
+    $(function(){
+        $('#annual_calendar').datepicker({
+          defaultDate: new Date(2013,0,1),
+          numberOfMonths: [4,3],
+          changeMonth: false,
+          dateFormat: "yy.mm.dd",
+          beforeShowDay: function(date){
+      var s = date_to_string(date);
+      if (vds.indexOf(s)>=0){
+          var start = vds.indexOf(s);
+          var stop0 = vds.indexOf('|', start);
+          var stop1 = vds.indexOf(',', start);
+          var stop2 = vds.indexOf(';', start);
+          if (stop0 > start && stop2 > stop1 && stop1 > stop0){
+            var schedule = vds.substring(stop0+1, stop1);
+            var ass = vds.substring(stop1+1, stop2);
+            return [1, '', "Schedule:" + schedule + "\nAssignment:" + ass];  
+        }
+        }
+        return [0, '', null];
+        },
+onSelect: function(date, inst){
+          var start = vds.indexOf(date);
+          if (start<0) return;
+          var stop0 = vds.indexOf('|', start);
+          var stop1 = vds.indexOf(',', start);
+          if (stop0 > start && stop1 > stop0){
+            var schedule = vds.substring(stop0+1, stop1);
+            if (confirm("Go to Schedule:" + schedule + "?"))
+              location = "/admin/schedules/" + schedule;
+}
+}
+          });
+
+    });
+  </script>
+<% end %>
+<h1>Shifts: Bus #<%= params[:id] %></h1>
+
+<div id='annual_calendar'></div>

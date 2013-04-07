@@ -1,0 +1,11 @@
+<tr id="<%= dom_id row%>" <%= 'class=\'deleted\'' if !row.level || row.level < 3 %>>
+  <td><%= row.id %></td>
+  <td><%= row.level %></td>
+  <td><%= row.page_url %></td>
+  <td><%= row.controller %></td>
+  <td><%= row.action %></td>
+  <td><%= row.log_brief %></td>
+  <td><%= row.created_at %></td>
+  <td><%= link_to 'view', log_path(row), :remote => true %></td>
+</tr>
+

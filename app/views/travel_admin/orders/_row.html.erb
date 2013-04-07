@@ -1,0 +1,10 @@
+    <tr>
+        <td><%= link_to row.order_number, order_path(row) %></td>
+        <td><%= row.order_detail.full_name if row.order_detail %></td>
+        <td><%= row.schedule.title if row.schedule %></td>
+        <td><%= time_tag row.created_at %></td>
+        <td><%= row.status %></td>
+      <td class='actions'>
+          <%= link_to_edit_url edit_order_path(row), :title => "edit_#{dom_id(row)}", :remote => true %>
+      </td>
+    </tr>

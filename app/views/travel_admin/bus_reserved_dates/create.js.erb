@@ -1,0 +1,7 @@
+  $("#list_bus_reserved_dates")
+    .append("<%= escape_javascript(render(:partial => 'row', :locals => {:obj => @object})) %>");
+
+var edit_div = "#edit_bus_reserved_date_div";
+$(edit_div).dialog('close');
+
+

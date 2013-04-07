@@ -1,0 +1,46 @@
+var edit_div = "edit_schedule_div";
+if ($('#'+edit_div).length == 0){
+  $('#page_main').append("<div id='"+ edit_div +"'></div>");
+  $('#'+edit_div).dialog({ autoOpen:false, width:700, dialogClass:'shadow', modal:true});
+}
+
+$('#'+edit_div)
+	.html("<%= j render 'form_new' %>")
+	.dialog('option', 'title', '* New Schedule *')
+	.dialog('open');
+
+
+$( "#tour_select" ).autocomplete({
+	source: host_path + "/tours/search",
+	minLength: 2,
+	select: function( event, ui ) {
+		if (ui.item) {
+			$('#tour_id').val(ui.item.id);
+			$('#departure_date').val('');
+		}
+	}
+});
+
+$('#tour_select').click(function(){
+	$(this).select();
+});
+
+function date_tostring(d){
+	var m = d.getMonth() + 1;
+	if (m < 10)
+		m = "0" + m;
+	else
+		m = '' + m;
+	return d.getFullYear() + '.' + m + '.' + d.getDate();		
+}
+
+
+$('#departure').datepicker({
+  numberOfMonths: 2,
+  showButtonPanel: false,
+  minDate: 0,
+  dateFormat: 'yy-mm-dd',
+  onSelect: function(dateText, inst){
+    $('#departure_date').val(dateText);
+  }
+  });

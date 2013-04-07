@@ -1,0 +1,5 @@
+var api = $('.tabs').data('tabs');
+api.getCurrentPane().load(api.getCurrentTab().attr('href'));
+
+$('#unseat_orders').html("<%=j render 'travel_admin/schedules/orders', :orders => @object.schedule.orders %>")
+

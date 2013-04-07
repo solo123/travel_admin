@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>admin-<%= @title %></title>
+  <%= favicon_link_tag %>
+<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+<![endif]-->
+
+  <link rel="stylesheet" href="/css/jquerytools/my_jquerytools.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/jqueryui/ui.css" type="text/css" media="screen, projection">
+  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
+  <%= stylesheet_link_tag '/css/superfish/superfish' %>
+  <%= javascript_include_tag "admin/admin" %>
+  <%= javascript_include_tag '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/superfish/hoverIntent', '/css/superfish/superfish' %>
+  <%= csrf_meta_tags %>
+
+  <%= yield :head %>
+</head>
+<body>
+  <div id='page_container'>
+    <div id='page_head'>
+      <%= image_tag '/pics/logo.png', :class => 'logo' %>
+      <div id="progress"><%= image_tag 'admin/progress.gif' %> <%= t(:loading) %>...</div>      
+      <%= render 'travel_admin/shared/main_menu' %>
+
+      <div id='login'>
+        <% if current_employee %>
+        Welcome <%= link_to current_employee.employee_info.nickname, employees_path %> |
+        <%= link_to 'Logout', main_app.destroy_employee_session_path, :method => :delete %>
+        <% end %>
+      </div>
+    </div>
+    <div id='page_breadcrumbs'>
+      <%= yield :breadcrumbs %>
+    </div>
+
+    <div id='page_main' class='use-sidebar sidebar-at-right'>
+      <div id='contents'>
+
+        <% if flash[:error] %>
+          <div class="flash error"><%= raw flash[:error] %></div>
+        <% end %>
+        <% if flash[:alert] %>
+          <div class="flash alert"><%= raw flash[:alert] %></div>
+        <% end %>
+        <% if notice %>
+          <div class="flash notice"><%= raw notice %></div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+      <div id='sidebar'>
+        <div id='quick_go' class='zone'>
+          <table class='compact' style='width:auto;'>
+            <tr>
+              <td>Tour:</td>
+              <td><input id='qg_tour' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
+              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_tour();' %></td>
+            </tr>
+            <tr>
+              <td>Schedule:</td>
+              <td><input id='qg_schedule' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
+              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_schedule();' %></td>
+            </tr>
+            <tr>
+              <td>Order:</td>
+              <td><input id='qg_order' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
+              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_order();' %></td>
+            </tr>
+          </table>
+
+        </div>
+        <div id='todos' class='zone'></div>
+        <div id='last_logs' class='zone'></div>
+      </div>
+      <a href='#' id='separator'></a>
+      <div class='clear'></div>
+    </div>
+
+    <div id='page_foot'>
+      <%= render 'travel_admin/shared/footer' %>
+    </div>
+  </div>
+</body>
+</html>

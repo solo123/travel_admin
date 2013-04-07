@@ -1,0 +1,25 @@
+<div id="<%= dom_id row %>">
+  <div class='container'>
+    <div class='color-title'>
+      Day <%= row.visit_day %>:
+      <%= row.visit_order %>)  
+      <%= "#{row.destination.description.title}, #{row.destination.description.title_cn}" if row.destination %>
+      | <%= link_to 'Edit', "spots/#{row.id}/edit", :remote => true, :class => 'edit_button'   %>
+      | <%= link_to 'Delete', "spots/#{row.id}", :remote => true, :method => :delete, :confirm => 'Are you sure to delete this spot?' %>
+    </div>
+  </div>
+  <div class='container'>
+    <div class='column span-6'>
+      <%= image_tag row.destination.title_photo.pic.url(:thumb), :class => 'info-icon' if row.destination && row.destination.title_photo %><br />
+      <%= link_to '<-- set tour icon',"spots/#{row.id}", :remote => true %>
+    </div>
+    <% if row.description %>
+      <div class='column span-10'>
+        <%= raw row.description.en %>
+      </div>
+      <div class='column span-10 last'>
+        <%= raw row.description.cn %>
+      </div>
+    <% end %>
+  </div>
+</div> 

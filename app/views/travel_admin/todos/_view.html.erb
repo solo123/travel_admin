@@ -1,0 +1,31 @@
+<div class='container'>
+  <div class='small toolbar'>
+    From: <span class='strong'><%= @object.employee_info.nickname %></span><br />
+    To: 
+    <%= link_to 'Add', object_url(@object) + '/add_employee', :remote => true %>
+    <span class='strong' id='list_todo_workers'>
+      <%= render :partial => 'row_workers', :locals => {:workers => @object.todo_workers} %>
+    </span>
+  </div>
+
+  <div style='float:left;margin-right:10px;background-color:#c8e0c0;border:solid 1px white; font-size:12px;padding:2px;'>
+    <%= type_text.get_text('todo.level', @object.level) %>
+  </div>
+  <h2>
+    <%= @object.message %>
+  </h2>
+  <div>
+    Notes: <%= link_to 'Add', todo_remarks_path(@object) + '/new', :remote => true %><br />
+    <table id='list_remarks' class='data-list'>
+      <% @object.remarks.each do |note| %>
+        <tr>
+          <td><%= note.employee_info_id %></td>
+          <td><%= note.note_text %><br />
+            <span class='strong'><%= note.created_at %></span>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+

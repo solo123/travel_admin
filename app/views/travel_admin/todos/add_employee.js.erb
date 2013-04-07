@@ -1,0 +1,14 @@
+var edit_div_id = "edit_todo_worker_div"
+var edit_div = "#" + edit_div_id;
+if ($(edit_div).length == 0){
+  $('#page_main').append("<div id='"+ edit_div_id +"'></div>");
+  $(edit_div).dialog({ autoOpen:false, width:400, dialogClass:'shadow', modal:true});
+}
+
+$(edit_div)
+	.html("<%= j render 'add_worker' %>")
+	.dialog('option', 'title', '* Add *')
+	.dialog('open');
+
+$('input[type=submit]').addClass('button green');
+

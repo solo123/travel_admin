@@ -1,0 +1,118 @@
+<div class='container'>
+  <div class='span-12'>
+    <fieldset>
+      <legend>Customer</legend>
+      <% if @object.order_detail && @object.order_detail.user_info %>
+        <table class='compact' style='width:auto;'>
+          <tr>
+            <td class='note-text'>Full name:</td>
+            <td><%= @object.order_detail.user_info.full_name %></td>
+          </tr>
+          <tr>
+            <td class='note-text'>Telephone:</td>
+            <td>
+              <% @object.order_detail.user_info.telephones.each do |tel| %>
+                <%= tel %>,
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td class='note-text'>Email:</td>
+            <td><%= @object.order_detail.user_info.emails.first %></td>
+          </tr>
+          <tr>
+            <td class='note-text'>Address:</td>
+            <td><%= @object.order_detail.user_info.addresses.first %></td>
+          </tr>
+        </table>
+      <% end %>
+    </fieldset>
+    <fieldset id='list_payments'>
+      <%= render :partial => 'travel_admin/payments/payments', :object => @object  %>
+    </fieldset>
+  </div>
+  <div class='span-12 last'>
+    <fieldset>
+      <legend>Order</legend>
+      <div class='barcode' style='float:right;'><%= @object.order_number %></div>
+      <% if @object.schedule %>
+        <p style='font-size:110%;font-weight:bold;'>
+          <%= @object.schedule.tour.description.title %><br />
+          <%= @object.schedule.tour.description.title_cn %>
+        </p>
+        <p>
+          <%= date_tag @object.schedule.departure_date %> ~ 
+          <%= date_tag @object.schedule.return_date %>
+          &nbsp;|&nbsp;(<%= link_to 'seat table', object_url(@object.schedule) %>)
+        </p>
+      <% end %>
+    </fieldset>
+
+    <fieldset>
+      <legend>Detail</legend>
+      <table class='border-table' style='width:100%;'>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Adult</th>
+            <th>Child</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @object.order_items.each_with_index do |item, i| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= item.num_adult %></td>
+              <td><%= item.num_child %></td>
+              <td class='align-right'><%= item.amount %></td>
+            </tr>
+          <% end %>
+          <% if @object.order_price %>
+            <tr>
+              <td class='align-right'>Total:</td>
+              <td colspan='2' class='align-right'><%= @object.order_price.num_total %> person</td>
+              <td class='align-right'><%= @object.order_price.total_amount %></td>
+            </tr>
+            <tr>
+              <td colspan='3' class='align-right'>Adjustment amount:</td>
+              <td class='align-right'><%= @object.order_price.adjustment_amount %></td>
+            </tr>
+            <tr>
+              <td colspan='3' class='align-right'>Actual Amount:</td>
+              <td class='align-right'><%= @object.order_price.actual_amount %></td>
+            </tr>
+          <% end %> 
+        </tbody>
+      </table>
+      <div class='container'>
+        <div class='span-3 note-text'>Order method: </div>
+        <div class='span-5 last'><%= @object.order_method %></div>
+      </div>
+      <div class='container'>
+        <div class='span-3 note-text'>Created at: </div>
+        <div class='span-5 last'><%= time_tag @object.created_at, :class => 'local-datetime' %></div>
+      </div>
+      <div class='container'>
+        <div class='span-3 note-text'>Updated at: </div>
+        <div class='span-5 last'><%= time_tag @object.updated_at, :class => 'local-datetime' if @object.updated_at %></div>
+      </div>
+      <div class='container'>
+        <div class='span-3 note-text'>Completed at: </div>
+        <div class='span-5 last'><%= time_tag @object.completed_at, :class => 'local-datetime' if @object.completed_at %></div>
+      </div>
+      <div class='container'>
+        <div class='span-3 note-text'>Status: </div>
+        <div class='span-5 last'><%= @object.status %></div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<%= link_to 'Add remark', new_order_remark_path(@object), :remote => true %>
+<div id='list_remarks' class='notes'>
+<% @object.remarks.each do |rmk| %>
+  <%= render :partial => 'travel_admin/remarks/row', :object => rmk %>
+<% end %>
+
+</div>
+

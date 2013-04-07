@@ -1,0 +1,16 @@
+<tr id="<%= dom_id row_company%>">
+  <td><%= row_company.id %></td>
+  <td><%= row_company.owner_type %></td>
+  <td><%= row_company.owner_id %></td>
+  <td><%= row_company.account_type %></td>
+  <td><%= row_company.account_brief %></td>
+  <td><%= row_company.balance %></td>
+  <td><%= row_company.status %></td>
+  <td><%= row_company.created_at %></td>
+  <td><%= row_company.updated_at %></td>
+  <td>
+    <%= link_to 'detail', object_url(row_company) + '/pay' %> 
+  </td>
+</tr>
+
+
