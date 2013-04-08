@@ -1,0 +1,32 @@
+@import 'def_colors';
+div.underline {border-bottom: solid 1px $bg1;}
+.strong {color: $ptn_4;}
+.hot-link {cursor:pointer;}
+.hot-link:hover {
+  background-color: lightYellow;
+}
+
+.small-font {font-size: 60%;}
+
+input.date-picker {width: 100px;}
+.cmap {
+  list-style: none;
+  li {width:22px; height:22px; float:left; border:solid 1px #ccc;}
+}
+.cmap_ptn_1 {background-color: $ptn_1;}
+.cmap_ptn_2 {background-color: $ptn_2;}
+.cmap_ptn_3 {background-color: $ptn_3;}
+.cmap_ptn_4 {background-color: $ptn_4;}
+.cmap_ptn_5 {background-color: $ptn_5;}
+.cmap_ptn1 {background-color: $ptn1;}
+.cmap_ptn2 {background-color: $ptn2;}
+.cmap_ptn3 {background-color: $ptn3;}
+.cmap_ptn4 {background-color: $ptn4;}
+.cmap_ptn5 {background-color: $ptn5;}
+.cmap_bg1 {background-color: $bg1;}
+.cmap_bg2 {background-color: $bg2;}
+.cmap_bg3 {background-color: $bg3;}
+.cmap_bg1 {background-color: $bg1;}
+.cmap_bd1 {background-color: $bd1;}
+.cmap_bd2 {background-color: $bd2;}
+.cmap_bd3 {background-color: $bd3;}
