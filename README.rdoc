@@ -1,3 +1,9 @@
 = TravelAdmin
 
-This project rocks and uses MIT-LICENSE.
+2013-04-xx V1.1 - All common admin functions
+
+1. emails list related to userinfo (/admin/emails)
+2. employee only belongs to our company
+
+2013-04-08 V1.0 - Basic functions
+

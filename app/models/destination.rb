@@ -5,7 +5,8 @@ class Destination < ActiveRecord::Base
   belongs_to :title_photo, :class_name => 'Photo'
   has_many :photos, :as => :photo_data, :dependent => :destroy
   belongs_to :city
-  
+
+  default_scope joins(:description).order('descriptions.title')
   scope :visible, where(:status => 1)
   def status_text
     if self.status && self.status > 0
