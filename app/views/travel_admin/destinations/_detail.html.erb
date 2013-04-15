@@ -1,17 +1,16 @@
 <% if detail.description %>
   <h2><%= detail.description.title%>, <%= detail.description.title_cn %></h2>
-  <div style='width:320px; float:left;'>
+  <div class='small-image-left'>
     <%= image_tag detail.title_photo.pic.url(:small) if detail.title_photo %>
   </div>
-  <div class='container'>
-    <div class='span-8'>
+  <pre>
       <%=raw detail.description.cn %>
-    </div>
-    <div class='span-8 last'>
+  </pre>
+  <br />
+  <pre>
       <%=raw detail.description.en %>
-    </div>
-  </div>
+  </pre>
 <% end %>
 
 <br />
-<%= button_link_to 'Edit', edit_destination_path(detail), {:icon => 'add', :remote => true} %>
+<%= button_link_to_edit detail %>

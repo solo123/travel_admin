@@ -1,4 +1,5 @@
 $("#<%= dom_id(@object) %>")
 	.replaceWith("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
-var edit_div = "#edit_<%= @object.class.name.underscore %>_div";
-$(edit_div).dialog('close');
+$("#<%= dom_id(@object) %>").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();

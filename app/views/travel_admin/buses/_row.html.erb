@@ -1,18 +1,24 @@
-<tr id="<%= dom_id row %>" <%= 'class=\'deleted\'' if !row.status || row.status < 1 %>>
-  <td><%= row.id %></td>
-  <td><%= row.name %></td>
+<tr id="<%= dom_id row %>" <%= 'class=deleted' if !row.status || row.status < 1 %>>
+  <td class='cell-middle'><%= row.id %></td>
+  <td>
+    <%= row.name %><br />
+    <span class='text-info'><%= row.tel %></span>
+  </td>
   <td><%= row.bus_type %></td>
   <td><%= row.seats %></td>
-  <td><%= row.plate_number %></td>
-  <td><%= row.vin_number %></td>
+  <td>
+    <%= row.plate_number %><br />
+    <span class='text-info'><%= row.vin_number %></span>
+  </td>
   <td><%= row.inspection_date %></td>
-  <td><%= row.status %></td>
-  <td><%= formatted_shot_datetime(row.created_at) %></td>
+  <td><%= row.created_at %></td>
   <td class="actions">
-    <%= link_to 'Shifts', bus_path(row) + '/shifts' %> | 
-    <%= link_to_edit row %> |
-    <%= link_to 'Photos', bus_photos_path(row), {:target => 'edit-win'} %> |
-    <%= link_to 'Reserved', bus_bus_reserved_dates_path(row) %> |
-    <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Position?' %>
+    <div class='btn-group'>
+      <%= icon_link_to '', bus_path(row) + '/shifts', :icon => 'icon-list-alt', :title => 'View bus shifts table' %> 
+    <%= row_link_to_edit row %>
+    <%= row_link_to_photo bus_photos_path(row) %>
+    <%= icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'icon-ban-circle', :title => 'Bus reserved dates' %>
+    <%= row_link_to_hide row %>
+    </div>
   </td>
 </tr>

@@ -1,0 +1,18 @@
+<% if flash[:error] %>
+  alert("<%= flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+  if ($('#list_user_infos').length == 0){
+    if ($('#edit_order_div').length>0)
+      set_order_customer(<%= @object.id %>);
+    else
+      location.href = host_path + '/user_infos/<%= @object.id %>';
+  } else {
+    $("#edit_user_info_div").modal('hide');
+    $("#list_<%= class_name %>")
+      .append("<%= j render(:partial => 'row', :object => @object) %>");
+    $("#<%= dom_id(@object) %>").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();
+  }
+<% end %>

@@ -1,33 +1,27 @@
 <%= content_for :breadcrumbs do %>
-  Data &gt;
-  Schedules
+      <ul class="breadcrumb">
+        <li>Data <span class="divider">/</span></li>
+        <li class="active">Schedules</li>
+      </ul>
 <% end %>
-<div class='toolbar'>
-  <ul class="actions">
-    <li>
+<%= content_for :search_box do %>
     <%= form_for(@search, :url => schedules_path) do |f| %>
-      Departure from: <%= f.text_field :departure_date_greater_than_or_equal_to, :size => 8, :class => 'date-picker' %> 
-      to: <%= f.text_field :departure_date_less_than_or_equal_to, :size => 8, :class => 'date-picker' %>
-      <%= button 'Search' %>
+    <div class='input-prepend input-append'>
+      <span class='add-on'>From</span>
+      <%= f.text_field :departure_date_greater_than_or_equal_to, :class => 'span2 date-picker' %> 
+      <span class='add-on'>To</span>
+      <%= f.text_field :departure_date_less_than_or_equal_to, :class => 'span2 date-picker' %>
+      <%= search_button %>
+      <%= icon_link_to "Generate schedules", 'schedules/generate', :icon => 'icon-share', :class => 'btn btn-success' %>
+      <%= icon_link_to "Add schedule", new_schedule_path, :icon => 'icon-plus', :remote => true, :class => 'btn btn-info' %>
+    </div>
     <% end %>  
-    </li>
-    <li>
-    <%= button_link_to "Generate schedules", 'schedules/generate', { :icon => 'add', :id => 'generate_schedule'} %>
-    </li>
-    <li>
-      <%= button_link_to "Add schedule", new_schedule_path, { :icon => 'add', :id => 'add_schedule', :remote => true} %>
-    </li>
-
-  </ul>
-  <br class='clear' />
-</div>
-
-<div id="edit_div"></div>
-
+<% end %>
+<section>
 <%= will_paginate(@collection) %>
-<table class="data-list" id='list_schedules'>
+<table class="data-list table table-bordered table-striped" id="list_schedules">
   <thead>
-  <tr>
+  <tr class='table-header'>
       <th><%= t("schedule_id") %></th>
       <th><%= t("tour") %></th>
       <th><%= t("days") %></th>
@@ -45,4 +39,4 @@
 </tbody>
 </table>
 <%= will_paginate(@collection) %>
-
+</section>

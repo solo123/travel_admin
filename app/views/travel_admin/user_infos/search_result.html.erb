@@ -1,0 +1,12 @@
+<% @collection.each do |d| %>
+  <tr tag='<%= d.user_info_id %>'>
+    <td>
+      <%= d.name %>
+      <div class='text-inf'><%= d.email %></div>
+    </td>
+    <td>
+      <%= d.phone %>
+      <div class='text-success'><%= d.address %></div>
+    </td>
+  </tr>
+<% end %>

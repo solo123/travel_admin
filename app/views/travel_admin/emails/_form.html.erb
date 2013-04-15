@@ -1,6 +1,11 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Email# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
 <%= form_for( @object, :remote => true) do |f| %>
-  <div class="container">
-  	<div class='span-8'>
+  <div class="row">
+  	<div class='span3'>
 	  <%= f.field_container :email_address do %>
 	  	<%= f.label :email_address %><br />
 	  	<%= f.text_field :email_address %>
@@ -11,14 +16,12 @@
     Created at: <%= @object.created_at %><br />
     Updated at: <%= @object.updated_at %><br />
 	  </div>
-	  <div class='span-8 last'>
+	  <div class='span3'>
     </div>   
 	</div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
-
-
-
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>

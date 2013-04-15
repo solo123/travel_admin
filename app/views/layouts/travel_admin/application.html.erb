@@ -1,90 +1,83 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>admin-<%= @title %></title>
-  <%= favicon_link_tag %>
-<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
-<!--[if lt IE 8]>
-  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
-<![endif]-->
-
-  <link rel="stylesheet" href="/css/jquerytools/my_jquerytools.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="/css/jqueryui/ui.css" type="text/css" media="screen, projection">
-  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
-  <%= stylesheet_link_tag '/css/superfish/superfish' %>
-  <%= javascript_include_tag "admin/admin" %>
-  <%= javascript_include_tag '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/superfish/hoverIntent', '/css/superfish/superfish' %>
-  <%= csrf_meta_tags %>
-  <%= render 'travel_admin/shared/head_script' %>
-
-  <%= yield :head %>
-</head>
-<body>
-  <div id='page_container'>
-    <div id='page_head'>
-      <%= image_tag 'logo.png', :class => 'logo' %>
-      <div id="progress"><%= image_tag 'admin/progress.gif' %> <%= t(:loading) %>...</div>      
-      <%= render 'travel_admin/shared/main_menu' %>
-
-      <div id='login'>
-        <% if current_employee %>
-        Welcome <%= link_to current_employee.employee_info.nickname, employees_path %> |
-        <%= link_to 'Logout', main_app.destroy_employee_session_path, :method => :delete %>
-        <% end %>
-      </div>
-    </div>
-    <div id='page_breadcrumbs'>
-      <%= yield :breadcrumbs %>
-    </div>
-
-    <div id='page_main' class='use-sidebar sidebar-at-right'>
-      <div id='contents'>
-
-        <% if flash[:error] %>
-          <div class="flash error"><%= raw flash[:error] %></div>
-        <% end %>
-        <% if flash[:alert] %>
-          <div class="flash alert"><%= raw flash[:alert] %></div>
-        <% end %>
-        <% if notice %>
-          <div class="flash notice"><%= raw notice %></div>
-        <% end %>
-
-        <%= yield %>
-      </div>
-      <div id='sidebar'>
-        <div id='quick_go' class='zone'>
-          <table class='compact' style='width:auto;'>
-            <tr>
-              <td>Tour:</td>
-              <td><input id='qg_tour' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
-              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_tour();' %></td>
-            </tr>
-            <tr>
-              <td>Schedule:</td>
-              <td><input id='qg_schedule' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
-              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_schedule();' %></td>
-            </tr>
-            <tr>
-              <td>Order:</td>
-              <td><input id='qg_order' type='text' size=5 onkeypress='return quick_go_enter(this);'/></td>
-              <td><%= image_tag 'admin/go.gif', :onclick => 'quick_go_order();' %></td>
-            </tr>
-          </table>
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>admin-<%= @title %></title>
+    <%= favicon_link_tag %>
+    <meta name='<%= @title %>' content='width=device-width, initial-scale=1.0'>
+    <%= stylesheet_link_tag '/css/bootstrap/css/bootstrap', 'admin/admin', '/css/bootstrap/css/datepicker' %>
+    <%= javascript_include_tag 'admin/admin', '/css/bootstrap/js/bootstrap.min', '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/bootstrap/js/bootstrap-datepicker' %>
+    <%= csrf_meta_tags %>
+    <%= render 'travel_admin/shared/head_script' %>
+    <%= yield :head %>
+  </head>
+  <body>
+    <div class='navbar navbar-inverse navbar-fixed-top'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand' href='/'>Admin Home</a>
+          <%= render 'travel_admin/shared/main_menu' %>
+          <div style='float:right;color:white;'>
+            <% if current_employee %>
+              Welcome <%= link_to current_employee.employee_info.nickname, employees_path %> |
+              <%= link_to 'Logout', main_app.destroy_employee_session_path, :method => :delete %>
+            <% end %>
+          </div>
         </div>
-        <div id='todos' class='zone'></div>
-        <div id='last_logs' class='zone'></div>
       </div>
-      <a href='#' id='separator'></a>
-      <div class='clear'></div>
     </div>
 
-    <div id='page_foot'>
+    <div class='navbar navbar-fixed-top' id='top_breadcrumbs'>
+      <div class='container'>
+        <%= yield :breadcrumbs %>
+      </div>
+    </div>
+    <header class='subhead' id='toolbox'>
+    <div class='container'>
+      <div class='quick-go'>
+        <%= render 'travel_admin/shared/sidebar' %>
+      </div>
+      <div class='search-box'>
+        <%= yield :search_box %>
+      </div>
+    </div>
+    </header>
+
+    <div class='container'>
+      <%= yield %>
+      <div id='hide_contents'>
+      <% if flash[:error] %>
+        <div class="flash notice">
+          <div class='alert alert-error'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-important'>ERROR</label> <%= raw flash[:error] %>
+          </div>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="flash notice">
+          <div class='alert alert-error'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-warning'>Alert</label> <%= raw flash[:alert] %>
+          </div>
+        </div>
+        </div>
+      <% end %>
+      <% if notice %>
+        <div class="flash notice">
+          <div class='alert alert-info'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-info'>Notice</span> <%= raw notice %>
+          </div>
+        </div>
+      <% end %>
+      <div id='dialog_place_holder'></div>
+      </div>
+    </div>
+
+    <footer class='footer'>
+    <div class='container'>
       <%= render 'travel_admin/shared/footer' %>
     </div>
-  </div>
-</body>
+    </footer>
+  </body>
 </html>

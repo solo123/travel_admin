@@ -2,9 +2,11 @@
   <td><%= row.permalink %></td>
   <td><%= row.title %></td>
   <td><%= row.updated_at %></td>
-  <td class="actions">
-    <%= link_to_edit row %> |
-    <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Page?' %> |
-    <%= link_to 'Photo', page_photos_path(row), :target => 'edit-win' %>
+  <td class="cell-middle">
+    <div class='btn-group'>
+    <%= row_link_to_edit row %> 
+    <%= row_link_to_hide row %> 
+    <%= row_link_to_photo page_photos_path(row) %>
+    </div>
   </td>
 </tr>

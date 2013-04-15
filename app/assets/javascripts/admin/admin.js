@@ -4,8 +4,7 @@
 //= require jquery/jquery.cookie
 //= require jquery/jquery.timeago
 //= require jquery_ujs
-//= require jquery/jquery-ui-1.8.22.custom.min
-//= require jquery/jquery.tools.min
 //= require jquery/jquery-barcode-2.0.2.min
+//= require jquery/jquery.purr
 //= require_tree ./shared
 

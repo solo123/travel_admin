@@ -2,11 +2,13 @@ function caculate_tour_price(){
   var price = parseFloat($('#tour_tour_price_attributes_price_adult').val());
   var single_charge = parseFloat($('#tour_tour_price_attributes_single_charge').val());
   var forth_charge = parseFloat($('#tour_tour_price_attributes_forth_charge').val());
-  if (price>0 && single_charge>0 && forth_charge>0) {
+  var buy2 = parseInt($('#tour_tour_price_attributes_buy_two_get_one_free').val());
+  if (price>0 && single_charge>=0 && forth_charge>=0) {
   var price1 = price + single_charge;
   var price2 = price + price;
   var price3 = price2;
-  var price4 = price2 + forth_charge;
+  if (buy2 == 0) price3 += price;
+  var price4 = price3 + forth_charge;
 
   $('#tour_tour_price_attributes_price1').val(price1);
   $('#tour_tour_price_attributes_price2').val(price2);
@@ -24,11 +26,14 @@ function caculate_tour_price_rev(){
   if (price1>0 && price2>=price1 && price3>=price2 && price4>=price3){
     var price = price2 / 2;
     var single_charge = price1 - price;
-    var forth_charge = price4 - price2;
+    var forth_charge = price4 - price3;
+    var buy2 = 0;
+    if (price3==price2) buy2=1;
 
     $('#tour_tour_price_attributes_price_adult').val(price);
     $('#tour_tour_price_attributes_single_charge').val(single_charge);
     $('#tour_tour_price_attributes_forth_charge').val(forth_charge);
+    $('#tour_tour_price_attributes_buy_two_get_one_free').val(buy2);
   } else {
     alert('price1 ~ price4 maybe error!');
   }

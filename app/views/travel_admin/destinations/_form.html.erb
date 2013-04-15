@@ -1,14 +1,21 @@
 <%
-	if @object.new_record?
-		@object.build_description
-	end
+  @object.build_description if @object.new_record?
 %>
-<%= form_for( @object, :remote => true) do |f| %>
-	<%= render :partial => 'travel_admin/shared/description', :locals => {:f => f} %>
-	<%#= render :partial => 'city', :locals => { :f => f } %>
-	<%= render :partial => 'travel_admin/shared/status', :locals => {:f => f} %>  
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Destination# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
+  <%= form_for( @object, :remote => true) do |f| %>
+    <%= render :partial => 'travel_admin/shared/description', :locals => {:f => f} %>
+    <%#= render :partial => 'city', :locals => { :f => f } %>
+    <%= render :partial => 'travel_admin/shared/status', :locals => {:f => f} %>  
+  <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+

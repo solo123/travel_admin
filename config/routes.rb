@@ -38,7 +38,7 @@ TravelAdmin::Engine.routes.draw do
   end
   resources :user_infos do
     collection do
-      get :select, :search, :add_tel, :add_email, :add_address, :brief
+      get :select, :find, :search, :add_tel, :add_email, :add_address, :brief
     end
     resources :photos do
       get :cover, :on => :member
@@ -49,6 +49,7 @@ TravelAdmin::Engine.routes.draw do
     get :add_room, :on => :collection
     resources :remarks
   end
+  resources :emps
   resources :employee_infos do
     resources :photos do
       get :cover, :on => :member

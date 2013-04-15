@@ -6,19 +6,21 @@
 
 <%= render :partial => objects_path(@parent) + '/detail', :object => @parent %>
 
-<div id='upload_div' class='dialog-normal'></div>
-<div style='clear:both;margin-top:10px;'> 
-<%= button_link_to 'Add Photo', object_url(@parent) + '/photos/new', {:icon => 'add', :remote => true} %>
-</div>
-<div class='thumbs'>
+<section>
+<%= icon_link_to 'Add Photo', object_url(@parent) + '/photos/new', {:icon => 'icon-plus', :remote => true} %>
+</section>
+<section>
+<div class='row'>
   <% @collection.each do |p| %>
-    <div class='thumb'>
+    <div class='span2 thumb'>
       <a href='<%= p.pic.url(:large) %>'><%= image_tag p.pic.url(:thumb) %></a>
-      <div class='buttons'>
-        <%= icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'accept'} %> 
-        <%= icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'delete', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete'} %> 
+      <br />
+      <div class='btn-group'>
+        <%= icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'icon-circle-arrow-up', :class => 'btn btn-mini', :title => 'Set as this destination title icon'} %> 
+        <%= icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'icon-remove', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete', :class => 'btn btn-mini', :title => 'Delete this photo'} %> 
      </div>
     </div>
   <% end %>
-  <div class='clear'></div>
 </div>
+</section>
+

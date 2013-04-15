@@ -1,14 +1,15 @@
-  <tr id="<%= dom_id row %>" <%= 'class=\'deleted\'' if !row.status || row.status < 1 %>>
-      <td><%= row.id %></td>
-      <td><%= row.amount %></td>
-      <td><%= row.refund_order_id %></td>
-      <td><%= row.pre_voucher_id %></td>
-      <td><%= row.operator_id %></td>
-      <td><%= row.expire_date %></td>
-      <td><%= row.updated_at %></td>
-      <td><%= row.status %></td>
-    <td class="actions">
-      <%= link_to_edit row %> |
-      <%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Voucher?' %>
-    </td>
-  </tr>
+<tr id="<%= dom_id row %>" <%= 'class=\'deleted\'' if !row.status || row.status < 1 %>>
+  <td class='cell-middle'><%= row.id %></td>
+  <td><%= row.amount %></td>
+  <td><%= row.order_id %></td>
+  <td><%= row.employee_info_id %></td>
+  <td><%= row.expire_date %></td>
+  <td><%= row.updated_at %></td>
+  <td><%= row.status %></td>
+  <td class="cell-middle">
+    <div class='btn-group'>
+      <%= row_link_to_edit row %>
+      <%= row_link_to_hide row %>
+    </div>
+  </td>
+</tr>

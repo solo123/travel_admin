@@ -1,0 +1,19 @@
+<div class='sidebar'>
+  Schedule:
+  <div class='input-append'>
+    <input id='qg_schedule' type='text' onkeypress='return quick_go_enter(this);' class='span1' />
+    <button class='btn' type='button' onclick='quick_go_schedule();'><i class='icon-search'></i></button>
+  </div>
+  Order:
+  <div class='input-append'>
+    <input id='qg_order' type='text' onkeypress='return quick_go_enter(this);' class='span1' />
+    <button class='btn' type='button' onclick='quick_go_order();'><i class='icon-search'></i></button>
+  </div>
+  User:
+  <div class='input-append'>
+    <input id='qg_user' type='text' onkeypress='return quick_go_enter(this);' class='span1' />
+    <%= icon_link_to '', find_user_infos_path, :remote => true, :icon => 'icon-search' %>
+  </div>
+  <div id='todos' class='zone'></div>
+  <div id='last_logs' class='zone'></div>
+</div>

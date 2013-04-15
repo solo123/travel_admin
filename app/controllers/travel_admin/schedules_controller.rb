@@ -83,6 +83,13 @@ module TravelAdmin
         flash[:notice] = "Add new Schedule #{@object.id}"
       end
     end
+    def show
+      @object = Schedule.find(params[:id])
+      if @object.assignments.length > 0
+        redirect_to schedule_schedule_assignment_path(@object, @object.assignments.first)
+        return
+      end
+    end
 
   end
 end

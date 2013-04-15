@@ -2,4 +2,4 @@
   <%= render :partial => 'travel_admin/employee_infos/detail_info', :object => detail %>
 </div>
 <br />
-<%= button_link_to 'Edit', edit_info_employee_info_path(detail), {:icon => 'add', 'data-remote' => true} %>
+<%= icon_link_to 'Edit', edit_info_employee_info_path(detail), :icon => 'icon-pencil', :remote => true %>

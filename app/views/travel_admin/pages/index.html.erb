@@ -1,21 +1,20 @@
 <%= content_for :breadcrumbs do %>
-  Data &gt;
-  Pages
+      <ul class="breadcrumb">
+        <li>Data <span class="divider">/</span></li>
+        <li class="active">Pages</li>
+      </ul>
 <% end %>
-<div class="toolbar">
-  <ul class="actions">
-    <li>
-      <%= button_link_to 'New Page', new_page_path, {:remote => true, :icon => 'add'} %>
-    </li>
-  </ul>
-  <br class="clear">
-</div>
-
+<%= content_for :search_box do %>
+  <%= link_to_new 'New Page', new_page_path %>
+<% end %>
+<section>
 <h1><%= "Pages List" %></h1>
-
-<table class="data-list" id='list_pages'>
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
+</div>
+<table class="data-list table table-bordered table-striped" id="list_pages">
   <thead>
-  <tr>
+  <tr class='table-header'>
       <th>permalink</th>
       <th>title</th>
       <th>updated</th>
@@ -26,5 +25,7 @@
 	<%= render :partial => 'row', :object => page %>
 <% end %>
 </table>
-<%= will_paginate(@collection) %>
-
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
+</div>
+</section>

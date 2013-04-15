@@ -51,10 +51,10 @@ module TravelAdmin
         @search = object_name.classify.constantize.metasearch(params[:search])
         pages = cfg.get_config(:admin_list_per_page).to_i
         pages = 20 unless pages > 1
-        @collection = @search.page(params[:page]).per_page(pages)
+        @collection = @search.paginate(:page => params[:page], :per_page => pages)
       end 
       def load_object
-        @object = object_name.classify.constantize.find(params[:id])
+        @object = object_name.classify.constantize.find_by_id(params[:id])
       end
       def object_name
         controller_name #.singularize

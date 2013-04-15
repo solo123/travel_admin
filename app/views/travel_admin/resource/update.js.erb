@@ -2,18 +2,18 @@
   alert("<%= flash[:error] %>");
   <% flash.discard %>
 <% else %>
-
-
   if ($('#<%= dom_id(@object) %>').length == 0){
 	  location.reload(true);
   } else {
-    $("#<%= dom_id(@object) %>").replaceWith("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
-  }
-
-  $("#edit_<%= @object.class.name.underscore %>_div").dialog('close');
-
-  var after_function_name = "<%= @object.class.name.underscore %>_after_updated";
-  if (typeof(window[after_function_name]) == 'function')
+    $("#edit_<%= @object.class.name.underscore %>_div").modal('hide');
+    $("#<%= dom_id(@object) %>")
+      .replaceWith("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
+    $("#<%= dom_id(@object) %>").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();
+  
+    var after_function_name = "<%= @object.class.name.underscore %>_after_updated";
+    if (typeof(window[after_function_name]) == 'function')
     eval(after_function_name + "(<%= @object.id %>)");
-
+  }
 <% end %>

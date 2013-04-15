@@ -1,34 +1,33 @@
-<div class="schedule-title">
-  <div class='s-title-banner'>
-    <div class="s-id">
-      <%= s.id %><br />
+<section>
+<div class="well">
+  <div class='row'>
+    <div class="span2 alert-success cell-middle">
+      <h1><%= s.id %></h1>
     </div>
-    <div class="s-date">
+    <div class="span7">
+      <h4><%= s.tour.description.title_cn%> <%= s.tour.days %>日游</h4>
+      <h4><%= s.tour.description.title %></h4>
+    </div>
+    <div class="span2" style='text-align:right;'>
       出發: <b><%= date_tag s.departure_date %></b><br />
       返回: <b><%= date_tag s.return_date %></b>
     </div>
 
-    <div class="s-title">
-      <%= s.tour.description.title_cn%> <%= s.tour.days %>日游<br />
-      <%= s.tour.description.title %> 
-    </div>
-    <div class='clear'></div>
   </div>
-  <div class='s-prompt-banner'>
-    <div class="s-price">
+  <div class='row'>
+    <div class="span6">
       价格: 
       1人:<span class='strong'><%= s.price.price1 %></span> / 
       2人:<span class='strong'><%= s.price.price2 %></span> / 
       3人:<span class='strong'><%= s.price.price3 %></span> / 
       4人:<span class='strong'><%= s.price.price4 %></span> 
-      <%= small_button_link_to 'Edit', object_url(@object) + '/edit', {:remote => true} %>
+      <%= icon_link_to 'Edit', object_url(s) + '/edit', :remote => true, :icon => 'icon-pencil', :class => 'btn btn-mini' %>
     </div>
-    <div class="s-info">
+    <div class="span5" style='text-align:right;'>
       预定人数: <span class='strong'><%= s.book_customers %></span> / 
       已付款人数:<span class='strong'><%= s.actual_customers %></span> / 
       客房总数:<span class='strong'><%= s.actual_rooms %></span>
     </div>
-    <div class='clear'></div>
   </div>
 </div>
-
+</section>

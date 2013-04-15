@@ -1,3 +1,10 @@
-$('#schedule_title').html("<%= j render( :partial => 'schedule_title', :locals => {:s => @object}) %>");
-$("#edit_div").dialog('close');
-
+<% if flash[:error] %>
+  alert("<%= flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+    $("#edit_schedule_div").modal('hide');
+    $('#schedule_title').html("<%= j render( :partial => 'schedule_title', :locals => {:s => @object}) %>");
+    $("#schedule_title").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();
+<% end %>

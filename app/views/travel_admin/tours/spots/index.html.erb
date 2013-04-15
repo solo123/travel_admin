@@ -1,23 +1,20 @@
 <%= content_for :breadcrumbs do %>
-	<%= link_to '<< Back', 'javascript:history.go(-1)' %> |
-	<%= link_to 'Tours', tours_path %> &gt;
-	&gt; Routes
-<% end %>
-
-<div class='toolbar'>
-  <ul class='actions'>
-    <li id="new_spot_link">
-    <%= button_link_to 'Add Spot', new_tour_spot_path, {:remote => true, :icon => 'add', :id => 'add_spot' } %>    
-      </li>
+  <ul class="breadcrumb">
+	  <li><%= link_to 'Go Back', 'javascript:history.go(-1)' %><span class="divider">/</span></li>
+	  <li><%= link_to 'Tours', tours_path %><span class="divider">/</span></li>
+    <li class="active">Routes</li>
   </ul>
-  <br class='clear' />
+<% end %>
+<%= content_for :search_box do %>
+  <%= icon_link_to 'Add Spot', new_tour_spot_path, {:remote => true, :icon => 'icon-plus', :class => 'btn btn-success' } %>    
+<% end %>
+<div class='row'>
+  <% tour = Tour.find(params[:tour_id]) %>
+  <h3>
+    <%= raw "#{tour.description.title}<br />#{tour.description.title_cn}" %>
+  </h3>
+  <%= image_tag tour.title_photo.pic.url(:small), :id => 'tour_icon' if tour.title_photo %>
 </div>
-
-<div class='route-title'>
-  <%= render 'route_title' %>
-</div>
-
-<div id="edit_div" class='dialog-normal'></div>
 
 <div id="list_spots">
 <% @collection.each do |sp| %>

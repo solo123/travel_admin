@@ -1,33 +1,32 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Add Bus</h3>
+</div>
+<div class="modal-body">
 <%= form_for( [@schedule, @object], :remote => true) do |f| %>
   <div>
-      <%= f.field_container :bus do %>
-        <%= f.label :bus %><br />
+        <%= f.label :bus %>
         <%= f.select(:bus_id, @object.valid_buses_list, {:include_blank => true}) %>  	
-      <% end %>
   </div>
-  <div class='container'>
-    <div class='span-8'>
-      <%= f.field_container :driver_id do %>
-        <%= f.label :driver_id %><br />
+  <div class='row'>
+    <div class='span4'>
+        <%= f.label :driver_id %>
         <%= f.select :driver_id, [] %>  	
-      <% end %>
-      <%= f.field_container :driver_assistance_id do %>
-        <%= f.label :driver_assistance_id %><br />
+        <%= f.label :driver_assistance_id %>
         <%= f.select :driver_assistance_id, [] %>  	
-      <% end %>
     </div>
-    <div class='span-8 last'>
-      <%= f.field_container :tour_guide_id do %>
-        <%= f.label :tour_guide_id %><br />
+    <div class='span4'>
+        <%= f.label :tour_guide_id %>
         <%= f.select :tour_guide_id, [] %>  	
-      <% end %>
-      <%= f.field_container :tour_guide_assistance_id do %>
-        <%= f.label :tour_guide_assistance_id %><br />
+        <%= f.label :tour_guide_assistance_id %>
         <%= f.select :tour_guide_assistance_id, [] %>  	
-      <% end %>
     </div>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+

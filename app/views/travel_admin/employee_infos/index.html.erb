@@ -1,26 +1,27 @@
-<div class='toolbar'>
-  <ul class='actions'>
-    <li>
+<%= content_for :breadcrumbs do %>
+      <ul class="breadcrumb">
+        <li>Data <span class="divider">/</span></li>
+        <li class="active">Employees</li>
+      </ul>
+<% end %>
+<%= content_for :search_box do %>
       <%= form_for( @search, :url => employee_infos_path ) do |f| %>
       <%= f.select :company_id_eq, Company.all.map { |c| [c.short_name, c.id] }.insert(0, ['All Company', nil]), {}, :class => 'data-field', :onchange => 'this.form.submit()'  %>
       <%= f.select :status_eq, [['All Status', nil],['active', 1], ['leaved', 0]],{}, :class => 'data-field', :onchange => 'this.form.submit()' %>
+    <div class='input-append'>
       <%= f.text_field :nickname_contains, :size => 15, :class => 'data-field' %>
-      <%= button 'search' %>
+      <%= search_button %>
+      <%= link_to_new 'Add Employee', new_employee_info_path %>
+    </div>
       <% end %>
-    </li>
-    <li>
-    <%= button_link_to 'Add Employee', new_employee_info_path, {:remote => true, :icon => 'add'} %>
-    </li>
-  </ul>
-  <br class='clear' />
+<% end %>
+<section>
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
 </div>
-
-<div id="edit_div" class='dialog-normal'></div>
-
-<%= will_paginate(@collection) %>
-<table class="data-list" id='list_employee_infos'>
+<table class="data-list table table-bordered table-striped" id="list_employee_infos">
   <thead>
-  <tr>
+  <tr class='table-header'>
       <th><%= t("id") %></th>
       <th><%= t("Company") %></th>
       <th><%= t("name") %></th>
@@ -37,6 +38,16 @@
 <% end %>
   </tbody>
 </table>
-<%= will_paginate(@collection) %>
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="/home">Home</a>
+  </li>
+  <li><a href="#">...</a></li>
+  <li><a href="#">...</a></li>
+</ul>
 
 

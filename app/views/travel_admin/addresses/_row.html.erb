@@ -1,0 +1,16 @@
+<tr id="<%= dom_id row%>">
+  <td class='cell-middle'><%= row.id %></td>
+  <td><%= row.address_data_type %><br />
+    <%= row.address_data_id %></td>
+  <td><%= row.address1 %><br />
+    <%= row.address2 %></td>
+  <td><%= row.zipcode %></td>
+  <td><%= row.city %>
+  <td><%= row.created_at %><br />
+    <%= row.updated_at %></td>
+  <td class='cell-middle'>
+      <%= row_link_to_edit row %>
+  </td>
+</tr>
+
+

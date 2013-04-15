@@ -1,0 +1,25 @@
+/* Footer
+-------------------------------------------------- */
+.footer {
+  text-align: center;
+  padding-top: 30px 0;
+  margin-top: 70px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #c8e0c0;
+
+  p {
+  margin-bottom: 0;
+  color: #777;
+  }
+  .footer-links {
+    margin: 10px 0;  
+    li {
+      display: inline;
+      padding: 0 2px;
+    }
+    li:first-child {
+      padding-left: 0;
+    }
+  }
+}
+

@@ -1,39 +1,70 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title><%#= cfg.get_config(:site_name) %></title>
-  <%= favicon_link_tag %>
-<link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
-<!--[if lt IE 8]>
-  <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
-<![endif]-->
-
-  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
-  <%= javascript_include_tag "admin/admin" %>
-  <%= csrf_meta_tags %>
-
-  <%= yield :head %>
-</head>
-<body>
-
-  <div id='page_container'>
-    <div id='page_head'>
-      <%= image_tag 'logo.png', :class => 'logo' %>
-    </div>
-
-    <div id='page_main'>
-      <div class='contents'>
-        <div class='login-div'>
-    <%#= flash_messages %>
-          <%= yield %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>admin-<%= @title %></title>
+    <%= favicon_link_tag %>
+    <meta name='<%= @title %>' content='width=device-width, initial-scale=1.0'>
+    <%= stylesheet_link_tag '/css/bootstrap/css/bootstrap', 'admin/admin' %>
+    <%= javascript_include_tag 'admin/admin', '/css/bootstrap/js/bootstrap.min' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class='navbar navbar-inverse navbar-fixed-top'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand' href='/'>Admin Home</a>
+          <div style='float:right;color:white;'>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id='page_foot'>
+    <div class='navbar navbar-fixed-top' id='top_breadcrumbs'>
+      <div class='container'>
+      </div>
     </div>
-  </div>
-</body>
+    <header class='subhead' id='toolbox'>
+    <div class='container'>
+      <div class='quick-go'>
+      </div>
+      <div class='search-box'>
+      </div>
+    </div>
+    </header>
+
+    <div class='container'>
+      <%= yield %>
+      <div id='hide_contents'>
+      <% if flash[:error] %>
+        <div class="flash notice">
+          <div class='alert alert-error'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-important'>ERROR</label> <%= raw flash[:error] %>
+          </div>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="flash notice">
+          <div class='alert alert-error'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-warning'>Alert</label> <%= raw flash[:alert] %>
+          </div>
+        </div>
+        </div>
+      <% end %>
+      <% if notice %>
+        <div class="flash notice">
+          <div class='alert alert-info'>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <span class='label label-info'>Notice</span> <%= raw notice %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <footer class='footer'>
+    <div class='container'>
+    </div>
+    </footer>
+  </body>
 </html>

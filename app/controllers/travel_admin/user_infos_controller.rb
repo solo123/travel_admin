@@ -1,26 +1,29 @@
 module TravelAdmin
   class UserInfosController < ResourceController
-    layout nil
-    layout 'admin', :except => [:search, :brief]
+
+    def find
+      @no_log = 1
+    end
 	  def search
       @no_log = 1
 	    r = []
-      Telephone.where('tel like ?', "%#{params[:term]}%").limit(100).order(:tel).each do |tel|
-        if tel.tel_number_type == 'UserInfo'
-          u = tel.tel_number
-          r << {:value => "#{u.id}: #{u.full_name}, tel:#{tel.tel}", :id => u.id}
-        end
+      if params[:q] && params[:q].length > 2
+      Telephone.where('tel like ?', "%#{params[:q]}%").where(:tel_number_type => 'UserInfo').limit(100).order(:tel).each do |tel|
+        u = tel.tel_number
+        r << UserResult.new(u.id, u.full_name, tel.tel, u.emails.first, u.addresses.first)
       end
-	    UserInfo.where("full_name like ?", "%#{params[:term]}%").limit(100 - r.count).order('full_name').each do |t|
-	      r << {:value => "#{t.id}: #{t.full_name}", :id => t.id}
+	    UserInfo.where("full_name like ?", "%#{params[:q]}%").limit(100 - r.count).order('full_name').each do |u|
+        r << UserResult.new(u.id, u.full_name, u.telephones.first, u.emails.first, u.addresses.first)
 	    end if r.count < 100
-      Email.where('email_address like ?', "%#{params[:term]}%").limit(100 - r.count).each do |em|
+      Email.where('email_address like ?', "%#{params[:q]}%").where(:email_data_type => 'UserInfo').limit(100 - r.count).each do |em|
         if em.email_data_type == 'UserInfo'
           u = em.email_data
-          r << {:value => "#{u.id}: #{u.full_name}, email:#{em.email_address}", :id => u.id}
+          r << UserResult.new(u.id, u.full_name, u.telephones.first, em.email_address, u.addresses.first)
         end
       end if r.count < 100
-	    render :text => r.to_json
+      end
+      @collection = r
+	    render 'search_result', :layout => nil
 	  end
     def brief
       @no_log = 1

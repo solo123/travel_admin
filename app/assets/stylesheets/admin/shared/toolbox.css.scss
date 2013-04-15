@@ -1,0 +1,17 @@
+#toolbox{
+  padding-top: 72px;
+  position: relative;
+  background-color: #c8e0c0;
+}
+.breadcrumb{
+  padding: 4px 0;
+  margin: 0;
+  font-size: 85%;
+  background-color: transparent;
+  & > .active { color:black; }
+  & > li { text-shadow: none; }
+}
+#top_breadcrumbs{
+  top:41px; background-color:#c8e0c0;
+  z-index: 10;
+}

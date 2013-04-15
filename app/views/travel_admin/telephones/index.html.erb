@@ -1,41 +1,37 @@
 <%= content_for :breadcrumbs do %>
-  Orders &gt;
-  Users &gt; Emails
-<% end %>
-<div class="toolbar">
-  <ul class="actions">
-  	<li>
-			<%= form_for( @search, :url => telephones_path ) do |f| %>
-  		<%= f.label :tel_contains, "Tel" %> <%= f.text_field :tel_contains, :size => 15 %> &nbsp;
-  		<%= button 'Search' %>
-			<% end %>
-  	</li>
+  <ul class="breadcrumb">
+    <li>Orders <span class="divider">/</span></li>
+    <li><%= link_to 'Users', user_infos_path %> <span class="divider">/</span></li>
+    <li class="active">Phones</li>
   </ul>
-  <br class="clear">
-</div>
-
-<div id="edit_div" class='dialog-normal'></div>
-
-<div class='data-pager'>
-<%= will_paginate(@collection) %>
-</div>
-<table class="data-list" id="list_emails">
-  <thead>
-  <tr>
-    <th>id</th>
-	<th>email</th>
-	<th>data type</th>
-  <th>data id</th>
-	<th>created_at</th>
-  <th>updated_at</th>
-  <th>op</th>
-  </tr>
-</thead>
-<% @collection.each do |d| %>
-	<%= render :partial => 'row', :object => d %>
 <% end %>
+<%= content_for :search_box do %>
+  <%= form_for( @search, :url => telephones_path ) do |f| %>
+    <div class='input-prepend input-append'>
+      <span class='add-on'>Tel</span>
+      <%= f.text_field :tel_contains %> 
+      <%= search_button %>
+    </div>
+  <% end %>
+<% end %>
+<section>
+<%= will_paginate(@collection) %>
+<table class="data-list table table-bordered table-striped" id="list_telephones">
+  <thead>
+    <tr class='table-header'>
+      <th>id</th>
+      <th>data type</th>
+      <th>data id</th>
+      <th>type</th>
+      <th>Phone</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th>op</th>
+    </tr>
+  </thead>
+  <% @collection.each do |d| %>
+    <%= render :partial => 'row', :object => d %>
+  <% end %>
 </table>
 <%= will_paginate(@collection) %>
-
-
-
+</section>

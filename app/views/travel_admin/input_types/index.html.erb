@@ -1,35 +1,36 @@
-<div class='toolbar'>
-  <ul class='actions'>
-  	<li>
-			<%= form_for(@search, :url => input_types_path ) do |f| %>
-        <%= f.select :type_name_eq, InputType.group(:type_name).map{|t| [t.type_name, t.type_name]}.insert(0, ['Select Type', '']), {}, :class => 'data-field', :onchange => 'this.form.submit();' %>
-			<% end %>
-  	</li>
-    <li>
-    <%= button_link_to 'Add Input Type', new_input_type_path, {:remote => true, :icon => 'add', :id => 'new_input_type'} %>
-    </li>
+<%= content_for :breadcrumbs do %>
+  <ul class="breadcrumb">
+    <li>Manage <span class="divider">/</span></li>
+    <li class="active">Input types</li>
   </ul>
-  <br class='clear' />
-</div>
-
-<h1><%= raw "#{t("actions.listing")} #{t("input_types")}" %></h1>
-<div id='edit_div' class='dialog-normal'></div>
-<table id='list_input_types' class="data-list">
+<% end %>
+<%= content_for :search_box do %>
+  <%= form_for(@search, :url => input_types_path ) do |f| %>
+    <div class='input-append'>
+      <%= f.select :type_name_eq, InputType.group(:type_name).map{|t| [t.type_name, t.type_name]}.insert(0, ['Select Type', '']), {}, :class => 'span2', :onchange => 'this.form.submit();' %>
+      <%= link_to_new 'Add Input Type', new_input_type_path %>
+    </div>
+  <% end %>
+<% end %>
+<section>
+<%= will_paginate(@collection) %>
+<table class="data-list table table-bordered table-striped" id="list_input_types">
   <thead>
-    <tr>
-        <th><%= t("id") %></th>
-        <th><%= t("type_name") %></th>
-        <th><%= t("type_text") %></th>
-        <th><%= t('type_value') %></th>
-        <th>status</th>
-        <th><%= t('created_at') %></th>
-        <th><%= t('updated_at') %></th>
-        <th><%= t('op') %></th>
+    <tr class='table-header'>
+      <th><%= t("id") %></th>
+      <th><%= t("type_name") %></th>
+      <th><%= t("type_text") %></th>
+      <th><%= t('type_value') %></th>
+      <th>status</th>
+      <th><%= t('created_at') %></th>
+      <th><%= t('updated_at') %></th>
+      <th><%= t('op') %></th>
     </tr>
   </thead>
-<% @collection.each do |c| %>
-  <%= render :partial => 'row', :object => c %>
-<% end %>
+  <% @collection.each do |c| %>
+    <%= render :partial => 'row', :object => c %>
+  <% end %>
 </table>
 <%= will_paginate(@collection) %>
+</section>
 

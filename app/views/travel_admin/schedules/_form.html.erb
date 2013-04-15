@@ -1,41 +1,47 @@
-<%= form_for( @object, :remote => true) do |f| %>
-  <%= f.fields_for :price do |fp| %>
-  <div class="container">
-  	<div class='span-8'>
-	  <div>
-	  	<%= fp.label :price_adult %><br />
-	  	<%= fp.text_field :price_adult %>
-	  </div>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Schedule# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
+  <%= form_for( @object, :remote => true) do |f| %>
+    <%= f.fields_for :price do |fp| %>
+      <div class="row">
+        <div class='span4'>
+          <div>
+            <%= fp.label :price_adult %>
+            <%= fp.text_field :price_adult %>
+          </div>
+          <div>
+            <%= fp.label :price_child %>
+            <%= fp.text_field :price_child %>
+          </div>
+        </div>
+        <div class='span4'>
+          <div>
+            <%= fp.label :price1 %>
+            <%= fp.text_field :price1 %>
+          </div>
+          <div>
+            <%= fp.label :price2 %>
+            <%= fp.text_field :price2 %>
+          </div>
+          <div>
+            <%= fp.label :price3 %>
+            <%= fp.text_field :price3 %>
+          </div>	  
 
-	  <div>
-	  	<%= fp.label :price1 %><br />
-	  	<%= fp.text_field :price1 %>
-	  </div>
-
-	  <div>
-	  	<%= fp.label :price3 %><br />
-	  	<%= fp.text_field :price3 %>
-    </div>	  
-	  </div>
-	  <div class='span-8 last'>
-	  <div>
-	  	<%= fp.label :price_child %><br />
-	  	<%= fp.text_field :price_child %>
-	  </div>
-
-	  <div>
-	  	<%= fp.label :price2 %><br />
-	  	<%= fp.text_field :price2 %>
-	  </div>
-
-	  <div>
-	  	<%= fp.label :price4 %><br />
-	  	<%= fp.text_field :price4 %>
-	  </div>	  
-	  </div>
-	</div>
+          <div>
+            <%= fp.label :price4 %>
+            <%= fp.text_field :price4 %>
+          </div>	  
+        </div>
+      </div>
+    <% end %>
   <% end %>
-  <div class="actions">
-    <%= f.submit 'Update Price' %>
-  </div>
-<% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+

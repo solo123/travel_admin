@@ -1,64 +1,44 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Bus# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
 <%= form_for( @object, :remote => true) do |f| %>
-  <div class="container">
-  	<div class='span-8'>
-	  <%= f.field_container :name do %>
-	  	<%= f.label :name %><br />
+  <div class="row">
+  	<div class='span4'>
+	  	<%= f.label :name %>
 	  	<%= f.text_field :name %>
-	  <% end %>
-    <%= f.field_container :company_id do %>
-      <%= f.label :company %><br />
-      <%= f.select(:company_id, Company.all.collect{|c| [c.short_name, c.id]}, {:prompt => 'Select Company'}) %>
-    <% end %>
-      <%= f.field_container :bus_type do %>
-        <%= f.label :bus_type %><br />
-        <%= f.select(:bus_type, InputType.get_list('bus').collect{|d| [d.type_text, d.type_value]}, {:prompt => 'Select Bus Type'}) %>  	
-      <% end %>
-	  <%= f.field_container :seats do %>
-	  	<%= f.label :seats %><br />
-	  	<%= f.text_field :seats %>
-	  <% end %>
-	  <%= f.field_container :seats_per_row do %>
-	  	<%= f.label :seats_per_row %><br />
-	  	<%= f.text_field :seats_per_row %>
-	  <% end %>
-	  <%= f.field_container :passengeway do %>
-	  	<%= f.label :passengeway %><br />
-	  	<%= f.text_field :passengeway %>
-	  <% end %>
-	  <%= f.field_container :reserved_seats do %>
-	  	<%= f.label :reserved_seats %><br />
-	  	<%= f.text_field :reserved_seats %>
-	  <% end %>
-	  </div>
-	  <div class='span-8 last'>
-	  <%= f.field_container :contact_name do %>
-	  	<%= f.label :contact_name %><br />
-	  	<%= f.text_field :contact_name %>
-	  <% end %>
-  <%= f.field_container :tel do %>
-	  	<%= f.label :tel %><br />
-	  	<%= f.text_field :tel %>
-	  <% end %>
 
-	  <%= f.field_container :plate_number do %>
-	  	<%= f.label :plate_number %><br />
+
+        <%= f.label :bus_type %>
+        <%= f.select(:bus_type, InputType.get_list('bus').collect{|d| [d.type_text, d.type_value]}, {:prompt => 'Select Bus Type'}) %>  	
+	  	<%= f.label :seats %>
+	  	<%= f.text_field :seats %>
+	  	<%= f.label :seats_per_row %>
+	  	<%= f.text_field :seats_per_row %>
+	  	<%= f.label :passengeway %>
+	  	<%= f.text_field :passengeway %>
+	  	<%= f.label :reserved_seats %>
+	  	<%= f.text_field :reserved_seats %>
+	  </div>
+	  <div class='span4'>
+      <%= f.label :company %>
+      <%= f.select(:company_id, Company.all.collect{|c| [c.short_name, c.id]}, {:prompt => 'Select Company'}) %>
+	  	<%= f.label :contact_name %>
+	  	<%= f.text_field :contact_name %>
+	  	<%= f.label :tel %>
+	  	<%= f.text_field :tel %>
+	  	<%= f.label :plate_number %>
 	  	<%= f.text_field :plate_number %>
-	  <% end %>
-	  <%= f.field_container :vin_number do %>
-	  	<%= f.label :vin_number %><br />
+	  	<%= f.label :vin_number %>
 	  	<%= f.text_field :vin_number %>
-	  <% end %>
-	  <%= f.field_container :inspection_date do %>
-	  	<%= f.label :inspection_date %><br />
+	  	<%= f.label :inspection_date %>
       <%= f.text_field :inspection_date, :value => formatted_date(@object.inspection_date), :class => 'date-picker' %>
-    <% end %>
-	  <%= render :partial => 'travel_admin/shared/status', :locals => {:f => f} %>  
     </div>   
 	</div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
-
-
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>

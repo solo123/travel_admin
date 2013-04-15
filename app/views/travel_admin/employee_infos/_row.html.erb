@@ -8,7 +8,9 @@
       <td><%= row.default_email %></td>
       <td><%= row.status %></td>
     <td class="actions">
-      <%= link_to_edit row %> |
-      <%= link_to 'Photos', employee_info_photos_path(row), {:target => 'edit-win'} %>
+    <div class='btn-group'>
+      <%= row_link_to_edit row %>
+      <%= row_link_to_photo employee_info_photos_path(row) %>
+  </div>
     </td>
   </tr>

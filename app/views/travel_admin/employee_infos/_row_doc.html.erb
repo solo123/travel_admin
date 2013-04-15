@@ -1,6 +1,6 @@
   <% tt = TypeText.instance %>
   <tr id="<%= dom_id row_doc %>" <%= 'class=deleted' unless row_doc.status && row_doc.status == 1 %>>
-      <td><%= row_doc.id %></td>
+      <td class='cell-middle'><%= row_doc.id %></td>
       <td><%= row_doc.company_id %></td>
       <td><%= row_doc.nickname %></td>
       <td><%= tt.get_texts('roles', row_doc.roles) %></td>
@@ -9,8 +9,8 @@
       <td><%= row_doc.ssn %></td>
       <td><%= row_doc.employee.sign_in_count if row_doc.employee %></td>
       <td><%= row_doc.status %></td>
-    <td class="actions">
-      <%= link_to 'Detail', employee_info_photos_path(row_doc), {:target => 'edit-win'} %>
+    <td class="cell-middle">
+      <%= icon_link_to 'Detail', employee_info_photos_path(row_doc), :icon => 'icon-list-alt', :target => 'edit-win' %>
     </td>
   </tr>
 

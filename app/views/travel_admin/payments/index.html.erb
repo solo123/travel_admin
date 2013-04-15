@@ -1,21 +1,14 @@
-<div class="toolbar">
-  <ul class="actions">
-    <li>
-      <%= form_for( @search, :url => payments_path ) do |f| %>
-      <%= button 'Search' %>
-      <% end %>
-    </li>
-    <li>
-      <%= button_link_to 'Pay', 'payments/new', {:icon => 'add', 'data-remote' => true} %>
-    </li>
-  </ul>
-  <br class="clear">
-</div>
-<h1><%= t("list_payments") %></h1>
-<div id='dialog' class='dialog-normal'></div>
-<table class="data-list" id='list_payments'>
+<%= content_for :breadcrumbs do %>
+      <ul class="breadcrumb">
+        <li>Accounts <span class="divider">/</span></li>
+        <li class="active">Payments</li>
+      </ul>
+<% end %>
+<section>
+<%= will_paginate(@collection) %>
+<table class="data-list table table-bordered table-striped" id="list_payments">
   <thead>
-    <tr>
+    <tr class='table-header'>
       <th>id</th>
       <th>bill_type</th>
       <th>bill_id</th>

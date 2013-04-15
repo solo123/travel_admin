@@ -2,31 +2,31 @@
 	@object.build_description if !@object.description
 %>
 
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Route# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
 <%= form_for([@tour, @object], :remote => true) do |f| %>
-  <div class="container">
-  	<%= f.fields_for :destination_id do %>
-	    <%= f.label :destination_id %> : 
-   		<%= f.select(:destination_id, Destination.visible.collect{|d| [d.description.title, d.id]}, {:prompt => 'Select Destination'}) %>  	
-   	<% end %>
-	</div>
-
-  <div class="container">
-	  <div class='span-8'>
-    	<%= f.fields_for :visit_day do %>
-		    <%= f.label :visit_day %><br />
-    		<%= f.text_field :visit_day %>
-    	<% end %>
+  <div class="row">
+    <div class='span4'>
+	    <%= f.label :destination_id %> 
+      <%= f.select(:destination_id, Destination.visible.collect{|d| [d.description.title, d.id]}, {:prompt => 'Select Destination'}) %>  	
+    </div>
+	  <div class='span2'>
+		    <%= f.label :visit_day %>
+        <%= f.text_field :visit_day, :class => 'span1' %>
 	  </div>
-	  <div class='span-8 last'>
-      <%= f.fields_for :visit_order do %>
-        <%= f.label :visit_order %><br />
-        <%= f.text_field :visit_order %>
-      <% end %>	
+	  <div class='span2'>
+        <%= f.label :visit_order %>
+        <%= f.text_field :visit_order, :class => 'span1' %>
     </div>
 	</div>
 	<%= render :partial => 'travel_admin/shared/description', :locals => {:f => f} %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>

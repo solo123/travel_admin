@@ -1,6 +1,10 @@
-<div class='container'>
-  <div class='span-2'><%= f.number_field :num_adult, :in => 1..4 %></div>
-  <div class='span-2'><%= f.number_field :num_child, :size => 1, :in => 0..4 %></div>
-  <div class='span-2'>0.00</div>
-  <div class='span-2 last'><%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %><%= f.label :_destroy, 'Del'%></div>
+<div class='row'>
+  <div class='span1'><%= f.number_field :num_adult, :in => 1..4, :class => 'span1' %></div>
+  <div class='span1'><%= f.number_field :num_child, :size => 1, :in => 0..4, :class => 'span1' %></div>
+  <div class='span1' style='text-align:center'>0.00</div>
+  <div class='span1'>
+    <label class='checkbox inline'>
+      <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %> Del
+    </label>
+  </div>
 </div>

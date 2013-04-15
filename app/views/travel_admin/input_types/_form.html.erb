@@ -1,29 +1,38 @@
-<%= form_for(@object, :remote => true) do |f| %>
-  <div class="container">
-  	<div class='span-8'>
-	  <%= f.field_container :type_name do %>
-	  	<%= f.label :type_name %><br />
-      <%= f.text_field :type_name %>
-	  <% end %>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Input type# <%= @object.id %></h3>
+</div>
+<div class="modal-body">
+  <%= form_for(@object, :remote => true) do |f| %>
+    <div class="row">
+      <div class='span4'>
+        <%= f.field_container :type_name do %>
+          <%= f.label :type_name %><br />
+          <%= f.text_field :type_name %>
+        <% end %>
 
-	  <%= f.field_container :status do %>
-	  	<%= f.label :status %><br />
-	  	<%= f.text_field :status %>
-	  <% end %>
-	  </div>
-	  <div class='span-8 last'>
-	  <%= f.field_container :type_text do %>
-	  	<%= f.label :type_text %><br />
-	  	<%= f.text_field :type_text %>
-	  <% end %>
-	  <%= f.field_container :type_value do %>
-	  	<%= f.label :type_value %><br />
-	  	<%= f.text_field :type_value %>
-	  <% end %>
-	 	</div>
-	</div>
+        <%= f.field_container :status do %>
+          <%= f.label :status %><br />
+          <%= f.text_field :status %>
+        <% end %>
+      </div>
+      <div class='span4'>
+        <%= f.field_container :type_text do %>
+          <%= f.label :type_text %><br />
+          <%= f.text_field :type_text %>
+        <% end %>
+        <%= f.field_container :type_value do %>
+          <%= f.label :type_value %><br />
+          <%= f.text_field :type_value %>
+        <% end %>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+

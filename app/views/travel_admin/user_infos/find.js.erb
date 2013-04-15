@@ -1,0 +1,8 @@
+if ($('#search_user_div').length == 0){
+  $('#dialog_place_holder').append("<div id='search_user_div' class='modal hide fade' aria-hidden='true'></div>");
+}
+
+$('#search_user_div')
+	.html("<%= j render(:partial => "form_find") %>")
+	.modal('show');
+

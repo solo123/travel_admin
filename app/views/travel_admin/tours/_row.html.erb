@@ -1,19 +1,31 @@
 <tr id="<%= dom_id row%>" <%= 'class=deleted' if !row.status || row.status < 1 %>>
-	<td><%= row.id %></td>
-        <td><%= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo %></td>
-	<td><%= row.description.title %><br /><%= row.description.title_cn %></td>
-	<td><%= row.tour_type_name %></td>
-	<td class='align-center'><%= row.days %></td>
-	<td class='align-center'><%= row.tour_setting.weekly if row.tour_setting %></td>
-  <td class='align-right'><%= row.tour_price.price_adult %></td>
-  <td class='align-right'><%= row.tour_price.single_charge %></td>
-  <td class='align-right'><%= row.tour_price.forth_charge %></td>
-	<td class='align-center'><%= row.tour_setting.days_in_advance if row.tour_setting %></td>
+	<td class='cell-middle'><%= row.id %></td>
+  <td class='cell-middle'><%= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo %></td>
+  <td>
+    <span class='text-success'>[<%= row.tour_type_name %>]</span> 
+    (<span class='text-warning'><%= row.days %> days</span>)
+    <span class='text-info'>Weekly: <%= row.tour_setting.weekly if row.tour_setting %></span>
+    <br />
+    <%= row.description.title %><br />
+    <span class='text-success'><%= row.description.title_cn %></span>
+  </td>
+  <td>
+    <%= row.tour_price.price_adult %><br />
+    <small>
+      <i class='icon-user' title='Single charge'></i> <%= row.tour_price.single_charge %><br />
+      <i class='icon-th-large' title='The forth charge'></i> <%= row.tour_price.forth_charge %><br />
+    <% if row.tour_price.buy_two_get_one_free == 1 %>
+      <abbr title="Buy 2 get 1 free" class='initialism text-success'>B2G1F</abbr>
+    <% end %>
+  </small>
+  </td>
 	<td><%= row.tour_setting.last_schedule_date if row.tour_setting %></td>
-	<td class='align-center'><%= row.status_text %></td>
-	<td nowrap="nowrap">
-		<%= link_to 'Route', tour_spots_path(row) %> |
-		<%= link_to_edit row %> |
-		<%= link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Tour?' %>
+	<td class='cell-middle'>
+    <div class='btn-group'>
+      <%= icon_link_to '', tour_spots_path(row), :class => 'btn', :icon => 'icon-list', :title => 'Tour route and visit schedule' %>
+		<%= row_link_to_edit row %>
+		<%= row_link_to_hide row %>
+  </div>
+
 	</td>
 </tr>

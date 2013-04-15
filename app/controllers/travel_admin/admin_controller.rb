@@ -2,9 +2,7 @@ module TravelAdmin
 	class AdminController < ActionController::Base
     before_filter :authenticate_employee!
     after_filter :log_operation
-		helper 'travel_admin/base'
 		helper 'search'
-    helper 'travel_admin/navigation'		
 		layout 'travel_admin/application'
 
     attr_writer :title 

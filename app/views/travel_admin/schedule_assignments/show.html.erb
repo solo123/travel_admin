@@ -1,0 +1,43 @@
+<%= content_for :head do %>
+  <%= javascript_include_tag 'admin/seat_table' %>
+<% end %>
+<div id='schedule_title'>
+  <%= render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @schedule} %>
+  <%= hidden_field_tag 'assignment_id', @object.id %>
+</div>
+<div>
+  <div class='row'>
+  <div class='btn-group' style='float:right;'>
+    <%= icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@schedule) + "?schedule_id=#{@schedule.id}", :remote => true, :icon => 'icon-plus-sign' %>
+        <%= icon_link_to 'Hold', 'javascript:hold()', :icon => 'icon-star', :class => 'btn btn-info' %>
+      <%= icon_link_to 'Release', 'javascript:release();', :icon => 'icon-star-empty' %>
+      <%= icon_link_to 'Order', 'javascript:order();', :icon => 'icon-shopping-cart', :class => 'btn btn-success' %>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs" id='list_emps'>
+    <% @schedule.assignments.each do |ass| %>
+      <% busname = ass.bus ? ass.bus.name : '<NA>' %>
+      <% if ass.id == @object.id %>
+        <li class='active'><a href='#'><%= busname %></a></li>
+      <% else %>
+        <li>
+        <%= link_to "#{busname}", schedule_schedule_assignment_path(@schedule, ass) %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <div class='container'>
+    <%= render :partial => 'seats', :locals => {:schedule => @schedule, :assignment => @object} %>
+  </div>
+
+</div>
+
+<div id='unseat_orders'>
+  <%= render 'travel_admin/schedules/orders', :orders => @schedule.orders %>
+</div>
+
+<div id='select_schedule_div' class='dialog-popup'></div>
+<div id='select_customer_div' class='dialog-popup'></div>
+
+

@@ -1,37 +1,30 @@
 <%= content_for :breadcrumbs do %>
-  Data &gt;
-  Destinations
+      <ul class="breadcrumb">
+        <li>Data <span class="divider">/</span></li>
+        <li class="active">Destinations</li>
+      </ul>
 <% end %>
-<div class="toolbar">
-  <ul class="actions">
-  	<li>
-			<%= form_for( @search, :url => destinations_path ) do |f| %>
-  		<%= f.label :description_title_or_description_title_cn_contains, "Title" %> <%= f.text_field :description_title_or_description_title_cn_contains, :size => 15 %> &nbsp;
-
-  		<%= button 'Search' %>
-			<% end %>
-  	</li>
-    <li>
-    	<%= button_link_to 'New Destination', 'destinations/new', {:icon => 'add', 'data-remote' => true} %>
-    </li>
-  </ul>
-  <br class="clear">
-</div>
-
-<div id="edit_div" class='dialog-normal'></div>
-
-<div class='data-pager'>
+<%= content_for :search_box do %>
+	<%= form_for( @search, :url => destinations_path ) do |f| %>
+    <div class='input-prepend input-append'>
+      <span class='add-on'>Title</span>
+      <%= f.text_field :description_title_or_description_title_cn_contains, :class => 'span2' %>
+      <%= search_button %>
+      <%= link_to_new 'New Destination', 'destinations/new' %>
+    </div>
+  <% end %>
+<% end %>
+<section>
 <%= will_paginate(@collection) %>
-</div>
-<table class="data-list" id="list_destinations">
+<table class="data-list table table-bordered table-striped" id="list_destinations">
   <thead>
-  <tr>
-    <th><%= t("id") %></th>
-	<th><%= t("title") %></th>
-	<th><%= t("title_cn") %></th>
+  <tr class='table-header'>
+    <th>ID</th>
+    <th width='50'>Photo</th>
+	<th>Title</th>
 	<th><%= t("city")%></th>
 	<th><%= t("status")%></th>
-  <th>operate</th>
+  <th width='160'>operate</th>
   </tr>
 </thead>
 <tbody>
@@ -41,4 +34,5 @@
 </tbody>
 </table>
 <%= will_paginate(@collection) %>
+</section>
 

@@ -3,10 +3,10 @@ function hold(){
 	if (validate_seats()){
 		var msg = prompt("Please input hold message:", "");
     if (msg) {
-      var pane = $('.panes > div:visible');
+      var pane = $('form.edit_schedule_assignment');
       pane.find('input[name=message1]').val(msg);
       pane.find('input[name=operate]').val('hold');
-      pane.find('form').submit();
+      $('form.edit_schedule_assignment').submit();
     }
 	}	
 }
@@ -17,59 +17,49 @@ function check_hold(hold_id){
 function release(){
 	if (validate_hold_seats()) {
 		if (confirm('Are you sure to RELEASE these seats?')){
-      var pane = $('.panes > div:visible');
+      var pane = $('form.edit_schedule_assignment');
 			pane.find('input[name=operate]').val('release');
-		  pane.find('form').submit();
+      $('form.edit_schedule_assignment').submit();
 		}
 	}
 }
-
 function order(){
   if (validate_order_seats()){
     $.ajax({
       type: "GET",
       url: host_path + "/orders/new",
       dataType: 'script',
-      data: 'assignment_id=' + get_current_assignment_id() + '&seats=' + get_selected_seats()
+      data: 'assignment_id=' + $('#assignment_id').val() + '&seats=' + get_selected_seats()
     });
   }
 }
 
-function order_after_updated(){
- reload_seat_table();
- reload_orders();
-}
 function order_after_created(){
  order_after_updated();
-}
-function reload_seat_table(){
-  var api = $('.tabs').data('tabs');
-  api.getCurrentPane().load(api.getCurrentTab().attr('href'));
 }
 function reload_orders(){
   $.get(host_path + "/schedules/"+ $('.s-id').text().trim() +"/orders",function(data){
     $('#unseat_orders').html(data);
   });
 }
-function get_current_assignment_id(){
-	var pane = $('.panes > div:visible');
-	return pane.find('div').attr('id').substring(5);
-}
 function get_selected_seats(){
-	var pane = $('.panes > div:visible');
+	var pane = $('.seat-table');
 	var ss = pane.find('input[type="checkbox"]:checked').map(function(){return this.id.substring(3);}).get().join(',');
 	return ss;
 }
 
 function validate_seats(){
-  var pane = $('.panes > div:visible');
+  var pane = $('.seat-table');
 	if (pane.find('input[type="checkbox"]:checked').length == 0){
 		alert('Please select seats.');
 		return false;
 	}
 
 	var result = '';
-	pane.find('input[type="checkbox"]:checked').each(function(){ if(!$(this).parent().parent().hasClass('blnk')) result += $(this).next().text() + ', '; });
+	pane.find('input[type="checkbox"]:checked').each(function(){ 
+    var seat = $(this).closest('.seat');
+    if(!seat.hasClass('blnk')) result += $(this).parent().text().trim() + ', '; 
+  });
 	if (result.length > 0) {
 		alert('Seats: ' + result + 'been taken. Please check again.');
 		return false;
@@ -78,7 +68,7 @@ function validate_seats(){
 	return true;
 }
 function validate_hold_seats(){
-	var pane = $('.panes > div:visible');
+	var pane = $('.seat-table');
 	if (pane.find('input[type="checkbox"]:checked').length == 0){
 		alert('Please select hold seats.');
 		return false;
@@ -86,8 +76,8 @@ function validate_hold_seats(){
 
 	var result = '';
 	pane.find('input[type="checkbox"]:checked').each(function(){
-    var seat = $(this).parent().parent();
-    if(!seat.hasClass('hold') && !seat.hasClass('sold')) result += $(this).next().text() + ', '; 
+    var seat = $(this).closest('.seat');
+    if(!seat.hasClass('hold') && !seat.hasClass('sold')) result += $(this).parent().text().trim() + ', '; 
   });
 	if (result.length > 0) {
 		alert('Seats: ' + result + ' not hold. Please check again.');
@@ -97,7 +87,7 @@ function validate_hold_seats(){
 }
 
 function validate_order_seats(){
-  var pane = $('.panes > div:visible');
+  var pane = $('.seat-table');
 	if (pane.find('input[type="checkbox"]:checked').length == 0){
 		alert('Please select seats.');
 		return false;
@@ -105,8 +95,8 @@ function validate_order_seats(){
 
 	var result = '';
 	pane.find('input[type="checkbox"]:checked').each(function(){
-    var pnode = $(this).parent().parent();
-    if(pnode.hasClass('sold')) result += $(this).next().text() + ', '; 
+    var seat = $(this).closest('.seat');
+    if(seat.hasClass('sold')) result += $(this).parent().text().trim() + ', '; 
   });
 	if (result.length > 0) {
 		alert('Seats: ' + result + ' already been order. \n\nPlease check again.');
@@ -116,35 +106,26 @@ function validate_order_seats(){
 	return true;
 }
 
-function tabs_load(){
-	var len = $('div.panes > div').length - 1;
-  $("ul.tabs").tabs("div.panes > div", {
-    effect: 'fade',
-	  initialIndex: len,
-    onBeforeClick: function(event, i){
-      var pane = this.getPanes().eq(i);
-      pane.load(this.getTabs().eq(i).attr('href'));
-    }
-  });
-}
-
 function assign_seat(order_id){
   if (validate_seats()){
-	  var pane = $('.panes > div:visible');
+	  var pane = $('.seat-table');
     pane.find('input[name=order_id]').val(order_id);
     pane.find('input[name=operate]').val('order_seats');
     pane.find('form').submit();
   }
 }
-function refresh_customer(){
-  var uid = parseInt($('#order_order_detail_attributes_user_info_id').val());
+function set_order_customer(uid){
+  $("#edit_user_info_div").modal('hide');
+  $('#search_user_div').modal('hide');
+
+  $('#order_order_detail_attributes_user_info_id').val(uid);
   if (uid > 0 ){
     $.getJSON(host_path + '/user_infos/' + uid, function(data){
       $('#order_order_detail_attributes_full_name').val(data.full_name);
       $('#order_order_detail_attributes_telephone').val(data.telephone);
       $('#order_order_detail_attributes_email').val(data.email);
       $('#order_order_detail_attributes_bill_address').val(data.address);
-      test = data;
+      //test = data;
     });
   } else {
     $('#order_order_detail_attributes_full_name').val("");
@@ -190,10 +171,6 @@ function bind_tourguide_selection(){
     opt_tg_ass[opt_tg_ass.length] = new Option(tourguide_list[i][0], tourguide_list[i][1]);
   }
 }
-// auto-run commands
-$(function(){
-  tabs_load();
-});
 
 
 

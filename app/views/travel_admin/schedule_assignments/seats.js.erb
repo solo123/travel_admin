@@ -1,5 +1,5 @@
-var api = $('.tabs').data('tabs');
-api.getCurrentPane().load(api.getCurrentTab().attr('href'));
+$("#assignment_tab")
+.replaceWith("<%=j render(:partial => 'seats', :locals => { :schedule => @object.schedule,:assignment => @object}) %>");
 
 $('#unseat_orders').html("<%=j render 'travel_admin/schedules/orders', :orders => @object.schedule.orders %>")
 

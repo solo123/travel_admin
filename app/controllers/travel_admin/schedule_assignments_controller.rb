@@ -4,7 +4,9 @@ module TravelAdmin
     def destroy
       load_object
       if @object.seats.count == 0
+        schedule = @object.schedule
         @object.delete
+        redirect_to schedule
       else
         flash[:alert] = 'not empty'
       end

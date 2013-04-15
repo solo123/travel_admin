@@ -1,22 +1,20 @@
 var edit_div_id = "edit_schedule_assignment_div";
 var edit_div = '#' + edit_div_id;
+
 if ($(edit_div).length == 0){
-  $('#page_main').append("<div id='"+ edit_div_id +"'></div>");
-  $(edit_div).dialog({ autoOpen:false, width:700, dialogClass:'shadow', modal:true});
+  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
 }
 
 $(edit_div)
-	.html("<%= j render 'form' %>")
-	.dialog('option', 'title', '* New Schedule Assignment *')
-	.dialog('open');
+	.html("<%= j render(:partial => "form") %>")
+  .modal();
 
-var driver_list = <%=raw @object.valid_employee('2').collect{|e| [e.nickname, e.id]} %>;
-var tourguide_list = <%=raw @object.valid_employee('3').collect{|e| [e.nickname, e.id]} %>;
+var driver_list = <%=raw @object.valid_employee_list('2') %>;
+var tourguide_list = <%=raw @object.valid_employee_list('3') %>;
 
 bind_driver_selection();
 bind_tourguide_selection();
-
-$('.html-editor').xheditor({tools: 'Blocktag,Bold,Italic,Underline,|,List,Link,Img,|,Source'});		
-$('input[type=submit]').addClass('button green');
-$('.date-picker').datepicker({ showButtonPanel: true, dateFormat: 'yy-mm-dd' });
-
+$('#schedule_assignment_driver_id').val(<%= @object.driver_id %>);
+$('#schedule_assignment_driver_assistance_id').val(<%= @object.driver_assistance_id %>);
+$('#schedule_assignment_tour_guide_id').val(<%= @object.tour_guide_id %>);
+$('#schedule_assignment_tour_guide_assistance_id').val(<%= @object.tour_guide_assistance_id %>);

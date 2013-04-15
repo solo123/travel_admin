@@ -21,7 +21,7 @@
     Bus:
     <span class='strong'> 
     <% if assignment.bus %>
-      <%= assignment.bus.name %>(Tel: <%= assignment.bus.contact_name %> <b><%= assignment.bus.tel %></b>)</span>
+      <%= assignment.bus.name %> <b>(Tel: <%= assignment.bus.contact_name %> <%= assignment.bus.tel %>)</b></span>
     <% end %>
     Driver: <span class='strong'><%= assignment.driver.nickname if assignment.driver %> / 
       <%= assignment.driver_assistance.nickname if assignment.driver_assistance %></span>

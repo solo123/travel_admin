@@ -1,0 +1,34 @@
+table.seat-table-intro{
+  width: 380px;
+  border:solid 1px darkgreen;
+  float: right;
+}
+  .diagram-exp .block {
+    width:16px;height:16px;margin-right:4px;float:left;border:solid 1px grey;
+  }
+  .blnk { background-color:#339966; }
+  .hold { background-color:#ffff80; }
+  .sold { background-color:#ff99cc; }
+  .paid { background-color:#ffc0e0; }
+  .fpaid { background-color:#ffcc99; }
+  .unav { background-color:#eee; color: #aaa; }
+    
+
+    .seat-table {
+      border:solid 1px green; margin:2px;
+      border-collapse: separate;
+      width: 100%;
+      margin-top: 6px;
+      .seat {
+        width:23%;border:solid 1px #ccc;padding:4px;position:relative;
+        &:hover {border:solid 1px red;}
+      }
+      .error { border:solid 1px red; }
+      .clear {clear:both;}
+      .space {width:3%;}
+      .seat-check {position:absolute; bottom:4px;}
+      .seat-pickup {float:left;}
+      .seat-info {text-align: right;}
+    }
+
+

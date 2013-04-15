@@ -2,10 +2,6 @@
   alert("<%= flash[:error] %>");
   <% flash.discard %>
 <% else %>
-var api = $('.tabs').data('tabs');
-$(".tabs").append('<li><%= link_to "#{@object.id}:#{@object.title}", schedule_schedule_assignment_bus_seats_path(@object.schedule_id, @object) %>"</li>');
-$(".panes").append('<div style="display:none;"></div>');
-tabs_load();
-
-$("#edit_schedule_assignment_div").dialog('close');
+  location.href = "<%= schedule_schedule_assignment_path(@object.schedule, @object) %>";
 <% end %>
+

@@ -1,30 +1,25 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Edit Company: <%= @object.short_name %></h3>
+</div>
+<div class="modal-body">
 <%= form_for( @object, :remote => true) do |f| %>
-  <div class="container">
-  	<div class='span-8'>
-	  <%= f.field_container :short_name do %>
-	  	<%= f.label :short_name %><br />
+  <div class="row">
+  	<div class='span4'>
+	  	<%= f.label :short_name %>
 	  	<%= f.text_field :short_name %>
-	  <% end %>
-	  <%= f.field_container :company_name do %>
-	  	<%= f.label :company_name %><br />
+	  	<%= f.label :company_name %>
 	  	<%= f.text_field :company_name %>
-	  <% end %>
-	  <%= f.field_container :company_type do %>
-	  	<%= f.label :company_type %><br />
+	  	<%= f.label :company_type %>
       <%= f.select :company_type, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'data-field' %>
-	  <% end %>
-	  <%= f.field_container :website do %>
-	  	<%= f.label :website %><br />
+	  	<%= f.label :website %>
 	  	<%= f.text_field :website %>
-	  <% end %>
-	  <%= f.field_container :icon_url do %>
-	  	<%= f.label :icon_url %><br />
-	  	<%= f.text_field :icon_url %>
-	  <% end %>
+	  	<%= f.label :icon_url %>
+      <%= f.text_field :icon_url %><br />
 		<%= render :partial => 'travel_admin/shared/status', :locals => {:f => f} %> 
 	  </div>
           <% if @object.id %>
-	  <div class='span-8 last'>
+	  <div class='span4'>
 		  <div>
 		  	<b>Accounts:</b><br />
 		  	<% if @object.company_account %>
@@ -49,9 +44,11 @@
 	 	</div>
         <% end %>
 	</div>
-      
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+

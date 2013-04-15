@@ -2,6 +2,10 @@
   alert("<%= flash[:error] %>");
   <% flash.discard %>
 <% else %>
-$("#edit_schedule_assignment_div").dialog('close');
-reload_seat_table();
+    $("#edit_schedule_assignment_div").modal('hide');
+    $("#ass_info")
+    .replaceWith("<%=j render(:partial => 'ass_info', :object => @object) %>");
+    $("#ass_info").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();
 <% end %>

@@ -1,31 +1,32 @@
-<div class='toolbar'>
-  <ul class='actions'>
-  	<li>
+<%= content_for :breadcrumbs do %>
+      <ul class="breadcrumb">
+        <li>Data <span class="divider">/</span></li>
+        <li class="active">Companies</li>
+      </ul>
+<% end %>
+<%= content_for :search_box do %>
   		<%= form_for( @search, :url => companies_path ) do |f| %>
-        <%= f.select :company_type_eq, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'data-field' %>
-  		<%= button 'search' %>
+      <%= f.select :company_type_eq, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'span2' %>
+    <div class='input-append'>
+      <%= f.text_field :short_name_or_company_name_contains, :class => 'span2' %>
+      <%= search_button %>
+      <%= icon_link_to 'Add Company', new_company_path, :remote => true, :icon => 'icon-plus', :class => 'btn btn-success', :title => 'Add Company' %>
+    </div>
 			<% end %>
-  	</li>
-    <li>
-    <%= button_link_to 'Add Company', new_company_path, {:remote => true, :icon => 'add', :id => 'new_company'} %>
-    </li>
-  </ul>
-  <br class='clear' />
+<% end %>
+<section>
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
 </div>
-
-<h1><%= raw "#{t("actions.listing")} #{t("companies")}" %></h1>
-<div id='edit_div' class='dialog-normal'></div>
-<div id='add_contact_div' class='dialog-normal'></div>
-<table id='list_companies' class="data-list">
+<table class="data-list table table-bordered table-striped" id="list_companies">
   <thead>
-    <tr>
+    <tr class='table-header'>
         <th><%= t("id") %></th>
         <th><%= t("short_name") %></th>
         <th><%= t("company_name") %></th>
         <th><%= t('company_type') %></th>
-        <th><%= t('icon') %></th>
+        <th>Logo</th>
         <th><%= t('website') %></th>
-        <th><%= t('status') %></th>
         <th><%= t('op') %></th>
     </tr>
   </thead>
@@ -33,5 +34,7 @@
   <%= render :partial => 'row', :object => c %>
 <% end %>
 </table>
-<%= will_paginate(@collection) %>
-
+<div class='data-pager'>
+  <%= will_paginate(@collection, :class => 'pagination pagination-mini') %>
+</div>
+</section>
