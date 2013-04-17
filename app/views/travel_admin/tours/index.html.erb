@@ -12,6 +12,7 @@
       <%= f.text_field :description_title_contains, :class => 'span2' %>
       <%= search_button %>
       <%= link_to_new 'New Tour', 'tours/new' %>
+      <%= icon_link_to "Generate schedules", generate_tours_path, :icon => 'icon-share', :class => 'btn btn-info' %>
     </div>
   <% end %>
 <% end %>
@@ -22,11 +23,11 @@
 <table class="data-list table table-bordered table-striped" id="list_tours">
   <thead>
     <tr class='table-header'>
-      <th><%= sort_link @search,:id, t(:id), {}, {:title => ''} %></th>
-      <th>icon</th>
-      <th><%= sort_link @search,:title, t(:title), {}, {:title => 'tours_listing_title'} %></th>
+      <th><%= sort_link @search,:id, 'ID', {}, {:title => ''} %></th>
+      <th>Icon</th>
+      <th>Title</th>
       <th>Price</th>
-      <th>last schedule</th>
+      <th>Weekly</th>
       <th>op</th>
     </tr>
   </thead>

@@ -45,7 +45,7 @@ class Tour < ActiveRecord::Base
     tour_setting && tour_setting.is_auto_gen == 1 && (!tour_setting.last_schedule_date || Date.parse(tour_setting.last_schedule_date) < Date.today) && tour_price && tour_price.price1 && tour_price.price2 && tour_price.price3 && tour_price.price4 && tour_price.price1 > 0 && tour_price.price2 >= tour_price.price1 && tour_price.price3 >= tour_price.price2 && tour_price.price4 >= tour_price.price3
   end
 
-  def gen_schedule(day)
+  def add_schedule(day)
     return nil if !day || self.schedules.exists?(:departure_date => day)
     
     s = self.schedules.build
@@ -66,6 +66,9 @@ class Tour < ActiveRecord::Base
     ass.save
     s.save    
     s
+  end
+  def gen_schedule(day)
+    add_schedule(day) if self.tour_setting.weekly.include? day.days_to_week_start(:sunday).to_s
   end
     
 end

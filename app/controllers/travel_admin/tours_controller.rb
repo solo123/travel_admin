@@ -45,6 +45,21 @@ module TravelAdmin
       end
       render :text => r.to_json      
     end
+    def generate
+      @collection = Tour.where(:status => 1).joins(:tour_setting).where('tour_settings.is_auto_gen' => 1)
+    end
+    def gen
+      @tour = Tour.find(params[:id])
+      default_days = cfg.get_config(:max_reservation_days).to_i
+      @gen_count = 0
+      if @tour.ready_to_gen?
+        days = @tour.tour_setting.days_in_advance.to_i
+        days = default_days if days == 0
+        (Date.today .. Date.today + days).each do |day|
+          @gen_count += 1 if @tour.gen_schedule(day) 
+        end
+      end
+    end
     protected
 
   end

@@ -1,0 +1,38 @@
+var edit_div_id = "edit_pay_cash_div";
+var edit_div = '#' + edit_div_id;
+
+if ($(edit_div).length == 0){
+  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
+}
+
+$(edit_div)
+	.html("<%= j render(:partial => "form") %>")
+  .modal();
+
+  //pay cash script
+	$('#recv_cash').focus();
+		
+	$('#recv_cash').keyup(function(){
+		var b = parseFloat($('#balance').text()) || 0;
+		var p = parseFloat($('#recv_cash').val()) || 0;
+		var c = 0;
+		if (p > b) c = p-b;
+		$('#pay_cash_change').text(c);
+		if (c==0){
+			$('#recv_cash').css('color', 'black');
+			$('#pay_cash_change').css('color', 'black');
+			$('#pay_cash_amount').val(p);
+      $('#paid_amount').text(p);
+      $('#balance_after').text(b-p);
+		}
+		else {
+			$('#recv_cash').css('color', 'green');
+			$('#pay_cash_change').css('color', 'green');
+      $('#pay_cash_amount').val(b);
+      $('#paid_amount').text(b);
+      $('#balance_after').text('0.00');
+		}
+			 
+	});
+
+

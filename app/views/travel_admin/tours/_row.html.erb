@@ -19,7 +19,7 @@
     <% end %>
   </small>
   </td>
-	<td><%= row.tour_setting.last_schedule_date if row.tour_setting %></td>
+	<td><%= row.tour_setting.weekly %></td>
 	<td class='cell-middle'>
     <div class='btn-group'>
       <%= icon_link_to '', tour_spots_path(row), :class => 'btn', :icon => 'icon-list', :title => 'Tour route and visit schedule' %>

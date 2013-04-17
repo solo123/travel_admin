@@ -1,0 +1,13 @@
+$("#<%= dom_id(@tour) %>")
+  .replaceWith("<%=j render(:partial => 'row_gen', :object => @tour) %>");
+  
+$("#<%= dom_id(@tour) %>")
+  .delay(500)
+  .fadeOut().fadeIn()
+  .fadeOut().fadeIn();
+
+  if ($('#auto_gen_indicator:visible').length>0){
+    $('#btn_auto_gen').click();
+  }
+
+

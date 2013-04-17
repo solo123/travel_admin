@@ -20,8 +20,9 @@ TravelAdmin::Engine.routes.draw do
   resources :tours do
     resources :spots, :controller => 'tours/spots'
     collection do
-      get 'search'
+      get :search, :generate
     end
+    get :gen, :on => :member
   end
   resources :schedules do
     collection do
@@ -48,6 +49,7 @@ TravelAdmin::Engine.routes.draw do
   resources :orders do
     get :add_room, :on => :collection
     resources :remarks
+    resources :pay_cashes
   end
   resources :emps
   resources :employee_infos do
@@ -72,9 +74,7 @@ TravelAdmin::Engine.routes.draw do
   end
   resources :vouchers, :company_receivables
   resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers
-  resources :pay_credit_cards do
-    get :look, :on => :member
-  end
+  resources :pay_credit_cards
   resources :accounts do
     get :company, :on => :collection
     get :pay, :on => :member

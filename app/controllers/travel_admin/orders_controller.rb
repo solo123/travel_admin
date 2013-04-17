@@ -14,6 +14,10 @@ module TravelAdmin
       end
       set_seats
     end
+    def show
+      load_object
+      @order = @object
+    end
     private
     def new_params
       if !@object.schedule_assignment && params[:assignment_id]

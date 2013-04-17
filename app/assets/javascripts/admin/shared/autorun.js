@@ -1,3 +1,10 @@
+$(document).ajaxStart(function(){
+  $("#progress").slideDown();
+});
+$(document).ajaxStop(function(){
+  $("#progress").slideUp();
+});
+
 $(function(){
   $('.date-picker').datepicker({
     format: 'yyyy-mm-dd'

@@ -1,11 +1,12 @@
-var edit_div = "edit_<%= @object.class.name.underscore %>_div";
-if ($('#'+edit_div).length == 0){
-  $('#page_main').append("<div id='"+ edit_div +"'></div>");
-  $('#'+edit_div).dialog({ autoOpen:false, width:750, dialogClass:'shadow', modal:true});
+var edit_div_id = "edit_payment_div";
+var edit_div = '#' + edit_div_id;
+
+if ($(edit_div).length == 0){
+  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
 }
 
-$('#'+edit_div)
-	.html("<%= escape_javascript(render(:partial => "form"))%>");
+$(edit_div)
+	.html("<%=j render(:partial => "form")%>");
 
 $('#tabs_payment').tabs("div.panes > div");
 	
@@ -87,4 +88,5 @@ function init_pay_check(){
 		}
 	});	
 }
+
 

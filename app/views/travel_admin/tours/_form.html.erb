@@ -1,6 +1,9 @@
 <%
-  @object.build_description if @object.new_record?
+  @object.build_description unless @object.description
+  @object.build_tour_setting.set_new_default unless @object.tour_setting 
+  @object.build_tour_price.set_new_default unless @object.tour_price
 %>
+
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
   <h3 id="myModalLabel">Edit Tour# <%= @object.id %></h3>

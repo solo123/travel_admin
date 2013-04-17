@@ -8,8 +8,14 @@ module TravelAdmin
       @object.PayCreditCard.find(params[:id])
       biz_payment = Biz::OrderPayment.new
     end
-    def look
-      @object = PayCreditCard.find(params[:id])
+    def update
+      super
+      if params[:lookcard] && @object.status == 0
+        look_card
+      end
+      redirect_to @object
+    end
+    def look_card
       order = @object.order
       biz_payment = Biz::OrderPayment.new
       biz_payment.pay(order, @object, current_employee.employee_info) 
@@ -19,6 +25,14 @@ module TravelAdmin
       end
       redirect_to @object
     end
+    protected
+      def load_collection
+        params[:search] ||= {}
+        @search = PayCreditCard.metasearch(params[:search]).where(:status => 0)
+        pages = cfg.get_config(:admin_list_per_page).to_i
+        pages = 20 unless pages > 1
+        @collection = @search.paginate(:page => params[:page], :per_page => pages)
+      end 
   end
 end
 

@@ -3,5 +3,6 @@ class PayCreditCard < ActiveRecord::Base
   belongs_to :account
   belongs_to :user_info
   belongs_to :order
+  default_scope order('id desc')
 end
 

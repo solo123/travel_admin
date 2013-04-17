@@ -1,13 +1,16 @@
-var edit_div = "edit_schedule_div";
-if ($('#'+edit_div).length == 0){
-  $('#page_main').append("<div id='"+ edit_div +"'></div>");
-  $('#'+edit_div).dialog({ autoOpen:false, width:700, dialogClass:'shadow', modal:true});
+var edit_div_id = "edit_schedule_div";
+var edit_div = '#' + edit_div_id;
+
+if ($(edit_div).length == 0){
+  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
 }
 
-$('#'+edit_div)
-	.html("<%= j render 'form_new' %>")
-	.dialog('option', 'title', '* New Schedule *')
-	.dialog('open');
+$(edit_div)
+	.html("<%= j render(:partial => "form_new") %>")
+  .modal();
+
+$('.date-picker').datepicker({ showButtonPanel: true, dateFormat: 'yy-mm-dd' });
+/*
 
 
 $( "#tour_select" ).autocomplete({
@@ -44,3 +47,4 @@ $('#departure').datepicker({
     $('#departure_date').val(dateText);
   }
   });
+  */
