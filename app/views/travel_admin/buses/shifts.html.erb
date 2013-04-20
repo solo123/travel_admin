@@ -39,7 +39,7 @@
   <tbody>
     <% buses.each do |bus| %>
       <tr>
-        <td><%= bus.bus.name %></td>
+        <td><%= bus.bus.name if bus.bus %></td>
         <% (d_start..d_end).each do |d| %>
           <% if s = shifts.detect { |s| s.bus_id == bus.bus_id && s.date == d } %>
             <td class='shift' tag="<%= s.schedule_assignment_id %>" link="<%= schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment) %>" title='Schedule: <%= s.schedule_assignment.schedule_id %>'>&nbsp;</td>
