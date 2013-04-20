@@ -3,8 +3,8 @@
   <% flash.discard %>
 <% else %>
     $("#edit_schedule_div").modal('hide');
-    $('#schedule_title').html("<%= j render( :partial => 'schedule_title', :locals => {:s => @object}) %>");
-    $("#schedule_title").delay(500)
-      .fadeOut().fadeIn()
-      .fadeOut().fadeIn();
+    <% if flash[:notice] %>
+      alert('<%= flash[:notice] %>');
+      <% flash.discard %>
+    <% end %>
 <% end %>

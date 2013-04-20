@@ -2,12 +2,14 @@
   alert("<%= raw flash[:error] %>");
   <% flash.discard %>
 <% else %>
-  
+  <% if @order.status == 3 %>
+    location.reload(true);
+  <% else %>
   $("#list_payments")
-    .html("<%= j render(:partial => 'travel_admin/payments/payments', :object => @object.payment.payment_data) %>");
+    .html("<%= j render(:partial => 'travel_admin/payments/payments', :object => @order) %>");
   to_localtime();
-  $('#edit_payment_div').dialog('close');
-
+  $('#edit_payment_div').modal('hide');
+  <% end %>
 <% end %>
 
 

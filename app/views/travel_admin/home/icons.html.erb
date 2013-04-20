@@ -1,0 +1,67 @@
+<h2>admin - Home</h2>
+
+<h2>glyphicon-</h2>
+<table class='span6 table table-bordered table-condensed'>
+  <thead>
+    <tr class='table-header'>
+      <th>i</th>
+      <% 10.times do |c| %>
+        <th><%= c %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% 42.times do |i| %>
+    <tr>
+      <td class='cell-middle'><%= i %></td>
+      <% 10.times do |j| %>
+        <% cs = "glyphicon-#{j}-#{i}" %>
+        <td title='<%= cs %>'><i class='<%= cs %>'></i></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<h2>gicon-</h2>
+<table class='span6 table table-bordered table-condensed'>
+  <thead>
+    <tr class='table-header'>
+      <th>i</th>
+      <% 10.times do |c| %>
+        <th><%= c %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  <% 42.times do |i| %>
+    <tr>
+      <td class='cell-middle'><%= i %></td>
+      <% 10.times do |j| %>
+        <% cs = "gicon-#{j}-#{i}" %>
+        <td title='<%= cs %>'><i class='<%= cs %>'></i></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr />
+
+<table class='span6'>
+  <% 42.times do |i| %>
+    <tr>
+      <% 10.times do |j| %>
+        <% ss = "background-position: #{-j * 24}px #{-i * 24}px;" %>
+        <td><i class='gicon-<%= "#{j}-#{i}" %>' style='<%= ss %>'></i></td>
+      <% end %>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<% 42.times do |i| %>
+  <% 10.times do |j| %>
+    <%= ".gicon-#{j}-#{i}   {background-position: #{-j * 24}px #{-i * 24}px;}" %><br />
+  <% end %>
+  <br />
+<% end %>
+

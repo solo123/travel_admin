@@ -1,23 +1,34 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel"><i class='glyphicon-7-22'></i>Pay Cash</h3>
+  <h3 id="myModalLabel"><i class='glyphicon-0-15'></i>Pay Check</h3>
 </div>
 <div class="modal-body">
   <%= form_for([@order, @object], :remote => true) do |f| %>
     <div class='row'>
       <div class='span4'>
+
+
         <table>
           <tr>
-            <td>Pay:</td>
-            <td><input type='text' id='recv_cash' value='0.00' class='large-number' onchange='recaculate_pay_cash();' /></td>
+            <td>Check number:</td>
+            <td><%= f.text_field :check_number, :placeholder => 'input check number' %></td>
           </tr>
           <tr>
-            <td>Casher:</td>
+            <td>Amount:</td>
+            <td><%= f.text_field :amount %></td>
+          </tr>
+          <tr>
+            <td>Check received by:</td>
             <td>
               <%= render :partial => 'travel_admin/shared/select_employee', :locals => {:f => f, :field_name => :received_by_id , :role => '5'} %>
             </td>
           </tr>
+          <tr>
+            <td colspan='2' class='cell-middle'><span class='text-error' id='pcc_msg'></span></td>
+          </tr>
         </table>
+
+
       </div>
       <div class='span4'>
         <table class='table table-bordered'>
@@ -27,27 +38,21 @@
           </tr>
           <tr>
             <td>Order Amount</td>
-            <td class='cell-right'><%= @order.order_price.actual_amount %></td>
+            <td class='cell-right'><%= number_with_precision @order.order_price.actual_amount, :precision => 2 %></td>
           </tr>
           <tr>
             <td>Balance before</td>
-            <td class='cell-right' id='tb_balance_before'><%= @order.order_price.balance_amount %></td>
+            <td class='cell-right' id='tb_balance_before'><%= number_with_precision @order.order_price.balance_amount, :precision => 2 %></td>
           </tr>
           <tr>
             <td>Pay amount</td>
-            <td id='tb_pay_amount' class='large-number cell-right'></td>
+            <td id='tb_pay_amount' class='large-number cell-right'><%= @order.order_price.actual_amount %></td>
           </tr>
           <tr>
             <td>Balance after</td>
-            <td id='tb_balance' class='cell-right'></td>
+            <td id='tb_balance' class='cell-right large-number'>0.00</td>
           </tr>
-
-            <tr>
-              <td>Change:</td>
-              <td class='large-number cell-right text-success' id='tb_change'>0.00</td>
-            </tr>
-          </table>
-          <%= f.hidden_field :amount  %>
+        </table>
       </div>
     </div>
   <% end %>
@@ -56,6 +61,4 @@
   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
   <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
 </div>
-
-
 

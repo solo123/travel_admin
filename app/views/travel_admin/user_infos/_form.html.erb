@@ -1,28 +1,28 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Edit User Info# <%= @object.id %></h3>
+  <h3 id="myModalLabel">Edit User #<%= @object.id %></h3>
 </div>
 <div class="modal-body">
-<%= form_for( @object, :remote => true) do |f| %>
+  <div style='min-height: 367px;'>
+    <%= form_for( @object, :remote => true) do |f| %>
   <%= hidden_field_tag :edit_div, params[:edit_div] %>
   <%= hidden_field_tag :short, params[:short] %>
-  <b>User ID: <%= @object.id %></b>
   <div class="row">
         <% if params[:agent_id] %>
         <%= f.hidden_field :user_data_type, :value => 'Agent' %>
         <%= f.hidden_field :user_data_id, :value => params[:agent_id] %>
         <% end %>
-  	<div class='span3'>
+  	<div class='span4'>
 	  <%= f.field_container :full_name do %>
-	  	<%= f.label :full_name %><br />
+	  	<%= f.label :full_name %>
 	  	<%= f.text_field :full_name %>
 	  <% end %>
 	  <%= f.field_container :status do %>
-	  	<%= f.label :status %><br />
+	  	<%= f.label :status %>
 	  	<%= f.text_field :status %>
 	  <% end %>
 	  </div>
-	  <div class='span3'>
+	  <div class='span4'>
 	  	<% if @object.user %>
 	  	<p>email(login): <%= @object.user.email %></p>
 	  	<p>sign_in_count: <%= @object.user.sign_in_count %></p>
@@ -37,7 +37,7 @@
         <%= f.fields_for :telephones do |tel_form| %>
         	<%= render :partial => 'form_tel', :locals => { :f => tel_form} %>
         <% end %>
-      </div><hr />
+      </div>
 	  	Emails:
       <%= add_object_js_link 'Add', f, :emails, 'form_email', '#emails'  %>
       <br /> 
@@ -46,7 +46,6 @@
         	<%= render :partial => 'form_email', :locals => { :f => email_form} %>
         <% end %>
       </div>
-      <hr />
 	  	
 	  	Addresses:
       <%= add_object_js_link 'Add', f, :addresses, 'form_address', '#addresses'  %>
@@ -60,6 +59,7 @@
 	 	</div>
 	</div>
 <% end %>
+</div>
 </div>
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

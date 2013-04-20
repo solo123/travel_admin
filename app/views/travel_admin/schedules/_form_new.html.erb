@@ -1,19 +1,20 @@
+<%
+  tour = Tour.find(params[:tour_id])
+%>
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
   <h3 id="myModalLabel">New Schedule *</h3>
 </div>
 <div class="modal-body">
-<%= form_tag schedules_path, :method => :post, :remote => true do %>
-  <%= hidden_field_tag :page, params[:page] %>
+<%= form_tag tour_schedules_path(tour), :method => :post, :remote => true do %>
 	<p>
-		Tour:<br />
-		<%= text_field_tag :tour_select, '', :style => 'width:200px' %>
-		<%= hidden_field_tag :tour_id %>
+    Tour:<br />
+    <%= tour.description.title %><br />
+    <span class='text-success'><%= tour.description.title_cn %></span>
 	</p>
 	<p>
 		Departure at:<br />
-		<%= text_field_tag :departure_date %>
-    <div id='departure'></div>		
+    <%= text_field_tag :departure_date, '', :class => 'date-picker' %>
 	</p>
 <% end %>
 </div>

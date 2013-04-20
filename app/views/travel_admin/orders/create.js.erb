@@ -3,20 +3,12 @@
   <% flash.discard %>
 <% else %>
   $("#edit_order_div").modal('hide');
-  if ($('#list_orders').length == 0){
-    if ($('form.edit_schedule_assignment').length>0){
-      $("#assignment_tab").replaceWith("<%=j render(:partial => 'travel_admin/schedule_assignments/seats', :locals => { :schedule => @object.schedule, :assignment => @object.schedule_assignment}) %>");
-      $('#unseat_orders').html("<%=j render 'travel_admin/schedules/orders', :orders => @object.schedule.orders %>")
-    } else
+  if ($('form.edit_schedule_assignment').length>0){
+    $("#assignment_tab")
+      .replaceWith("<%=j render(:partial => 'travel_admin/schedule_assignments/seats', :locals => { :schedule => @object.schedule, :assignment => @object.schedule_assignment}) %>");
+    $('#unseat_orders').html("<%=j render 'travel_admin/schedules/orders', :orders => @object.schedule.orders %>")
+  } else
   	  location.reload(true);
-  } else {
-    $("#list_orders")
-      .append("<%= j render(:partial => 'row', :object => @object) %>");
-    $("#<%= dom_id(@object) %>").delay(500)
-      .fadeOut().fadeIn()
-      .fadeOut().fadeIn();
-  
-  }
 <% end %>
 
 

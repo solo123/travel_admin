@@ -4,10 +4,10 @@ module TravelAdmin
       if action_name == 'show'
         @title = 'Seats table'
       else
-       super
+        super
       end 
     end 
-    
+
     def orders
       load_object
       render :partial => 'orders', :object => @object.orders
@@ -35,8 +35,12 @@ module TravelAdmin
       if @object
         flash[:error] = "Schedule #{@object.id} Already existed."
       else
-        @object = tour.gen_schedule(Date.parse(params[:departure_date]))
-        flash[:notice] = "Add new Schedule #{@object.id}"
+        @object = tour.add_schedule(Date.parse(params[:departure_date]))
+        if @object
+          flash[:notice] = "Add new Schedule #{@object.id}"
+        else
+          flash[:error] = 'Add schedule error!'
+        end
       end
     end
     def show

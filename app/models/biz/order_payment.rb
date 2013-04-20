@@ -194,43 +194,35 @@ module Biz
     def withdraw(a_pay, operator)
       check_for_withdraw(a_pay, operator)
       return unless @errors.blank?
-      withdraw_pay = a_pay.dup
-      withdraw_pay.amount = 0 - a_pay.amount
-      withdraw_pay.status = 0
-      withdraw_pay.account = a_pay.account
-      p = withdraw_pay.build_payment
-      order = a_pay.payment.payment_data
-      p.payment_data = order
-      p.amount = withdraw_pay.amount
-      p.pay_from = order.order_detail.user_info
-      p.account = withdraw_pay.account
-      p.pay_method = withdraw_pay
-      p.operator = operator
-      withdraw_pay.payment = p
+      
+      p_old = a_pay.payment
+      payment = Payment.new
+      payment.payment_data = p_old.payment_data
+      payment.amount = 0 - p_old.amount
+      payment.pay_from = p_old.pay_from
+      payment.account = p_old.account
+      payment.operator = operator
+
+      w_pay = a_pay.dup
+      w_pay.amount = 0 - a_pay.amount
+      w_pay.status = 0
+      w_pay.payment = payment
+      payment.pay_method = w_pay
 
       ActiveRecord::Base.transaction do
-        set_order_and_history(order, p, withdraw_pay)
-        set_receive_account(p)
-        a_pay.status = 0
-        a_pay.save
-        unless withdraw_pay.save
-          @errors << withdraw_pay.errors.full_messages.to_sentence
-          break
-        end
-        unless p.save
-          @errors << p.errors.full_messages.to_sentence
-          break
-        end
-        unless p.account.save
-          @errors << p.account.errors.full_messages.to_sentence
-          break
-        end
-        order.pay(p)
-        if a_pay.is_a? PayVoucher
-          a_pay.voucher.status = 1
-          a_pay.voucher.save
-        end
-        p
+        account = payment.account
+        acc_hist = account.account_histories.build
+        acc_hist.add_balance(account.balance, payment.amount)
+        account.balance = acc_hist.balance_after
+        acc_hist.payment = payment
+
+        payment.save!
+        account.save!
+        payment.payment_data.pay(payment)
+        w_pay.status = 7
+        w_pay.save!
+        a_pay.status = 7
+        a_pay.save!
       end
     end
     def check_for_withdraw(a_pay, operator)
@@ -243,10 +235,12 @@ module Biz
         errors << "Only credit card and check and voucher can withdraw"
         return
       end
+=begin      
       unless a_pay.status == 1
         errors << "This item cannot withdraw."
         return
       end
+=end
       order = a_pay.payment.payment_data
       unless order.status && order.status > 0 && order.status != 7
         errors << "Order cannot withdraw."
@@ -264,6 +258,8 @@ module Biz
         errors << "Account not found"
         return
       end
+    end
+    def set_order_and_history(order, payment, withdraw_pay)
     end
 
     def get_employee_account(employee_info, pay_method)

@@ -4,6 +4,7 @@ class Bus < ActiveRecord::Base
   belongs_to :company
   has_many :telephones, :as => :tel_number
   has_many :bus_reserved_dates
+  has_many :bus_shifts
   after_initialize :init_seats
 
   def init_seats

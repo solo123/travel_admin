@@ -34,23 +34,6 @@ class Order < ActiveRecord::Base
       seat_now.save
     end
   end
-  def recaculate_price
-    return unless self.schedule
-    self.build_order_price unless self.order_price
-    self.order_items.each do |item|
-      if item.num_total > 0 && item.num_total <= 4
-        item.amount = eval("self.schedule.price.price#{item.num_total}")
-      end
-      item.save
-    end
-    op = self.order_price
-    op.num_rooms = self.order_items.count
-    op.num_total = self.order_items.sum(:num_total)
-    op.total_amount = self.order_items.sum(:amount)
-    op.actual_amount = op.total_amount + op.adjustment_amount
-    op.balance_amount = op.total_amount + op.adjustment_amount - op.payment_amount
-    op.save
-  end
   def ready_to_payment?
     order_detail && order_detail.user_info && order_price && (!status || status < 3)
   end

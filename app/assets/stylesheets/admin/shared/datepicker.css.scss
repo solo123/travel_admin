@@ -1,0 +1,31 @@
+.datepicker{
+  table {
+    background-color:#c8e0c0;
+
+    tbody {background-color: white;}
+    tr {
+    td {
+      border:solid 1px lightgray;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+    td.day {
+      background-color: #f1ffe0;
+    }
+    td.day:hover { background-color: yellow;}
+    td.disabled { background-color: white;}
+    td.disabled:hover {background-color: white;}
+  }
+    th {
+      border:solid 1px #c8e0c0; background-color:#c8e0c0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+    .dt-schedule {
+      background-color: rgb(241, 241, 241) !important;
+      color: rgb(223, 205, 178) !important;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<% if flash[:error] %>
+  alert("<%= raw flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+  alert('Withdraw check payment successed.');
+  location.reload(true);
+<% end %>
+
+

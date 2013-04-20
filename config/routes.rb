@@ -15,7 +15,8 @@ TravelAdmin::Engine.routes.draw do
       get :cover, :on => :member
     end
     resources :bus_reserved_dates
-    get :shifts, :on => :member
+    get :shift, :on => :member
+    get :shifts, :on => :collection
   end
   resources :tours do
     resources :spots, :controller => 'tours/spots'
@@ -23,6 +24,7 @@ TravelAdmin::Engine.routes.draw do
       get :search, :generate
     end
     get :gen, :on => :member
+    resources :schedules
   end
   resources :schedules do
     collection do
@@ -49,8 +51,9 @@ TravelAdmin::Engine.routes.draw do
   resources :orders do
     get :add_room, :on => :collection
     resources :remarks
-    resources :pay_cashes
+    resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers, :pay_credit_cards
   end
+  resources :pay_credit_cards, :pay_checks
   resources :emps
   resources :employee_infos do
     resources :photos do
@@ -73,8 +76,6 @@ TravelAdmin::Engine.routes.draw do
     get :refund, :on => :collection
   end
   resources :vouchers, :company_receivables
-  resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers
-  resources :pay_credit_cards
   resources :accounts do
     get :company, :on => :collection
     get :pay, :on => :member
@@ -111,5 +112,5 @@ TravelAdmin::Engine.routes.draw do
 
   resources :posts
 
-  match 'home', :to => 'home#index'
+  match 'home(/:action)', :to => 'home'
 end

@@ -1,0 +1,12 @@
+.calendar {
+  .month { width: 220px; height:250px; float:left; 
+    table { border: solid 1px green; 
+      th { border:solid 1px green; padding: 3px; background-color:#c8e0c0;}
+      td { border:solid 1px green; padding: 3px; width: 22px;}
+      td.shift { background-color: #49afcd;cursor:pointer;
+        a { color: white; font-weight: bold; display: block; text-decoration:none;}
+      }
+      td.shift:hover {background-color: #2f96b4;border:solid 1px yellow;}
+    }
+  }
+}

@@ -1,7 +1,7 @@
-<div class='row'>
-  <div class='span1'><%= f.number_field :num_adult, :in => 1..4, :class => 'span1' %></div>
-  <div class='span1'><%= f.number_field :num_child, :size => 1, :in => 0..4, :class => 'span1' %></div>
-  <div class='span1' style='text-align:center'>0.00</div>
+<div class='item-template row'>
+  <div class='span1'><%= f.number_field :num_adult, :in => 1..4, :class => 'span1', :onchange => 'recaculate_price();' %></div>
+  <div class='span1'><%= f.number_field :num_child, :size => 1, :in => 0..4, :class => 'span1', :onchange => 'recaculate_price()' %></div>
+  <div class='span1' style='text-align:center'><%= label_tag nil, number_with_precision(f.object.amount, :precision => 2), :class => 'strong' %></div>
   <div class='span1'>
     <label class='checkbox inline'>
       <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %> Del

@@ -14,7 +14,7 @@ class CreatePayments < ActiveRecord::Migration
       t.timestamps
     end
     create_table :account_histories do |t|
-      t.integer :balance_object_type
+      t.string :balance_object_type
       t.integer :balance_object_id
       t.integer :payment_id
       t.decimal :balance_before, :precision => 8, :scale => 2, :default => 0

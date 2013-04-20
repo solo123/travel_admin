@@ -14,7 +14,7 @@
   <td><%= row.created_at %></td>
   <td class="actions">
     <div class='btn-group'>
-      <%= icon_link_to '', bus_path(row) + '/shifts', :icon => 'icon-list-alt', :title => 'View bus shifts table' %> 
+      <%= icon_link_to '', shift_bus_path(row), :icon => 'icon-list-alt', :title => 'View bus shifts table' %> 
     <%= row_link_to_edit row %>
     <%= row_link_to_photo bus_photos_path(row) %>
     <%= icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'icon-ban-circle', :title => 'Bus reserved dates' %>

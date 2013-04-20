@@ -22,8 +22,9 @@
 	<td><%= row.tour_setting.weekly %></td>
 	<td class='cell-middle'>
     <div class='btn-group'>
-      <%= icon_link_to '', tour_spots_path(row), :class => 'btn', :icon => 'icon-list', :title => 'Tour route and visit schedule' %>
+      <%= icon_link_to '', tour_spots_path(row), :icon => 'icon-list', :title => 'Tour route and visit schedule' %>
 		<%= row_link_to_edit row %>
+    <%= icon_link_to '', new_tour_schedule_path(row), :icon => 'icon-plus', :title => 'Add 1 schedule to this tour.', :remote => true %>
 		<%= row_link_to_hide row %>
   </div>
 

@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel"><i class='glyphicon-3-15'></i>Pay Credit Card</h3>
+</div>
+<div class="modal-body">
+  <%= form_for( [@order, @object], :remote => true) do |f| %>
+    <div class='row'>
+      <div class='span4'>
+        <table>
+          <tr>
+            <td>Card type:</td>
+            <td><%= f.select( :card_type, %w[Visa Master AE]) %></td>
+          </tr>
+          <tr>
+            <td>Card Number:</td>
+            <td><%= f.text_field :card_number %></td>
+          </tr>
+          <tr>
+            <td>Valid date:</td>
+            <td><%= f.text_field :valid_date, :placeholder => 'MM/YY' %></td>
+          </tr>
+          <tr>
+            <td>CVV:</td>
+            <td><%= f.text_field :csc, :placeholder => 'xxx' %></td>
+          </tr>
+          <tr>
+            <td>Name:</td>
+            <td><%= f.text_field :full_name %></td>
+          </tr>
+          <tr>
+            <td>Prof code:</td>
+            <td><%= f.text_field :prof_code %></td>
+          </tr>
+          <tr>
+            <td colspan='2' class='cell-middle'><span class='text-error' id='pcc_msg'></span></td>
+          </tr>
+        </table>
+      </div>
+      <div class='span4'>
+        <table class='table table-bordered'>
+          <tr>
+            <td>Order</td>
+            <td class='cell-middle' width='150'><%= @order.order_number %></td>
+          </tr>
+          <tr>
+            <td>Order Amount</td>
+            <td class='cell-right'><%= @order.order_price.actual_amount %></td>
+          </tr>
+          <tr>
+            <td>Balance before</td>
+            <td class='cell-right' id='tb_balance_before'><%= @order.order_price.balance_amount %></td>
+          </tr>
+        </table>
+        <table class='table table-bordered'>
+          <tr>
+            <td>Amount:</td>
+            <td width='150' class='cell-right'><%= f.text_field :amount, :class => 'span2 large-number' %></td>
+          </tr>
+          <tr>
+            <td>Service fee:</td>
+            <td id='td_service_fee' class='cell-right'></td>
+          </tr>
+          <tr>
+            <td>Card amount:</td>
+            <td id='td_card_amount' class='cell-right large-number'></td>
+          </tr>
+          <tr>
+            <td>Balance after</td>
+            <td id='td_balance' class='cell-right large-number text-success'></td>
+          </tr>
+        </table>
+        <%= f.hidden_field :service_fee %>
+        <%= f.hidden_field :total_amount %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+
+
+

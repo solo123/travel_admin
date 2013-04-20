@@ -5,8 +5,13 @@ module TravelAdmin
       super
     end
     def destroy
-      @object.PayCreditCard.find(params[:id])
-      biz_payment = Biz::OrderPayment.new
+      @object = PayCreditCard.find(params[:id])
+      biz = Biz::OrderPayment.new
+      biz.withdraw(@object, current_employee.employee_info)
+      unless biz.errors.blank?
+        flash[:error] = biz.errors.to_sentence
+        @log_text = "withdraw credit card error: " + biz.errors.to_sentence
+      end
     end
     def update
       super

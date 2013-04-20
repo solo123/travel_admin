@@ -1,5 +1,8 @@
-<div class='container'>
-  <div class='span-2'><%= f.select :tel_type, InputType.where(:type_name => 'tel').map { |c| [c.type_text, c.type_text] },  :class => 'data-field' %></div>
-  <div class='span-4'><%= f.telephone_field :tel %></div>
-  <div class='span-2 last'><%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %><%= f.label :_destroy, 'Del'%></div>
+<div class='item-template'>
+  <%= f.select :tel_type, InputType.where(:type_name => 'tel').map { |c| [c.type_text, c.type_text] }, {}, :style => 'width:90px;' %>
+  <%= f.telephone_field :tel, :class => 'span2' %>
+  <label class="checkbox inline">
+    <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %>
+    Del
+  </label>
 </div>

@@ -1,12 +1,14 @@
-<div class='container'>
+<div class='item-template'>
     <%= f.text_field :address1, :style => 'width:240px;'%><br />
     <%= f.text_field :address2, :style => 'width:100px;' %>
     Zip:<%=f.text_field :zipcode, :style => 'width:40px;' %><br />   
     <%= f.hidden_field :city_id, :class => 'city_id' %>
     <span class='strong'><%= f.object.city.to_s if f.object.city %></span>
-    (<%= link_to 'Change', select_city_path(f.object.city ? f.object.city : 0), :remote => true, :onclick => 'set_current_city_field(this);' %>) 
-    <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %><%= f.label :_destroy, 'Del'%>
-    <hr />
+    (<%= link_to 'Change city', select_city_path(f.object.city ? f.object.city : 0), :remote => true, :onclick => 'set_current_city_field(this);' %>)
+    <label class='checkbox inline'> 
+      <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %>
+      Del
+    </label>
 </div>
 
 

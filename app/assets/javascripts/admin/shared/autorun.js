@@ -16,5 +16,6 @@ $(function(){
     removeTimer: 10000
   });
 
+  $('.barcode').barcode($('.barcode').text(), 'code128', {barHeight:20});
 
 });

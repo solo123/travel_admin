@@ -108,10 +108,10 @@ function validate_order_seats(){
 
 function assign_seat(order_id){
   if (validate_seats()){
-	  var pane = $('.seat-table');
+    var pane = $('form.edit_schedule_assignment');
     pane.find('input[name=order_id]').val(order_id);
     pane.find('input[name=operate]').val('order_seats');
-    pane.find('form').submit();
+    $('form.edit_schedule_assignment').submit();
   }
 }
 function set_order_customer(uid){
@@ -133,21 +133,6 @@ function set_order_customer(uid){
     $('#order_order_detail_attributes_email').val("");
     $('#order_order_detail_attributes_bill_address').val("");
   }
-}
-var order_room_template = 
-"<tr><td><input name='order[order_items_attributes][000][num_adult]' size='2' type='text' value=''></td>" +
-"<td><input name='order[order_items_attributes][000][num_child]' size='2' type='text' value=''></td>" +
-"<td>amount:</td><td><a href='javascript:void(0)' class='delete_room'>Remove</a></td></tr>";
-
-function add_room(){
-  var new_id = new Date().getTime();
-  var regexp = new RegExp("000", "g");
-  $("#rooms")
-    .append(order_room_template.replace(regexp, new_id));
-
-  $('.delete_room').click(function(){
-    $(this).parent().parent().remove();
-  });
 }
 
 function bind_driver_selection(){
@@ -172,5 +157,25 @@ function bind_tourguide_selection(){
   }
 }
 
-
-
+// order's function below
+function recaculate_price(){
+  var price = [ 
+    parseFloat($('#order_price1').text()),
+    parseFloat($('#order_price2').text()),
+    parseFloat($('#order_price3').text()),
+    parseFloat($('#order_price4').text())];
+  var total_amount = 0;
+  $('#rooms .item-template').each(function(){
+    var num_adult = $(this).find('input[type=number]:first').val();
+    var num_child = $(this).find('input[type=number]:last').val();
+    var num_tot   = parseInt(num_adult) + parseInt(num_child);
+    if (num_tot>4) {
+      $(this).find('input[type=number]:last').val( 4 - parseInt(num_adult) );
+      num_tot = 4;
+    }
+    var amount = price[num_tot-1];
+    total_amount += amount;
+    $(this).find('label:first').text( amount.toFixed(2));
+  });
+  $('#total_amount').text(total_amount.toFixed(2));
+}

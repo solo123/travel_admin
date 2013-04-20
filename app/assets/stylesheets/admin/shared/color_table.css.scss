@@ -1,0 +1,24 @@
+@import '../vars';
+
+/* color schema table */
+#color_schemas{
+	width: 200px;
+	height: 30px;
+	margin:auto;
+  list-style:none;
+	.color1 {background-color: $ptn_1;}
+	.color2 {background-color: $ptn_2;}
+	.color3 {background-color: $ptn_3;}
+	.color4 {background-color: $ptn_4;}
+	.color5 {background-color: $ptn_5;}
+	.color6 {background-color: $ptn_6;}
+
+	li {
+		height: 5px;
+		width: 5px;
+		border:solid 1px green;
+		float:right;
+		margin: 1px;
+	}
+}
+

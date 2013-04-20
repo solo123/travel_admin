@@ -7,10 +7,11 @@
 <%= content_for :search_box do %>
   <%= form_for( @search, :url => buses_path ) do |f| %>
     <div class='input-prepend input-append'>
-      <span class='add-on'>Bus name</span>
+      <span class='add-on'>Name</span>
       <%= f.text_field :name_contains, :class => 'span2' %>
       <%= search_button %>
       <%= link_to_new 'New Bus', 'buses/new' %>
+      <%= icon_link_to 'Shifts', 'buses/shifts', :icon => 'icon-list-alt' %>
     </div>
   <% end %>
 <% end %>

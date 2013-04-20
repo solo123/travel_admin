@@ -1,44 +1,53 @@
-<% content_for :head do %>
-  <script type='text/javascript'>
-    var vds = '<%= @datelist %>';
-    var aa = null;
-    $(function(){
-        $('#annual_calendar').datepicker({
-          defaultDate: new Date(2013,0,1),
-          numberOfMonths: [4,3],
-          changeMonth: false,
-          dateFormat: "yy.mm.dd",
-          beforeShowDay: function(date){
-      var s = date_to_string(date);
-      if (vds.indexOf(s)>=0){
-          var start = vds.indexOf(s);
-          var stop0 = vds.indexOf('|', start);
-          var stop1 = vds.indexOf(',', start);
-          var stop2 = vds.indexOf(';', start);
-          if (stop0 > start && stop2 > stop1 && stop1 > stop0){
-            var schedule = vds.substring(stop0+1, stop1);
-            var ass = vds.substring(stop1+1, stop2);
-            return [1, '', "Schedule:" + schedule + "\nAssignment:" + ass];  
-        }
-        }
-        return [0, '', null];
-        },
-onSelect: function(date, inst){
-          var start = vds.indexOf(date);
-          if (start<0) return;
-          var stop0 = vds.indexOf('|', start);
-          var stop1 = vds.indexOf(',', start);
-          if (stop0 > start && stop1 > stop0){
-            var schedule = vds.substring(stop0+1, stop1);
-            if (confirm("Go to Schedule:" + schedule + "?"))
-              location = "/admin/schedules/" + schedule;
-}
-}
-          });
-
-    });
-  </script>
+<%
+  year = Date.today.year
+  month = Date.today.month
+  max_year = year + 1
+  min_year = year - 1
+  year = params[:year].to_i if params[:year]
+  month = params[:month].to_i if params[:month]
+  d_start = Date.new(year, month, 1)
+  d_end = d_start.end_of_month
+  shifts = BusShift.joins(:schedule_assignment).where(:date => [d_start..d_end]).order('bus_shifts.date, schedule_assignments.schedule_id')
+  buses = BusShift.select(:bus_id).uniq.where(:date => [d_start..d_end]).includes(:bus)
+%>
+<%= content_for :breadcrumbs do %>
+  <ul class="breadcrumb">
+    <li>Data <span class="divider">/</span></li>
+    <li><%= link_to 'Vehicles', buses_path %> <span class="divider">/</span></li>
+    <li class="active">Bus shifts</li>
+  </ul>
 <% end %>
-<h1>Shifts: Bus #<%= params[:id] %></h1>
-
-<div id='annual_calendar'></div>
+<%= content_for :search_box do %>
+  <div class='input-prepend input-append'>
+    <span class='add-on'>Year</span>
+    <input class="span2" id="input_year" max="<%= max_year %>" min="<%= min_year %>" type="number" value="<%= year %>">
+    <span class='add-on'>Month</span>
+    <input class="span1" id="input_month" max="12" min="1" type="number" value="<%= month %>">
+    <a href='#' id='go_shift_button' class='btn btn-success' onclick='go_shift()'><i class='icon-play'></i> GO</a>
+  </div>
+<% end %>
+<h3>Shifts of <%= year %>.<%= month %></h3>
+<table class='shifts_table' id='list_shifts'>
+  <thead>
+    <tr class='table-header'>
+      <th>Bus</th>
+      <% (d_start..d_end).each do |day| %>
+        <th><%= day.day %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% buses.each do |bus| %>
+      <tr>
+        <td><%= bus.bus.name %></td>
+        <% (d_start..d_end).each do |d| %>
+          <% if s = shifts.detect { |s| s.bus_id == bus.bus_id && s.date == d } %>
+            <td class='shift' tag="<%= s.schedule_assignment_id %>" link="<%= schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment) %>" title='Schedule: <%= s.schedule_assignment.schedule_id %>'>&nbsp;</td>
+          <% else %>
+            <td>&nbsp;</td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

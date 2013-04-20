@@ -1,0 +1,9 @@
+@import '../vars';
+table.shifts_table{
+  width: 100%;
+  font-size: 10px;
+  th {background-color: $default_header_color; width: 20px;border:solid 1px $default_border_color;}
+  td {background-color: $default_background_color;border:solid 1px $default_border_color;width:20px;}
+  td.shift {background-color: $default_header_color;text-align:center;cursor:pointer;}
+  td.shift:hover {background-color: lightyellow;}
+}

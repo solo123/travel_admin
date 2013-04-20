@@ -9,7 +9,7 @@
       location.href = host_path + '/user_infos/<%= @object.id %>';
   } else {
     $("#edit_user_info_div").modal('hide');
-    $("#list_<%= class_name %>")
+    $("#list_user_infos")
       .append("<%= j render(:partial => 'row', :object => @object) %>");
     $("#<%= dom_id(@object) %>").delay(500)
       .fadeOut().fadeIn()

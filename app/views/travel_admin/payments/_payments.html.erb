@@ -1,52 +1,62 @@
-      <h4>Payment</h4>
-      <table class='table table-bordered table-condensed'>
-        <thead>
-          <tr class='table-header'>
-            <th>Method</th>
-            <th>before</th>
-            <th>Amount</th> 
-            <th>after</th> 
-            <th>account</th>
-            <th>Date</th>
-            <th>Op</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% payments.payments.each do |p| %>
-            <% order_hist = p.balance_data('Order') %>
-            <tr id='<%= dom_id(p) %>'>
-              <td><%= p.pay_method_type %></td>
-              <td><%= order_hist.balance_before %></td>
-              <td><%= p.amount %></td>
-              <td><%= order_hist.balance_after %></td>
-              <td>
-                <% if p.pay_method_type == 'PayCash' || p.pay_method_type == 'PayCheck' %>
-                  <%= p.received_by.nickname if p.received_by %>
-                <% else %>
-                  <%= p.operator.nickname if p.operator %>
-                <% end %>
-                </td>
-                <td><%= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at %></td>
-                <td>
-                  <%= link_to 'cancle', pay_credit_card_path(p.pay_method), :method => :delete, :remote => true if p.pay_method.is_a? PayCreditCard %>
-                </td>
-            </tr>
+<h4>Payment</h4>
+<table class='table table-bordered table-condensed'>
+  <thead>
+    <tr class='table-header'>
+      <th>Method</th>
+      <th>before</th>
+      <th>Amount</th> 
+      <th>after</th> 
+      <th>account</th>
+      <th>Date</th>
+      <th>Op</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% payments.payments.each do |p| %>
+      <% order_hist = p.balance_data('Order') %>
+      <% unless order_hist %>
+        <tr><td colspan='6'>Error data</td></tr>
+      <% else %>
+      <tr id='<%= dom_id(p) %>'>
+        <td class='cell-middle'><%= p.pay_method_type %></td>
+        <td class='cell-right'><%= order_hist.balance_before %></td>
+        <td class='cell-right'><%= p.amount %></td>
+        <td class='cell-right'><%= order_hist.balance_after %></td>
+        <td class='cell-middle'>
+          <% if p.account.is_a? EmployeeInfo %>
+            <%= p.account.owner.nickname %>
+          <% else %>
+            <%= p.operator.nickname if p.operator %>
           <% end %>
-        </tbody>
-      </table>
-      <p style='text-align:right;'><span class='note-text'>Current balance:</span> <span class='strong'><%= payments.order_price.balance_amount %></span></p>
-      <p>
-        <div class='btn-group'>
-          <a class='btn btn-success btn-mini' data-toggle='dropdown' href='#'>
-            <i class='icon-plus'></i> Payment
-            <span class='caret'></span></a>
-          <ul class='dropdown-menu'>
-            <li><%= link_to raw('<i class="icon-pencil"></i> Pay Cash'), new_order_pay_cash_path(@order), :remote => true  %></li>
-            <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
-            <li class='divider'></li>
-            <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
-          </ul>
-        </div>
-        <%= icon_link_to 'Payment', new_payment_path(:order_id => payments.id), :remote => true, :icon => 'icon-plus', :class => 'btn btn-mini btn-success' %>
-        <%= icon_link_to 'Refund', refund_payments_path(:order_id => payments.id), :remote => true, :icon => 'icon-share', :class => 'btn btn-mini btn-info' %>
-      </p>
+        </td>
+        <td class='cell-middle'><%= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at %></td>
+        <td class='cell-middle'>
+          <%= icon_link_to '', object_url(p.pay_method), :method => :delete, :remote => true, :icon => 'icon-retweet', :class => 'btn btn-mini btn-danger', :title => 'Withdraw this payment!', :confirm => "Withdraw when the payment failed. Paid amount will return. \n\nAre you sure to withdraw?" if (p.pay_method.status == 8) && ((p.pay_method.is_a? PayCreditCard) || (p.pay_method.is_a? PayCheck)) %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% 
+  btn_class = 'btn btn-mini btn-success'
+  btn_class += ' disabled' if payments.status && payments.status > 2
+  fn_class = 'btn btn-mini btn-info'
+  fn_class += ' disabled' if !payments.status || payments.status < 1 || payments.status > 3
+%> 
+<div class='pull-right'><span class='note-text'>Current balance:</span> <span class='strong'><%= payments.order_price.balance_amount %></span>
+</div>
+<div class='btn-group'>
+  <a class='<%= btn_class %>' data-toggle='dropdown' href='#'>
+    <i class='icon-plus'></i> Payment
+    <span class='caret'></span></a>
+  <ul class='dropdown-menu'>
+    <li><%= link_to raw('<i class="gicon-7-22"></i> Pay Cash'), new_order_pay_cash_path(@order), :remote => true  %></li>
+    <li><%= link_to raw('<i class="gicon-3-15"></i> Credit Card'), new_order_pay_credit_card_path(@order), :remote => true  %></li>
+    <li><%= link_to raw('<i class="icon-edit"></i> Pay Check'), new_order_pay_check_path(@order), :remote => true  %></li>
+    <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
+    <li class='divider'></li>
+    <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
+  </ul>
+</div>
+<%= icon_link_to 'Refund', refund_payments_path(:order_id => payments.id), :remote => true, :icon => 'icon-share', :class => fn_class %>

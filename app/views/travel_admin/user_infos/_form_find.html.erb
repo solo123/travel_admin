@@ -7,17 +7,14 @@
     <div class='input-prepend input-append'>
       <span class='add-on'>Name/Tel/Email</span>
       <%= text_field_tag :user_find, '', :onkeyup => 'find_user()' %>
-      <%= icon_link_to 'Select', new_user_info_path, :icon => 'icon-plus', :remote => true, :class => 'btn btn-success' %>
+      <%= icon_link_to 'New customer', new_user_info_path, :icon => 'icon-plus', :remote => true, :class => 'btn btn-success' %>
     </div>
   </div>
-  <div class='border-div' style='height:200px;overflow-y:scroll;'>
-    <table class="data-list table table-striped table-hover" id="list_user_infos">
+  <div class='border-div' style='height:300px;overflow-y:scroll;'>
+    <table class="data-list table table-striped table-hover" id="list_result_user_infos">
       <tbody id='search_result'>
       </tbody>
     </table>
-  </div>
-  <div class='border-div' id='user_detail' style='height: 100px; overflow-y:scroll;'>
-    detail info here.
   </div>
 </div>
 <div class="modal-footer">

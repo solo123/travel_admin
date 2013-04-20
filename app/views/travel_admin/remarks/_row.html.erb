@@ -1,7 +1,10 @@
-  <div class='a-note'><div class='content'>
-    <p class='note-text small-font'><%= row.employee_info.nickname if row.employee_info %>
+<div class='a-note'>
+  <div class='content'>
+    <small class='muted'>
+      <%= row.employee_info.nickname if row.employee_info %><br />
       <%= time_tag row.created_at %>
-  </p>
-  <p><%= row.note_text %></p>
-</div></div>
+    </small>
+    <p><%= row.note_text %></p>
+  </div>
+</div>
 

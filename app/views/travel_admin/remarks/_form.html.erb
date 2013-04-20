@@ -1,18 +1,19 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel"><i class='glyphicon-9-30'></i> Add Remark</h3>
+</div>
+<div class="modal-body">
 <%= form_for( [@parent, @object], :remote => true) do |f| %>
-  <div class="container">
-  	<div class='span-8'>
 	  <%= f.field_container :note_text do %>
-	  	<%= f.label :note_text %><br />
-	  	<%= f.text_area :note_text %>
+      <%= f.text_area :note_text, :rows => '10', :class => 'span8' %>
 	  <% end %>
-	  </div>
-	  <div class='span-8 last'>
-    </div>   
-	</div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
+</div>
+
+
 
 

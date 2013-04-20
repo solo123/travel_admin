@@ -8,9 +8,11 @@ if ($(edit_div).length == 0){
 $(edit_div)
   .html("<%= j render(:partial => "form") %>")
   .on('shown', function(){
-    $('#recv_cash').focus();
+    $('#pay_check_check_number').focus();
   })
   .modal();
 
   //pay cash script
-  $('#recv_cash').keyup(recaculate_pay_cash);
+  $('#pay_check_amount').keyup(recaculate_pay_check);
+  $('#pay_check_amount').val($('#tb_balance_before').text());
+
