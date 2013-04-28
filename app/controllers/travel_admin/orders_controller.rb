@@ -33,6 +33,14 @@ module TravelAdmin
       load_object
       @order = @object
     end
+    def destroy
+      load_object
+      biz = Biz::OrderPayment.new
+      biz.cancel_order(@object, current_employee.employee_info)
+      unless biz.errors.blank?
+        flash[:error] = biz.errors.to_sentence
+      end
+    end
     private
     def new_params
       if !@object.schedule_assignment && params[:assignment_id]

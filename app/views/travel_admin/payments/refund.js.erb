@@ -1,45 +1,13 @@
 var edit_div_id = "edit_payment_div";
 var edit_div = '#' + edit_div_id;
 if ($(edit_div).length == 0){
-  $('#page_main').append("<div id='"+ edit_div_id +"'></div>");
-  $(edit_div).dialog({ autoOpen:false, width:750, dialogClass:'shadow', modal:true});
+  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
 }
 
 $(edit_div)
 	.html("<%= escape_javascript(render(:partial => "form_refund"))%>");
+  .modal();
 
-$('#tabs_refund').tabs("div.panes > div");
-	
-$(edit_div)
-	.dialog('option', 'title', 'Refund')
-	.dialog('open');
+init_refund_cash();
 
-init_pay_cash();
-
-function init_pay_cash(){
-	$('#recv_cash').focus();
-		
-	$('#recv_cash').keyup(function(){
-		var b = parseFloat($('#paid_amount').text()) || 0;
-		var p = parseFloat($('#recv_cash').val()) || 0;
-		var c = b + p;
-    if (c > 0) c = 0;
-		$('#pay_cash_change').text(c);
-		if (c==0){
-			$('#recv_cash').css('color', 'black');
-			$('#pay_cash_change').css('color', 'black');
-			$('#pay_cash_amount').val(p);
-      $('#refund_amount').text(p);
-      $('#paid_amount_after').text(b+p);
-		}
-		else {
-			$('#recv_cash').css('color', 'green');
-			$('#pay_cash_change').css('color', 'green');
-      $('#pay_cash_amount').val(-b);
-      $('#refund_amount').text(-b);
-      $('#paid_amount_after').text('0.00');
-		}
-			 
-	});
-}
 

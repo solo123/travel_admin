@@ -26,14 +26,14 @@ module TravelAdmin
       link_to(raw('<i class="icon-globe"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
-      link_to raw("<i class=\"icon-plus\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
+      link_to raw("<i class=\"icon-plus icon-white\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
     end
 
     def row_link_to_edit(resource, options = {})
       options[:remote] = true
       options[:title] = 'Edit'
       options[:class] = 'btn btn-success'
-      link_to(raw('<i class="icon-pencil"></i>'), edit_object_url(resource), options)
+      link_to(raw('<i class="icon-edit icon-white"></i>'), edit_object_url(resource), options)
     end
     def button_link_to_edit(resource, options = {})
       options[:remote] = true
@@ -69,6 +69,21 @@ module TravelAdmin
       lb = label_text
       lb = "<i class='#{icon}'></i> " + label_text if icon
       link_to( raw(lb), to_url, options)
+    end
+    def icon_link(label_text, to_url, options = {})
+      icon = options[:icon]
+      options.delete(:icon)
+      lb = label_text
+      lb = "<i class='#{icon}'></i> " + label_text if icon
+      if options[:class] && options[:class].include?('disabled')
+        options.delete(:onclick)
+        options.delete(:remote)
+        options.delete(:method)
+        options.delete(:confirm)
+        link_to(raw(lb), '#', options)
+      else
+        link_to( raw(lb), to_url, options)
+      end
     end
     def search_button
       button_tag raw('<i class="icon-search"></i> Search'), :class => 'btn'

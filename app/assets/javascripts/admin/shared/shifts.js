@@ -11,7 +11,7 @@ function merge_shift_table(){
     }
     if (colspan>1){
       $(this).prop('colspan', colspan);
-      $(this).text($(this).attr('tag'));
+      $(this).text($(this).attr('schedule'));
     }
   });
   $('.shifts_table td.shift').click(function(){

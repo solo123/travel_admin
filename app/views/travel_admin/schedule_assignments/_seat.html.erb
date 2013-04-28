@@ -4,7 +4,9 @@
     css = 'unav'
   elsif seat
     if seat.order
-      if seat.order.status == 3
+      if seat.order.order_detail && seat.order.order_detail.from_agent
+        css = 'agent'
+      elsif seat.order.status == 3
         css = 'fpaid'
       elsif seat.order.status == 2
         css = 'paid'
@@ -30,10 +32,12 @@
     <div class="seat-pickup">
       <% if seat %>
         <% if seat.order %>
-          <%= seat.order.order_detail.pickup %>
-        <% else %>
-          <%= seat.message %>
+          <%= seat.order.order_detail.pickup %> <br />
+        <% if seat.order.order_detail && seat.order.order_detail.from_agent %>
+          <%= label_tag nil, "A:" +  seat.order.order_detail.from_agent.short_name, :title => seat.order.order_detail.from_agent.company_name, :class => 'text-success' %>
         <% end %>
+        <% end %>
+        <%= seat.message %> 
       <% end %>
     </div>
     <div class="seat-info">

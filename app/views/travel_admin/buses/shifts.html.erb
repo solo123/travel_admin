@@ -7,14 +7,13 @@
   month = params[:month].to_i if params[:month]
   d_start = Date.new(year, month, 1)
   d_end = d_start.end_of_month
-  shifts = BusShift.joins(:schedule_assignment).where(:date => [d_start..d_end]).order('bus_shifts.date, schedule_assignments.schedule_id')
-  buses = BusShift.select(:bus_id).uniq.where(:date => [d_start..d_end]).includes(:bus)
+  shifts = BusShift.where(:date => [d_start..d_end]).order(:date).includes(:schedule_assignment)
+  buses = Bus.joins(:bus_shifts).where('bus_shifts.date' => [d_start..d_end]).uniq.order(:name)
 %>
 <%= content_for :breadcrumbs do %>
   <ul class="breadcrumb">
-    <li>Data <span class="divider">/</span></li>
-    <li><%= link_to 'Vehicles', buses_path %> <span class="divider">/</span></li>
-    <li class="active">Bus shifts</li>
+    <li>Reports <span class="divider">/</span></li>
+    <li class="active">Vehicles shifts</li>
   </ul>
 <% end %>
 <%= content_for :search_box do %>
@@ -39,10 +38,14 @@
   <tbody>
     <% buses.each do |bus| %>
       <tr>
-        <td><%= bus.bus.name if bus.bus %></td>
+        <td><%= bus.name %></td>
         <% (d_start..d_end).each do |d| %>
-          <% if s = shifts.detect { |s| s.bus_id == bus.bus_id && s.date == d } %>
-            <td class='shift' tag="<%= s.schedule_assignment_id %>" link="<%= schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment) %>" title='Schedule: <%= s.schedule_assignment.schedule_id %>'>&nbsp;</td>
+          <% if s = shifts.detect { |s| s.bus_id == bus.id && s.date == d } %>
+            <% if s.schedule_assignment %>
+              <td class='shift' tag="<%= s.schedule_assignment_id %>" schedule="<%= s.schedule_assignment.schedule_id %>" link="<%= schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment) %>" title='Schedule: <%= s.schedule_assignment.schedule_id %>'>&nbsp;</td>
+            <% else %>
+              <td class='text-error' title='Schedule: <%= s.schedule_assignment_id %> NOT EXIST!'>ERR</td>
+            <% end %>
           <% else %>
             <td>&nbsp;</td>
           <% end %>

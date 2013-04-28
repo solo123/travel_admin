@@ -9,7 +9,7 @@ module TravelAdmin
       @object = object_name.classify.constantize.new(params[object_name.singularize.parameterize('_')])
       order = Order.find(params[:order_id])
       biz_payment = Biz::OrderPayment.new
-      if params[:commit] == 'refund'
+      if @object.is_a? RefundCash
         biz_payment.refund(order, @object, current_employee.employee_info)
       else
         biz_payment.pay(order, @object, current_employee.employee_info) 

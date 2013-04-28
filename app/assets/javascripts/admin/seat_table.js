@@ -134,6 +134,19 @@ function set_order_customer(uid){
     $('#order_order_detail_attributes_bill_address').val("");
   }
 }
+function set_order_agent(agent_id){
+  $("#edit_company_div").modal('hide');
+  $('#search_agent_div').modal('hide');
+
+  $('#order_order_detail_attributes_from_agent_id').val(agent_id);
+  if (agent_id > 0 ){
+    $.getJSON(host_path + '/companies/' + agent_id, function(data){
+      $('#agent_name').text(data.company_name).prop('title', data.short_name);
+    });
+  } else {
+    $('#agent_name').text("(no agent)").prop('title','');
+  }
+}
 
 function bind_driver_selection(){
   var opt_driver = $('#schedule_assignment_driver_id').prop('options');

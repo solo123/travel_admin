@@ -52,6 +52,7 @@ TravelAdmin::Engine.routes.draw do
     get :add_room, :on => :collection
     resources :remarks
     resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers, :pay_credit_cards
+    resources :refund_cashes
   end
   resources :pay_credit_cards, :pay_checks
   resources :emps
@@ -61,15 +62,18 @@ TravelAdmin::Engine.routes.draw do
     end
     resources :accounts
     get :docs, :on => :collection
+    get :shifts, :on => :collection
     get :test_email, :on => :member
     get :edit_info, :on => :member
   end
   resources :companies do
-    get 'add_contact', :on => :collection
+    get :add_contact, :on => :collection
+    get :search_agent, :on => :collection
     resources :photos do
       get :cover, :on => :member
     end
     resources :accounts 
+    get :find_agent, :on => :collection
     get :new_invoice, :on => :member 
   end
   resources :payments do
@@ -86,12 +90,12 @@ TravelAdmin::Engine.routes.draw do
   resources :schedule_assignment_costs, :schedule_assignment_balances
   resources :logs
   resources :todos do
-    get 'zone', :on => :collection
+    get :zone, :on => :collection
     resource :remarks
     member do
-      get 'add_employee'
-      post 'add_worker'
-      delete 'rm_worker'
+      get :add_employee
+      post :add_worker
+      delete :rm_worker
     end
   end
   resources :my_logs do

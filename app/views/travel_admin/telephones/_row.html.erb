@@ -1,11 +1,10 @@
 <tr id="<%= dom_id row%>">
   <td class='cell-middle'><%= row.id %></td>
-  <td><%= row.tel_number_type %></td>
-  <td><%= row.tel_number_id %></td>
+  <td><%= link_to "#{row.tel_number_type}: #{row.tel_number_id}", edit_object_url(row.tel_number), :remote => true %></td>
   <td><%= row.tel_type %></td>
-  <td><%= row.tel %></td>
-  <td><%= row.created_at %></td>
-  <td><%= row.updated_at %></td>
+  <td><%= number_to_phone row.tel %></td>
+  <td><%= time_tag row.created_at %></td>
+  <td><%= time_tag row.updated_at %></td>
   <td class='cell-middle'>
     <%= row_link_to_edit row %> 
   </td>

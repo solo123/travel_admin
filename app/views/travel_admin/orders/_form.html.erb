@@ -4,7 +4,7 @@
 %>
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Edit Order# <%= @object.order_number %></h3>
+  <h3 id="myModalLabel"><i class='glyphicon-2-20'></i>Edit Order# <%= @object.order_number %></h3>
 </div>
 <div class="modal-body">
   <%= form_for(@object, :remote => true, :html => {:class => 'small-form'}) do |f| %>
@@ -17,10 +17,22 @@
           <%= render 'schedule_title', :schedule => @object.schedule %>
           <%= icon_link_to 'Select Schdule', select_schedules_path + '?page=order', {:icon => 'icon-plus', :remote => true, :class => 'btn btn-success'} unless @object.schedule %>
         </div>
-          <%= f.fields_for :order_detail do |detail| %>
-            Customer: 
-            <%#= icon_link_to 'Change Customer', select_user_infos_path + '?id=' + (@object.order_detail.user_info ? @object.order_detail.user_info.id.to_s : '0'), {:remote => true, :class => 'btn btn-mini btn-success', :icon => 'icon-user'} %>
-            <%= icon_link_to 'Change Customer', '#', :onclick => 'goto_find_user()', :icon => 'icon-user', :class => 'btn btn-mini btn-success' %><br />
+        <%= f.fields_for :order_detail do |detail| %>
+          <p>
+            <div class='btn-group'>
+            <%= icon_link_to 'from agent', '#', :onclick => 'goto_find_agent()', :icon => 'icon-font icon-white', :class => 'btn btn-mini btn-success' %>
+            <%= icon_link_to 'no agent', '#', :onclick => 'set_order_agent(0)', :icon => 'icon-remove icon-white', :class => 'btn btn-mini btn-info' %>
+          </div>
+
+            <br />
+            <% if detail.object.from_agent %>
+              <%= label_tag nil, detail.object.from_agent.company_name, :id => 'agent_name' %>
+            <% else %>
+              <%= label_tag nil, '(no agent)', :id => 'agent_name' %>
+            <% end %>
+          </p>
+            <%= detail.hidden_field :from_agent_id %>
+            <%= icon_link_to 'Customer', '#', :onclick => 'goto_find_user()', :icon => 'icon-user icon-white', :class => 'btn btn-mini btn-success' %><br />
             <%= detail.text_field :user_info_id, :readonly => true %><br />
             Full name:<br />
             <%= detail.text_field :full_name, :readonly => true %><br />
@@ -63,7 +75,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <%= icon_link_to 'Payment', order_path(@object.id), :class => 'pull-left btn btn-small btn-info', :icon => 'icon-shopping-cart' unless @object.new_record? %>
+  <%= icon_link_to 'Payment', order_path(@object.id), :class => 'pull-left btn btn-small btn-info', :icon => 'icon-shopping-cart' if @object.ready_to_payment? %>
   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
   <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
 </div>

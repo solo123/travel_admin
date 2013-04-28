@@ -35,7 +35,7 @@
           
           <% @object.contacts.each do |c| %>
             <tr>
-              <td><%= c.to_s %></td>
+              <td><%=raw c.to_s("<br />") %></td>
               <td><%= link_to 'del', 'c', 'data-confirm' => 'Are you sure to delete this contact?' %></td>
             </tr>
 		  	<% end %>

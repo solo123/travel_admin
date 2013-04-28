@@ -9,6 +9,9 @@
   <%= icon_link_to 'Generate schedules for selected tours', '#', :class => 'btn btn-success', :icon => 'icon-plus', :onclick => 'generate_schedules()', :id => 'btn_auto_gen' %>
 <% end %>
 <section>
+<p>
+  <strong class='text-info larger'>Info:</strong> Automatic generate schedules from now to <span class='text-info'>"Days in advance"</span>, if set to <strong>0</strong> then using configuration: <span class='text-info'>"max_reservation_days" = </span><strong class='text-error'><%= cfg.get_config :max_reservation_days %></strong> <%= icon_link_to 'change', app_configurations_path, :class => 'btn btn-mini', :icon => 'icon-edit' %>
+</p>
 <table class="data-list table table-bordered table-striped" id="list_tours">
   <thead>
     <tr class='table-header'>
@@ -19,8 +22,9 @@
       </th>
       <th>Title</th>
       <th>Weekly</th>
+      <th>Days in advance</th>
       <th width='100'>Price</th>
-      <th>last schedule</th>
+      <th width='100'>last schedule</th>
       <th width='80'>op</th>
     </tr>
   </thead>

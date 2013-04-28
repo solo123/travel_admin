@@ -1,0 +1,80 @@
+<% ui = @parent  %>
+<h2>User details</h2>
+<%= image_tag ui.title_photo.pic.url(:small) if ui.title_photo %>
+
+<div class='span4'>
+<table class='table table-bordered table-condensed'>
+  <tr>
+    <td>ID</td>
+    <td><%= ui.id %></td>
+  </tr>
+  <tr>
+    <td>Full name</td>
+    <td><%= ui.full_name %></td>
+  </tr>
+  <tr>
+    <td>level</td>
+    <td><%= ui.user_level %></td>
+  </tr>
+  <tr>
+    <td>status</td>
+    <td><%= ui.status %></td>
+  </tr>
+  <tr>
+    <td>Created at</td>
+    <td><%= time_tag ui.created_at %></td>
+  </tr>
+  <tr>
+    <td>Updated at</td>
+    <td><%= time_tag ui.updated_at %></td>
+  </tr>
+</table>
+</div>
+<div class='span4'>
+  <% ui.telephones.each do |tel| %>
+    <p>[<%= tel.tel_type %>] <%= tel.tel %></p>
+  <% end %>
+  <% ui.emails.each do |email| %>
+    <p><%= email.email_address %></p>
+  <% end %>
+  <% ui.addresses.each do |addr| %>
+    <p><%= addr.address1 %>, <%= addr.address2 %> ZIP:<%= addr.zipcode %></p>
+  <% end %>
+  <p>
+    <%= icon_link_to 'Edit', edit_object_url(ui), :remote => true, :icon => 'icon-edit', :class => 'btn btn-mini btn-success' %>
+  </p>
+</div>
+<div class='span4'>
+  <% if ui.user %>
+  <% else %>
+    <p class='text-info'>No login info.</p>
+  <% end %>
+</div>
+<div class='span11'>
+  <table class='table table-bordered table-condensed'>
+    <thead>
+      <tr class='table-header'>
+        <th>ID</th>
+        <th>Schedule</th>
+        <th>method</th>
+        <th>Status</th>
+        <th>Created at</th>
+        <th>Updated at</th>
+        <th>amount</th>
+      </tr>
+    </thead>
+    <% ui.orders.each do |order| %>
+      <tr>
+        <td><%= order.order_number %></td>
+        <td><%= order.schedule_id %></td>
+        <td><%= order.order_method %></td>
+        <td><%= order.status %></td>
+        <td><%= time_tag order.created_at %></td>
+        <td><%= time_tag order.updated_at %></td>
+        <td><%= order.order_price.actual_amount if order.order_price %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
+<div class='clear'></div>

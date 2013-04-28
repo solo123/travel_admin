@@ -4,3 +4,6 @@ function submit_dialog_form(btn){
 function submit_this_form(btn){
   $(btn).closest('form').submit();
 }
+function remove_modal(btn){
+  $(btn).closest('.modal').modal('hide').remove();
+}

@@ -2,9 +2,14 @@ table.seat-table-intro{
   width: 380px;
   border:solid 1px darkgreen;
   float: right;
+  margin-right: 5px;
 }
-  .diagram-exp .block {
-    width:16px;height:16px;margin-right:4px;float:left;border:solid 1px grey;
+  .diagram-exp{
+    font-size:12px;
+    td {padding: 5px;}
+    .block {
+      width:16px;height:16px;margin-right:4px;float:left;border:solid 1px grey;
+    }
   }
   .blnk { background-color:#339966; }
   .hold { background-color:#ffff80; }
@@ -12,9 +17,10 @@ table.seat-table-intro{
   .paid { background-color:#ffc0e0; }
   .fpaid { background-color:#ffcc99; }
   .unav { background-color:#eee; color: #aaa; }
+  .agent {background-color:#78c7c2;}
     
 
-    .seat-table {
+  .seat-table {
       border:solid 1px green; margin:2px;
       border-collapse: separate;
       width: 100%;

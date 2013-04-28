@@ -74,16 +74,18 @@ module Biz
       acc_hist.payment = payment
     end
 
-    def refund(order, refund, operator)
-      check_for_refund(order, refund, operator)
+    def refund(order, a_refund, operator)
+      check_for_refund(order, a_refund, operator)
       return unless @errors.blank?
 
-      payment = set_payment_data(order, refund, operator)
+      payment = set_payment_data(order, a_refund, operator)
       ActiveRecord::Base.transaction do
         set_receive_account(payment)
         payment.save!
         payment.account.save!
-        order.pay(refund)
+        order.pay(payment)
+        a_refund.status = 8
+        a_refund.save
       end
     end
 
@@ -105,7 +107,7 @@ module Biz
         @errors << refund.errors.full_messages.to_sentence
         return
       end
-      if refund.is_a? PayCash
+      if refund.is_a? RefundCash
         unless refund.received_by
           @errors << "Please select refund from"
           return
@@ -115,24 +117,43 @@ module Biz
       @errors << "Account not found" unless refund.account
     end
 
-    def cancle_to_voucher(voucher, operator)
-      check_for_voucher(voucher, operator)
+    def cancel_order(order, operator)
+      # new order
+      if !order.status || order.status == 0
+        order.status = 7
+        order.save
+        return
+      end
+
+      check_for_cancel(order, operator)
       return unless @errors.blank?
 
-      order = voucher.order
+      # order no pay
+      if order.order_price.actual_amount == order.order_price.balance_amount
+        order.status = 7
+        order.save
+        return
+      end
+
+      # create voucher and cancel
+      voucher = Voucher.new
+      voucher.order = order
+      voucher.amount = order.order_price.actual_amount - order.order_price.balance
+      voucher.expire_date = Date.today + 1.year 
+      voucher.status = 1
       p = voucher.build_payment
       p.payment_data = order
-      p.amount = 0 - voucher.amount - voucher.refund_fee
+      p.amount = 0 - voucher.amount
       p.account = get_company_account(operator.company, 'Voucher')
       p.pay_method = voucher
       p.operator_id = operator.id
-      voucher.payment = p
       unless p.account
-        errors << "Account not found"
+        errors << "Company Voucher account not found"
         return
       end
 
       ActiveRecord::Base.transaction do
+        voucher.save
         order_hist = order.account_histories.build
         order_hist.sub_balance(order.order_price.balance_amount, p.amount)
         order.order_price.balance_amount = order_hist.balance_after
@@ -159,7 +180,7 @@ module Biz
         end
       end
     end
-    def check_for_voucher(voucher, operator)
+    def check_for_cancel(order, operator)
       @errors = []
       unless operator.is_a? EmployeeInfo
         @errors << "Please Login befor refund"
@@ -169,25 +190,16 @@ module Biz
         @errors << "Operator have no company"
         return
       end
-      unless voucher.order
+      unless order
         @errors << "Cannot cancle without order"
         return
       end
-      order = voucher.order
       unless order.status && order.status > 1 && order.order_price && order.order_price.balance_amount <= order.order_price.actual_amount
         @errors << "Order is not ready to refund."
         return
       end
-      unless voucher.amount > 0
-        @errors << "Please input amount."
-        return
-      end
-      unless voucher.valid?
-        @errors << voucher.errors.full_messages.to_sentence
-        return
-      end
-      if voucher.amount + voucher.refund_fee != order.order_price.actual_amount - order.order_price.balance_amount
-        @errors << "Voucher amount not match order amount"
+      if order.voucher
+        @errors << "Order already have a voucher"
         return
       end
     end

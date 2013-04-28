@@ -7,12 +7,11 @@ class ScheduleAssignment < ActiveRecord::Base
   belongs_to :tour_guide_assistance, :class_name => 'EmployeeInfo'
 
   has_many :seats, :class_name => 'BusSeat'
-  has_many :bus_shifts
-  has_many :employee_shifts
+  has_many :bus_shifts, :dependent => :destroy
+  has_many :employee_shifts, :dependent => :destroy
 
   after_create :add_shifts
   after_update :add_shifts
-  before_destroy :del_shifts
 
   validate :check_driver
   validate :check_tour_guide
@@ -91,10 +90,6 @@ class ScheduleAssignment < ActiveRecord::Base
         end
       end
     end
-  end
-  def del_shifts
-    self.bus_shifts.destroy_all
-    self.employee_shifts.destroy_all
   end
 
 end

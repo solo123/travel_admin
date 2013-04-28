@@ -1,0 +1,20 @@
+<% if flash[:error] %>
+  alert("<%= flash[:error] %>");
+  <% flash.discard %>
+<% else %>
+  if ($('#<%= dom_id(@object) %>').length == 0){
+    if ($('#edit_order_div').length>0)
+      set_order_agent(<%= @object.id %>);
+    else
+      location.href = host_path + '/user_infos/<%= @object.id %>';
+  } else {
+    $("#edit_company_div").modal('hide');
+    $("#<%= dom_id(@object) %>")
+      .replaceWith("<%= escape_javascript(render(:partial => 'row', :object => @object)) %>");
+    $("#<%= dom_id(@object) %>").delay(500)
+      .fadeOut().fadeIn()
+      .fadeOut().fadeIn();
+  } 
+<% end %>
+
+

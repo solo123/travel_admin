@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :schedule_assignment
   has_one :order_detail
   has_one :order_price
+  has_one :voucher
   has_many :order_items
   has_many :payments, :as => :payment_data
   has_many :bus_seats
@@ -35,7 +36,7 @@ class Order < ActiveRecord::Base
     end
   end
   def ready_to_payment?
-    order_detail && order_detail.user_info && order_price && (!status || status < 3)
+    !self.new_record? && order_detail && order_detail.user_info && order_price && order_price.total_amount > 0 && (!status || status < 3)
   end
   def change_status_after_payment
     if self.order_price.balance_amount == 0

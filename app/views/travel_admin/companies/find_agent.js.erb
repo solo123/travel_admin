@@ -1,0 +1,11 @@
+if ($('#search_agent_div').length == 0){
+  $('#dialog_place_holder').append("<div id='search_agent_div' class='modal hide fade' aria-hidden='true'></div>");
+}
+
+$('#search_agent_div')
+	.html("<%= j render(:partial => "form_find_agent") %>")
+	.modal('show');
+ 
+  find_agent();
+
+

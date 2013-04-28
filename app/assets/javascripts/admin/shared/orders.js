@@ -30,6 +30,26 @@ function recaculate_pay_cash(){
   $('#tb_change').text(change.toFixed(2));
   $('#pay_cash_amount').val(pay_amount);
 }
+function recaculate_refund_cash(){
+  var refund_amount = parseFloat($('#refund_cash_refund_amount').val());
+  var refund_fee = parseFloat($('#refund_cash_refund_fee').val());
+  var order_amount = parseFloat($('#tb_order_amount').text());
+  var balance_before = parseFloat($('#tb_balance_before').text());
+  var amount = refund_amount + refund_fee;
+
+  if (amount <= 0 || amount > (order_amount - balance_before)){
+    $('#pcc_msg').text('Error: Invalid amount');
+    $('#edit_payment_div').find('.btn-primary').prop('disabled', true);
+  } else {
+    $('#pcc_msg').text('');
+    $('#edit_payment_div').find('.btn-primary').prop('disabled', false);
+    var balance = balance_before + amount;
+
+    $('#tb_pay_amount').text((0-amount).toFixed(2));
+    $('#tb_balance').text(balance.toFixed(2));
+    $('#refund_cash_amount').val(0-amount);
+  }
+}
 function recaculate_pay_credit_card(){
   var amount = parseFloat($('#pay_credit_card_amount').val());
   var balance_before = parseFloat($('#tb_balance_before').text());
@@ -79,4 +99,31 @@ function recaculate_pay_check(){
     $('#pcc_msg').text('');
     $('#edit_payment_div').find('.btn-primary').prop('disabled', false);
   }
+}
+
+function init_refund_cash(){
+	$('#recv_cash').focus();
+		
+	$('#recv_cash').keyup(function(){
+		var b = parseFloat($('#paid_amount').text()) || 0;
+		var p = parseFloat($('#recv_cash').val()) || 0;
+		var c = b + p;
+    if (c > 0) c = 0;
+		$('#pay_cash_change').text(c);
+		if (c==0){
+			$('#recv_cash').css('color', 'black');
+			$('#pay_cash_change').css('color', 'black');
+			$('#pay_cash_amount').val(p);
+      $('#refund_amount').text(p);
+      $('#paid_amount_after').text(b+p);
+		}
+		else {
+			$('#recv_cash').css('color', 'green');
+			$('#pay_cash_change').css('color', 'green');
+      $('#pay_cash_amount').val(-b);
+      $('#refund_amount').text(-b);
+      $('#paid_amount_after').text('0.00');
+		}
+			 
+	});
 }

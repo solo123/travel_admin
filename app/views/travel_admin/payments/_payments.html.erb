@@ -31,7 +31,7 @@
         </td>
         <td class='cell-middle'><%= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at %></td>
         <td class='cell-middle'>
-          <%= icon_link_to '', object_url(p.pay_method), :method => :delete, :remote => true, :icon => 'icon-retweet', :class => 'btn btn-mini btn-danger', :title => 'Withdraw this payment!', :confirm => "Withdraw when the payment failed. Paid amount will return. \n\nAre you sure to withdraw?" if (p.pay_method.status == 8) && ((p.pay_method.is_a? PayCreditCard) || (p.pay_method.is_a? PayCheck)) %>
+          <%= icon_link_to '', object_url(p.pay_method), :method => :delete, :remote => true, :icon => 'icon-repeat', :class => 'btn btn-mini', :title => 'Withdraw this payment!', :confirm => "Withdraw when the payment failed. Paid amount will return. \n\nAre you sure to withdraw?" if (p.pay_method.status == 8) && ((p.pay_method.is_a? PayCreditCard) || (p.pay_method.is_a? PayCheck)) %>
         </td>
       </tr>
       <% end %>
@@ -43,6 +43,8 @@
   btn_class += ' disabled' if payments.status && payments.status > 2
   fn_class = 'btn btn-mini btn-info'
   fn_class += ' disabled' if !payments.status || payments.status < 1 || payments.status > 3
+  cn_class = 'btn btn-mini btn-warning'
+  cn_class += ' disabled' if payments.status && payments.status == 7
 %> 
 <div class='pull-right'><span class='note-text'>Current balance:</span> <span class='strong'><%= payments.order_price.balance_amount %></span>
 </div>
@@ -51,12 +53,22 @@
     <i class='icon-plus'></i> Payment
     <span class='caret'></span></a>
   <ul class='dropdown-menu'>
-    <li><%= link_to raw('<i class="gicon-7-22"></i> Pay Cash'), new_order_pay_cash_path(@order), :remote => true  %></li>
-    <li><%= link_to raw('<i class="gicon-3-15"></i> Credit Card'), new_order_pay_credit_card_path(@order), :remote => true  %></li>
-    <li><%= link_to raw('<i class="icon-edit"></i> Pay Check'), new_order_pay_check_path(@order), :remote => true  %></li>
-    <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
+    <li><%= icon_link 'Pay Cash', new_order_pay_cash_path(@order), :remote => true, :icon => 'gicon-7-22'  %></li>
+    <li><%= icon_link 'Credit Card', new_order_pay_credit_card_path(@order), :remote => true, :icon => 'gicon-3-15'  %></li>
+    <li><%= icon_link 'Pay Check', new_order_pay_check_path(@order), :remote => true, :icon => 'icon-edit'  %></li>
     <li class='divider'></li>
     <li><a href='#'><i class='icon-pencil'></i> Pay Cash</a></li>
   </ul>
 </div>
-<%= icon_link_to 'Refund', refund_payments_path(:order_id => payments.id), :remote => true, :icon => 'icon-share', :class => fn_class %>
+<div class='btn-group'>
+  <a class='<%= fn_class %>' data-toggle='dropdown' href='#'>
+    <i class='icon-share'></i> Refund
+    <span class='caret'></span>
+  </a>
+  <ul class='dropdown-menu'>
+    <li><%= icon_link 'Refund by Cash', new_order_refund_cash_path(@order), :icon => 'gicon-7-22', :remote => true %></li>
+    <li><%= icon_link 'Refund to Voucher', '', :icon => 'icon-tag' %></li>
+    <li class='divider'></li>
+  </ul>
+</div>
+<%= icon_link 'Cancel', order_path(@order), :remote => true, :icon => 'icon-trash', :method => :delete, :class => cn_class, :title => 'Cancel this order. Auto create voucher if have un-refunded payments.', :confirm => "Cancel this order. Auto create voucher if have un-refunded payments.\n\nPlease refund to advoid voucher to be create.\n\nAre you sure?" %>

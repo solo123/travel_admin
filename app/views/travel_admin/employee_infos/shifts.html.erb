@@ -1,0 +1,57 @@
+<%
+  year = Date.today.year
+  month = Date.today.month
+  max_year = year + 1
+  min_year = year - 1
+  year = params[:year].to_i if params[:year]
+  month = params[:month].to_i if params[:month]
+  d_start = Date.new(year, month, 1)
+  d_end = d_start.end_of_month
+  shifts = EmployeeShift.where(:date => [d_start..d_end]).order(:date).includes(:schedule_assignment)
+  emps = EmployeeInfo.joins(:employee_shifts).where('employee_shifts.date' => [d_start..d_end]).uniq.order(:nickname)
+%>
+<%= content_for :breadcrumbs do %>
+  <ul class="breadcrumb">
+    <li>Reports <span class="divider">/</span></li>
+    <li class="active">Employees shifts</li>
+  </ul>
+<% end %>
+<%= content_for :search_box do %>
+  <div class='input-prepend input-append'>
+    <span class='add-on'>Year</span>
+    <input class="span2" id="input_year" max="<%= max_year %>" min="<%= min_year %>" type="number" value="<%= year %>">
+    <span class='add-on'>Month</span>
+    <input class="span1" id="input_month" max="12" min="1" type="number" value="<%= month %>">
+    <a href='#' id='go_shift_button' class='btn btn-success' onclick='go_shift()'><i class='icon-play'></i> GO</a>
+  </div>
+<% end %>
+<h3>Shifts of <%= year %>.<%= month %></h3>
+<table class='shifts_table' id='list_shifts'>
+  <thead>
+    <tr class='table-header'>
+      <th>Employee</th>
+      <% (d_start..d_end).each do |day| %>
+        <th><%= day.day %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% emps.each do |emp| %>
+      <tr>
+        <td><%= emp.nickname %></td>
+        <% (d_start..d_end).each do |d| %>
+          <% if s = shifts.detect { |s| s.employee_info_id == emp.id && s.date == d } %>
+            <% if s.schedule_assignment %>
+              <td class='shift' tag="<%= s.schedule_assignment_id %>" schedule="<%= s.schedule_assignment.schedule_id %>" link="<%= schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment) %>" title='Schedule: <%= s.schedule_assignment.schedule_id %>'>&nbsp;</td>
+            <% else %>
+              <td class='text-error' title='Schedule: <%= s.schedule_assignment_id %> NOT EXIST'>ERR</td>
+            <% end %>
+          <% else %>
+            <td>&nbsp;</td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -7,6 +7,7 @@ function quick_go_enter(sender)
             if(sender.id=="qg_order") quick_go_order();
             if(sender.id=="qg_schedule") quick_go_schedule();
             if(sender.id=="qg_tour" ) quick_go_tour();
+            if(sender.id=="qg_user") quick_go_user();
         }
         return false; 
     } else
@@ -30,4 +31,6 @@ function quick_go_schedule(){
 function quick_go_order(){
   quick_go('orders', '#qg_order');
 }
-
+function quick_go_user(){
+  $.getScript(host_path + '/user_infos/find?n=' + $('#qg_user').val());
+}

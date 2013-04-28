@@ -52,7 +52,14 @@
       <li><%= link_to t(:schedule_balances), schedule_assignment_balances_path %></li>
     </ul>
   </li>
-  <li><a href='#'>Reports</a></li>
+  <li class='dropdown'>
+    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+      Reports<b class='caret'></b></a>
+    <ul class='dropdown-menu'>
+      <li><%= link_to 'Vehicles shifts', shifts_buses_path %></li>
+      <li><%= link_to 'Employees shifts', shifts_employee_infos_path %></li>
+    </ul>
+  </li>
   <% if has_auth('show_manage_menu') %>
     <li class='dropdown'>
       <a class='dropdown-toggle' data-toggle='dropdown' href='#'>

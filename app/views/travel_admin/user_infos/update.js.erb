@@ -6,7 +6,7 @@
     if ($('#edit_order_div').length>0)
       set_order_customer(<%= @object.id %>);
     else
-      location.href = host_path + '/user_infos/<%= @object.id %>';
+      location.href = '<%= user_info_photos_path(@object) %>';
   } else {
     $("#edit_user_info_div").modal('hide');
     $("#<%= dom_id(@object) %>")

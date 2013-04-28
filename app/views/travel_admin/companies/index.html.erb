@@ -10,7 +10,7 @@
     <div class='input-append'>
       <%= f.text_field :short_name_or_company_name_contains, :class => 'span2' %>
       <%= search_button %>
-      <%= icon_link_to 'Add Company', new_company_path, :remote => true, :icon => 'icon-plus', :class => 'btn btn-success', :title => 'Add Company' %>
+      <%= link_to_new 'Add Company', new_company_path %>
     </div>
 			<% end %>
 <% end %>

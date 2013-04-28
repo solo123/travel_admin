@@ -7,6 +7,7 @@ class EmployeeInfo < ActiveRecord::Base
   has_many :accounts, :as => :owner
   has_many :photos, :as => :photo_data, :dependent => :destroy
   belongs_to :title_photo, :class_name => 'Photo'
+  has_many :employee_shifts
 
   accepts_nested_attributes_for :telephones, :allow_destroy => true, :reject_if => proc {|att| att['tel'].blank? }
   accepts_nested_attributes_for :emails, :allow_destroy => true, :reject_if => proc { |att| att['email_address'].blank? }

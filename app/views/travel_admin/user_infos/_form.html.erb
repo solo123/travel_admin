@@ -62,7 +62,8 @@
 </div>
 </div>
 <div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <%= icon_link 'User details', user_info_photos_path(@object), :target => 'edit-win', :icon => 'icon-list-alt', :class => 'pull-left' %>
+  <button class="btn" onclick='remove_modal(this);'>Close</button>
   <button class="btn btn-primary" onclick='submit_dialog_form(this)'>Save changes</button>
 </div>
 

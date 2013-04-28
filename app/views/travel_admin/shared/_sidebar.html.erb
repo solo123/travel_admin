@@ -12,7 +12,7 @@
   User:
   <div class='input-append'>
     <input id='qg_user' type='text' onkeypress='return quick_go_enter(this);' class='span1' />
-    <%= icon_link_to '', find_user_infos_path, :remote => true, :icon => 'icon-search' %>
+    <%= icon_link_to '', '#', :icon => 'icon-search', :onclick => 'quick_go_user();' %>
   </div>
   <div id='todos' class='zone'></div>
   <div id='last_logs' class='zone'></div>

@@ -5,10 +5,10 @@ module TravelAdmin
       load_object
       if @object.seats.count == 0
         schedule = @object.schedule
-        @object.delete
+        @object.destroy
         redirect_to schedule
       else
-        flash[:alert] = 'not empty'
+        flash[:alert] = 'release all seats before delete!'
       end
     end
     def seats      

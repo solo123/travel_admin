@@ -1,3 +1,5 @@
+@import '../vars';
+
 .table-header{background-color:#c8e0c0;}
 td.table-header{background-color:#c8e0c0 !important;}
 
@@ -6,3 +8,9 @@ td.table-header{background-color:#c8e0c0 !important;}
 .cell-middle {text-align: center; vertical-align: middle;}
 td.cell-middle {text-align: center; vertical-align: middle;}
 td.cell-right {text-align:right;}
+
+.table-hover tr:hover > td { cursor:pointer; }
+.data-list {
+  tr {cursor: pointer; }
+  tr:hover {background-color: $high_light_color;}
+}
