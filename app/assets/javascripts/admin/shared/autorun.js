@@ -6,10 +6,6 @@ $(document).ajaxStop(function(){
 });
 
 $(function(){
-  $('.date-picker').datepicker({
-    format: 'yyyy-mm-dd'
-  });
-
   $('.flash').purr({
     fadeInSpeed: 500,
     fadeOutSpeed: 2000,
@@ -17,5 +13,8 @@ $(function(){
   });
 
   $('.barcode').barcode($('.barcode').text(), 'code128', {barHeight:20});
+  $('.date-picker').datepicker({
+    format: 'yyyy-mm-dd'
+  });
 
 });
