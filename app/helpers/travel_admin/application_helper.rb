@@ -165,6 +165,9 @@ var html = $("#{generate_template(form, method, :partial => partial)}".replace(/
       dt = date.strftime("%Y-%m-%d") 
       "<time class='local-date' datetime='#{dt}T00:00:00Z'>#{dt}</time>".html_safe
     end
+    def date_text_field(form, field)
+      form.text_field field, :value => form.object[field].strftime("%Y-%m-%d"), :class => 'date-picker'
+    end
 
 
 
