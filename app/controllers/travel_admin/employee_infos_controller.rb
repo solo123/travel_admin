@@ -1,6 +1,28 @@
 module TravelAdmin
 	class EmployeeInfosController < ResourceController
+		def index
+      @search = EmployeeInfo.metasearch(params[:search])
+      @ecs = EmployeeInfo.select('company_id, count(*) as count').where(:status => 1).group(:company_id).includes(:company)
+      @cid = 0
+      if params[:c]
+        @cid = params[:c].to_i
+      else
+        @cid = @ecs.first.company_id
+      end
+      @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 1) 
+		end
     def docs
+      @search = EmployeeInfo.metasearch(params[:search])
+      @ecs = EmployeeInfo.select('company_id, count(*) as count').where(:status => 1).group(:company_id).includes(:company)
+      @cid = 0
+      if params[:c]
+        @cid = params[:c].to_i
+      else
+        @cid = @ecs.first.company_id
+      end
+      @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 1) 
+    end
+    def search
       unless has_auth('view_employee_document')
         flash[:error] = 'Unauthorised access to special page.'
         redirect_to :controller => 'admin/home', :action => :index 

@@ -5,24 +5,21 @@
       </ul>
 <% end %>
 <%= content_for :search_box do %>
-      <%= form_for( @search, :url => employee_infos_path ) do |f| %>
-      <%= f.select :company_id_eq, Company.all.map { |c| [c.short_name, c.id] }.insert(0, ['All Company', nil]), {}, :class => 'data-field', :onchange => 'this.form.submit()'  %>
-      <%= f.select :status_eq, [['All Status', nil],['active', 1], ['leaved', 0]],{}, :class => 'data-field', :onchange => 'this.form.submit()' %>
-    <div class='input-prepend input-append'>
-      <span class='add-on'>Name</span>
-      <%= f.text_field :nickname_contains %>
-      <%= search_button %>
-    <%= link_to_new 'Add Employee', new_employee_info_path %>
-    </div>
-      <% end %>
+  <%= link_to_new 'Add Employee', new_employee_info_path %>
 <% end %>
 <section>
-<%= will_paginate(@collection) %>
+<ul class="nav nav-tabs" id='list_emps'>
+  <% @ecs.each do |e| %>
+    <li <%= "class=active" if e.company_id == @cid %>>
+      <a href="docs?c=<%= e.company_id %>"><%= e.company ? e.company.short_name : '(empty)' %>:<%= e.count %>p</a>
+    </li>
+  <% end %>
+</ul>
+<% if @employee_infos %>
 <table class="data-list table table-bordered table-striped" id="list_employee_infos">
   <thead>
   <tr class='table-header'>
       <th><%= t("id") %></th>
-      <th><%= t("Company") %></th>
       <th><%= t("name") %></th>
       <th><%= t("roles") %></th>
       <th>Login</th>
@@ -30,14 +27,14 @@
       <th>SSN</th>
       <th>Login count</th>
       <th><%= t('status') %></th>
-      <th>op</th>
+      <th width='100'>op</th>
   </tr>
   </thead>
   <tbody>
-<% @collection.each do |e| %>
+<% @employee_infos.each do |e| %>
   <%= render :partial => 'row_doc', :object => e %>
 <% end %>
   </tbody>
 </table>
-<%= will_paginate(@collection) %>
+<% end %>
 </section>
