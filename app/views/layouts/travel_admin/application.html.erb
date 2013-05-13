@@ -14,7 +14,7 @@
     <div class='navbar navbar-inverse navbar-fixed-top'>
       <div class='navbar-inner'>
         <div class='container'>
-          <a class='brand' href='/'>Admin Home</a>
+          <%= link_to 'Admin Home', cfg.get_config('admin_path'), :class => 'brand' %>
           <%= render 'travel_admin/shared/main_menu' %>
           <div style='float:right;color:white;'>
             <% if current_employee %>
