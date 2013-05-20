@@ -20,7 +20,8 @@
     css = 'blnk'
   end
 %>
-<td id='seat_<%= i %>' class='seat <%= css %>'>
+<td id='seat_<%= i %>' class='seat-td <%= css %>'>
+  <div class='seat'>
     <div class="seat-check">
       <% unless css == 'unav' %>
         <label class='checkbox inline'>
@@ -64,5 +65,6 @@
       <% end %>
       &nbsp;
     </div>
+  </div>
 </td>
 

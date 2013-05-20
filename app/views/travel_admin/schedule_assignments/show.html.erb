@@ -8,6 +8,7 @@
 <div>
   <div class='row'>
   <div class='btn-group' style='float:right;'>
+    <%= icon_link_to 'Clear', 'javascript:clear_selected_seats()', :icon => 'icon-ok-circle', :title => 'Unselected all seats' %>
     <%= icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@schedule) + "?schedule_id=#{@schedule.id}", :remote => true, :icon => 'icon-plus-sign' %>
         <%= icon_link_to 'Hold', 'javascript:hold()', :icon => 'icon-star', :class => 'btn btn-info' %>
       <%= icon_link_to 'Release', 'javascript:release();', :icon => 'icon-star-empty' %>

@@ -26,7 +26,8 @@ table.seat-table-intro{
       width: 100%;
       margin-top: 6px;
       .seat {
-        width:23%;border:solid 1px #ccc;padding:4px;position:relative;
+        padding:4px;position:relative;
+        border: solid 1px transparent;
         &:hover {border:solid 1px red;}
       }
       .error { border:solid 1px red; }
@@ -35,6 +36,7 @@ table.seat-table-intro{
       .seat-check {position:absolute; bottom:4px;}
       .seat-pickup {float:left;}
       .seat-info {text-align: right;}
+      td.seat-td {border-width: 0 1px 1px 0; border-style:solid; border-color: #ccc;}
     }
 
 

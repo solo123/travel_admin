@@ -57,7 +57,7 @@ function validate_seats(){
 
 	var result = '';
 	pane.find('input[type="checkbox"]:checked').each(function(){ 
-    var seat = $(this).closest('.seat');
+    var seat = $(this).closest('.seat-td');
     if(!seat.hasClass('blnk')) result += $(this).parent().text().trim() + ', '; 
   });
 	if (result.length > 0) {
@@ -76,7 +76,7 @@ function validate_hold_seats(){
 
 	var result = '';
 	pane.find('input[type="checkbox"]:checked').each(function(){
-    var seat = $(this).closest('.seat');
+    var seat = $(this).closest('.seat-td');
     if(!seat.hasClass('hold') && !seat.hasClass('sold')) result += $(this).parent().text().trim() + ', '; 
   });
 	if (result.length > 0) {
@@ -95,7 +95,7 @@ function validate_order_seats(){
 
 	var result = '';
 	pane.find('input[type="checkbox"]:checked').each(function(){
-    var seat = $(this).closest('.seat');
+    var seat = $(this).closest('.seat-td');
     if(seat.hasClass('sold')) result += $(this).parent().text().trim() + ', '; 
   });
 	if (result.length > 0) {
@@ -105,7 +105,11 @@ function validate_order_seats(){
 
 	return true;
 }
-
+function clear_selected_seats(){
+  $('.seat-table').find('input[type="checkbox"]:checked').each(function(){
+    $(this).removeAttr('checked');
+  });
+}
 function assign_seat(order_id){
   if (validate_seats()){
     var pane = $('form.edit_schedule_assignment');

@@ -1,3 +1,5 @@
+<div class='row'>
+  <div class='span5'>
 <h2>Look Card</h2>
 <%= form_for(@object) do |f| %>
 <table class="data-list table table-bordered table-striped" id="pay_credit_cards" style='width:auto;'>
@@ -20,6 +22,16 @@
     <td class='table-header'>CVV</td><td><%= @object.csc %></td>
   </tr>
   <tr>
+    <td class='table-header'>Tel</td><td><%= @object.telephone.tel %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>Address</td>
+    <td>
+      <%= @object.address.address1 %><br />
+      <%= @object.address.state %>, <%= @object.address.country %> ZIP: <%= @object.address.zipcode %>
+    </td>
+  </tr>
+  <tr>
     <td class='table-header'>Prof code</td><td><%= f.text_field :prof_code %></td>
   </tr>
   <tr>
@@ -31,4 +43,35 @@
   <a href='#' class='btn btn-info' onclick='submit_this_form(this);'><i class='icon-ok'></i> Look Card Done</a>
 </p>
 <% end %>
+</div>
+<% order = @object.order %>
+<div class='span5'>
+  <h2>Order detail</h2>
+<table class="data-list table table-bordered table-striped" id="pay_credit_cards" style='width:auto;'>
+  <tr>
+    <td class='table-header'>Order# </td><td><%= order.order_number %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>Tour</td>
+    <td>
+      <%= order.schedule.tour.description.title %><br />
+      <%= order.schedule.tour.description.title_cn %> <br />
+      <%= order.schedule.departure_date %> ~ <%= order.schedule.return_date %>
+    </td>
+  </tr>
+  <tr>
+    <td class='table-header'>Rooms</td><td><%= order.order_price.num_rooms %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>PAX</td><td><%= order.order_price.num_total %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>Amount</td><td><%= order.order_price.actual_amount %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>Created at</td><td><%= order.created_at %></td>
+  </tr>
+</table>
+</div>
+</div>
 
