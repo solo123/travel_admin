@@ -57,14 +57,21 @@ TravelAdmin::Engine.routes.draw do
   resources :pay_credit_cards, :pay_checks
   resources :emps
   resources :employee_infos do
+    resources :employees
     resources :photos do
       get :cover, :on => :member
     end
     resources :accounts
-    get :docs, :on => :collection
-    get :shifts, :on => :collection
-    get :test_email, :on => :member
-    get :edit_info, :on => :member
+    collection do
+      get :docs
+      get :shifts
+    end
+    member do
+      get :test_email
+      get :edit_info
+      get :psw
+      post :set_psw
+    end
   end
   resources :companies do
     get :add_contact, :on => :collection
@@ -112,9 +119,10 @@ TravelAdmin::Engine.routes.draw do
     get :get_detail, :on => :member
     get :search, :on => :collection
   end
-  resources :auths, :employees;
+  resources :auths, :employees
 
   resources :posts
 
   match 'home(/:action)', :to => 'home'
+  match 'admin(/:action)', :to => 'admin_tools'
 end

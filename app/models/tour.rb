@@ -50,7 +50,7 @@ class Tour < ActiveRecord::Base
     
     s = self.schedules.build
     s.departure_date = day
-    s.return_date = day + days
+    s.return_date = day + days - 1
     s.status = 1
     p = s.build_price
     if self.tour_price

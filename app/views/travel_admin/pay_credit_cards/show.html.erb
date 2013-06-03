@@ -72,6 +72,18 @@
     <td class='table-header'>Created at</td><td><%= order.created_at %></td>
   </tr>
 </table>
+<% user = order.order_detail.user_info %>
+<h3>User info</h3>
+<table class='table table-bordered'>
+  <tr>
+    <td class='table-header'>Name:</td>
+    <td><%= user.full_name %></td>
+  </tr>
+  <tr>
+    <td class='table-header'>Email:</td>
+    <td><%= user.user.email %></td>
+  </tr>
+</table>
 </div>
 </div>
 

@@ -12,8 +12,10 @@
     </tr>
   </thead>
   <tbody>
-    <% orders.includes(:order_detail, :order_price, :bus_seats).each do |order| 
-         order.recaculate_price unless order.order_price
+    <% 
+      biz = Biz::OrderPayment.new
+      orders.includes(:order_detail, :order_price, :bus_seats).each do |order| 
+         biz.caculate_price(order) unless order.order_price
          next if order.order_price.num_total == order.bus_seats.count
   %>
       <tr id="<%= dom_id order %>" >

@@ -15,7 +15,14 @@
     </li>
   <% end %>
 </ul>
+
+<div class="btn-group" data-toggle="buttons-checkbox" style='margin-bottom:10px;'>
+  <%= link_to 'Current Employees', docs_employee_infos_path(:c => @cid), :class => @btn_css[0] %>
+  <%= link_to 'Disabled Employees', docs_employee_infos_path(:c => @cid, :s => 'hide'), :class => @btn_css[1] %>
+  <%= link_to 'Deleted Employees', docs_employee_infos_path(:c => @cid, :s => 'del'), :class => @btn_css[2] %>
+</div>
 <% if @employee_infos %>
+  Total: <b><%= @employee_infos.count %></b> person.
 <table class="data-list table table-bordered table-striped" id="list_employee_infos">
   <thead>
   <tr class='table-header'>

@@ -5,6 +5,9 @@
   <%= render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @schedule} %>
   <%= hidden_field_tag 'assignment_id', @object.id %>
 </div>
+<div id='unseat_orders'>
+  <%= render 'travel_admin/schedules/orders', :orders => @schedule.orders %>
+</div>
 <div>
   <div class='row'>
   <div class='btn-group' style='float:right;'>
@@ -34,9 +37,6 @@
 
 </div>
 
-<div id='unseat_orders'>
-  <%= render 'travel_admin/schedules/orders', :orders => @schedule.orders %>
-</div>
 
 <div id='select_schedule_div' class='dialog-popup'></div>
 <div id='select_customer_div' class='dialog-popup'></div>

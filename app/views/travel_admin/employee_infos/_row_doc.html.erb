@@ -9,7 +9,14 @@
       <td><%= row_doc.employee.sign_in_count if row_doc.employee %></td>
       <td><%= row_doc.status %></td>
     <td class="cell-middle">
+      <div class='btn-group'>
       <%= icon_link_to 'Detail', employee_info_photos_path(row_doc), :icon => 'icon-list-alt', :target => 'edit-win' %>
+      <% if !params[:s] %>
+        <%= row_link_to_hide row_doc %>
+      <% elsif params[:s] == 'hide' %>
+        <%= icon_link_to 'Del', employee_info_path(row_doc), :icon => 'icon-remove', :remote => true, :method => :delete, :confirm => 'Are you sure to delete this employee' %>
+      <% end %>
+    </div>
     </td>
   </tr>
 

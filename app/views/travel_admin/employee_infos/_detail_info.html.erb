@@ -1,12 +1,13 @@
 <% tt = TypeText.instance %>
-<div class='row'>
-<table class='border-table'>
+<div>
+<br />
+<table>
   <tr>
-    <td width='200'>
-      <%= image_tag detail_info.title_photo.pic.url(:small) if detail_info.title_photo %>
+    <td width='330'>
+      <%= image_tag detail_info.title_photo.pic.url(:small), :class => 'img-polaroid' if detail_info.title_photo %>
     </td>
-    <td style='padding:6px;' class='border-table'>
-      <table padding='4'>
+    <td style='padding:6px;'>
+      <table padding='4' class='table table-bordered'>
         <tr>
           <td width='100'>Company:</td>
           <td width='300'><%= detail_info.company.company_name if detail_info.company %></td>
@@ -20,12 +21,22 @@
           <td><%= detail_info.employ_date %></td>
         </tr>
         <tr>
-          <td>Age:</td>
-          <td><%= Time.now.year - detail_info.birthday.year if detail_info.birthday %> (<%= detail_info.birthday %>)</td>
+          <td>Birthday:</td>
+          <td><%= detail_info.birthday%></td>
         </tr>
       </table>
-        Created at:<%= time_tag detail_info.created_at %>
+        Created at: <%= time_tag detail_info.created_at %>
         Last updated: <%= time_tag detail_info.updated_at if detail_info.updated_at %>
+        <br /><strong>Login account:</strong>
+      <% if detail_info.employee %>
+        <%= render :partial => 'travel_admin/employees/employee', :object => detail_info.employee %>
+      <% else %>
+        Cannot login. <%= icon_link_to 'Create login', new_employee_info_employee_path(detail_info), :remote => true, :icon => 'icon-add'  %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>
     </td>
   </tr>
 </table>

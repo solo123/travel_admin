@@ -12,15 +12,25 @@ module TravelAdmin
       @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 1) 
 		end
     def docs
-      @search = EmployeeInfo.metasearch(params[:search])
       @ecs = EmployeeInfo.select('company_id, count(*) as count').where(:status => 1).group(:company_id).includes(:company)
       @cid = 0
+      @btn_css = ['btn', 'btn', 'btn']
       if params[:c]
         @cid = params[:c].to_i
       else
         @cid = @ecs.first.company_id
       end
-      @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 1) 
+      if params[:s] && params[:s] == 'hide'
+        @btn_css[1] = 'btn btn-info disabled'
+        @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 0)
+      elsif params[:s] && params[:s] == 'del'
+        @btn_css[2] = 'btn btn-info disabled'
+        @employee_infos = EmployeeInfo.where(:company_id => @cid).where('status > 1')
+      else
+        @btn_css[0] = 'btn btn-info disabled'
+        @employee_infos = EmployeeInfo.where(:company_id => @cid).where(:status => 1) 
+      end
+      @employee_infos = @employee_infos.order('id desc')
     end
     def search
       unless has_auth('view_employee_document')
@@ -38,6 +48,15 @@ module TravelAdmin
     def edit_info
       load_object
     end
+    def create
+      @object = EmployeeInfo.new(params[:employee_info])
+      @object.status = 1
+      if @object.save
+      else
+        flash[:error] = @object.errors.full_messages.to_sentence
+        @no_log = 1
+      end
+    end
     def update
       load_object
       @object.attributes = params[:employee_info]
@@ -50,6 +69,17 @@ module TravelAdmin
         end
       end
       render 'update_info'
+    end
+    def destroy
+      load_object
+      if @object.status == 1
+        @object.status = 0
+      else
+        @object.status = 7
+      end
+      @object.save
+    end
+    def set_psw
     end
 	end
 end

@@ -1,5 +1,5 @@
 <% if flash[:error] %>
-  alert("<%= flash[:error] %>");
+  alert("<%=raw flash[:error] %>");
   <% flash.discard %>
 <% else %>
 <%

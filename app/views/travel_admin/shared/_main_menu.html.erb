@@ -78,4 +78,15 @@
       </ul>
     </li>
   <% end %>
+  <% if has_auth('is_admin') %>
+    <li class='dropdown'>
+      <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+        Admin
+        <b class='caret'></b>
+      </a>
+      <ul class='dropdown-menu'>
+        <li><%= link_to 'Reset schedules data', 'admin/reset_schedules'  %></li>
+      </ul>
+    </li>
+  <% end %>
 </ul>

@@ -162,11 +162,14 @@ var html = $("#{generate_template(form, method, :partial => partial)}".replace(/
     end
 
     def date_tag(date)
-      dt = date.strftime("%Y-%m-%d") 
+      dt = ''
+      dt = date.strftime("%Y-%m-%d") if date
       "<time class='local-date' datetime='#{dt}T00:00:00Z'>#{dt}</time>".html_safe
     end
     def date_text_field(form, field)
-      form.text_field field, :value => form.object[field].strftime("%Y-%m-%d"), :class => 'date-picker'
+      dt = ''
+      dt = form.object[field].strftime("%Y-%m-%d") if form.object[field]
+      form.text_field field, :value => dt, :class => 'date-picker'
     end
 
 
