@@ -122,6 +122,11 @@ TravelAdmin::Engine.routes.draw do
   resources :auths, :employees
 
   resources :posts
+  resource :test do
+    member do
+      get :reset_app_session
+    end
+  end
 
   match 'home(/:action)', :to => 'home'
   match 'admin(/:action)', :to => 'admin_tools'

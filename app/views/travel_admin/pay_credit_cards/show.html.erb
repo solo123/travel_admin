@@ -22,13 +22,15 @@
     <td class='table-header'>CVV</td><td><%= @object.csc %></td>
   </tr>
   <tr>
-    <td class='table-header'>Tel</td><td><%= @object.telephone.tel %></td>
+    <td class='table-header'>Tel</td><td><%= @object.telephone.tel if @object.telephone %></td>
   </tr>
   <tr>
     <td class='table-header'>Address</td>
     <td>
+      <% if @object.address %>
       <%= @object.address.address1 %><br />
       <%= @object.address.state %>, <%= @object.address.country %> ZIP: <%= @object.address.zipcode %>
+      <% end %>
     </td>
   </tr>
   <tr>
