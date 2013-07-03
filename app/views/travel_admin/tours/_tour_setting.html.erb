@@ -7,6 +7,8 @@
 	  	<%= s.text_field :weekly %>
 	  	<%= s.label :is_auto_gen %>
 	  	<%= s.select :is_auto_gen, [['manual', 0],['auto gen', 1]], {} %>
+      Max reservation days(0=default)
+      <%= s.text_field :days_in_advance %>
 	  </div>
 	  <div class='span3'>
 	  	<%= s.label :has_seat_table %>
