@@ -10,7 +10,6 @@ module TravelAdmin
 
     def orders
       load_object
-      render :partial => 'orders', :object => @object.orders
     end
     def selected
       @object = Schedule.where(:tour_id => params[:tour_id]).where(:departure_date => params[:departure_date]).first
@@ -23,9 +22,10 @@ module TravelAdmin
 
     #override index
     def index
-      return @collection if @collection
+      @tt = 1
+      @tt = params[:tour_type] if params[:tour_type]
       params[:search] ||= {:departure_date_greater_than_or_equal_to => Date.current()}
-      @search = Schedule.metasearch(params[:search])
+      @search = Schedule.joins(:tour).where(['tours.tour_type = ?', @tt]).metasearch(params[:search])
       @collection = @search.page(params[:page]).per_page(cfg.get_config(:admin_list_per_page))
     end
     #override create

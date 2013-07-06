@@ -17,19 +17,17 @@
         <tbody>
           <tr>
             <td class='note-text'>Full name:</td>
-            <td><%= @object.order_detail.user_info.full_name %></td>
+            <td><%= @object.order_detail.user_info.payment_name %></td>
           </tr>
           <tr>
             <td class='note-text'>Telephone:</td>
             <td>
-              <% @object.order_detail.user_info.telephones.each do |tel| %>
-                <%= tel %>,
-              <% end %>
+              <%= @object.order_detail.user_info.payment_tel %>
             </td>
           </tr>
           <tr>
             <td class='note-text'>Email:</td>
-            <td><%= @object.order_detail.user_info.emails.first %></td>
+            <td><%= @object.order_detail.user_info.user.email %></td>
           </tr>
           <tr>
             <td class='note-text'>Address:</td>

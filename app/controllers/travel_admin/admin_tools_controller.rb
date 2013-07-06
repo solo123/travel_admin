@@ -1,5 +1,7 @@
 module TravelAdmin
 	class AdminToolsController < AdminController
+    before_filter :is_admin
+    
     def reset_schedules
       @result = []
       Tour.all_tours.each do |tour|
@@ -16,6 +18,10 @@ module TravelAdmin
           @result << "#{cnt} schedules changed for tour #{tour.id}"
         end
       end
+    end
+    def autofill_pname
+      UserInfo.update_all('payment_name=full_name', 'full_name is not null and payment_name is null')
+      redirect_to :controller => :user_infos, :action => :index
     end
   end
 end

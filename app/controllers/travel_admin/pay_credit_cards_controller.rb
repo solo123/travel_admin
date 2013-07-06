@@ -27,7 +27,9 @@ module TravelAdmin
         if order
           biz_payment = Biz::OrderPayment.new
           biz_payment.pay(order, @object, current_employee.employee_info) 
-          unless biz_payment.errors.blank? 
+          if biz_payment.errors.blank? 
+             
+          else
             flash[:error] = biz_payment.errors.to_sentence
             @no_log = 1
           end

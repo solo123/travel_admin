@@ -23,6 +23,10 @@ module TravelAdmin
       return false if auth.role.empty?
       auth.role.match(Regexp.new("[#{roles}]"))
     end
+    def is_admin
+      roles = current_employee.employee_info.roles
+      /X/.match(roles)
+    end
 
     def log_operation
       return if defined? @no_log

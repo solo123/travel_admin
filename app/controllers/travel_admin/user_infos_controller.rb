@@ -30,6 +30,28 @@ module TravelAdmin
         @object = UserInfo.new
       end
     end
+    def create
+      @object = UserInfo.new(params[:user_info])
+      @object.payment_name = @object.full_name
+      if @object.save
+      else
+        flash[:error] = @object.errors.full_messages.to_sentence
+        @no_log = 1
+      end
+    end
+    def update
+      load_object
+      @object.attributes = params[object_name.singularize.parameterize('_')]
+      @object.payment_name = @object.full_name if @object.full_name_changed?
+      if @object.changed_for_autosave?
+        @changes = @object.all_changes
+        if @object.save
+        else
+          flash[:error] = @object.errors.full_messages.to_sentence
+          @no_log = 1
+        end
+      end
+    end
 
   end
   

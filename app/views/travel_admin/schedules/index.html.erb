@@ -16,6 +16,13 @@
     <% end %>  
 <% end %>
 <section>
+<ul class="nav nav-tabs" id='list_emps'>
+  <% type_text.get_types('tour').each do |t| %>
+    <li <%= "class=active" if t.type_value.to_i == @tt.to_i %>>
+      <%= link_to t.type_text, schedules_path(:tour_type => t.type_value) %>
+    </li>
+  <% end %>
+</ul>
 <%= will_paginate(@collection) %>
 <table class="data-list table table-bordered table-striped" id="list_schedules">
   <thead>

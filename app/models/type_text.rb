@@ -24,4 +24,14 @@ class TypeText
     tt.join(',')
   end
 
+  def get_types(type_name)
+    tt = []
+    @tts.each do |s| 
+      if s.type_name == type_name.to_s
+        tt << s
+      end
+    end
+    tt
+  end
+
 end
