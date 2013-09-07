@@ -128,6 +128,6 @@ TravelAdmin::Engine.routes.draw do
     end
   end
 
-  match 'home(/:action)', :to => 'home'
-  match 'admin(/:action)', :to => 'admin_tools'
+  #match 'home(/:action)', :to => 'home'
+  #match 'admin(/:action)', :to => 'admin_tools'
 end

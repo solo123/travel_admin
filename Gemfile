@@ -1,5 +1,6 @@
-source "http://rubygems.org"
+source "http://ruby.taobao.org"
 
+gem 'rails', '4.0.0'
 # Declare your gem's dependencies in travel_admin.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
@@ -15,4 +16,4 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'debugger'
-gem 'will_paginate', '~> 3.0.4'
+gem 'will_paginate'

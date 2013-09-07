@@ -8,7 +8,7 @@
 	<%= form_for( @search, :url => destinations_path ) do |f| %>
     <div class='input-prepend input-append'>
       <span class='add-on'>Title</span>
-      <%= f.text_field :description_title_or_description_title_cn_contains, :class => 'span2' %>
+      <%#= f.text_field :description_title_or_description_title_cn_contains, :class => 'span2' %>
       <%= search_button %>
       <%= link_to_new 'New Destination', 'destinations/new' %>
     </div>

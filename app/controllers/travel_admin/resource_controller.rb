@@ -48,7 +48,7 @@ module TravelAdmin
     protected
       def load_collection
         params[:search] ||= {}
-        @search = object_name.classify.constantize.metasearch(params[:search])
+        @search = object_name.classify.constantize.search(params[:q])
         pages = cfg.get_config(:admin_list_per_page).to_i
         pages = 20 unless pages > 1
         @collection = @search.paginate(:page => params[:page], :per_page => pages)
