@@ -1,0 +1,31 @@
+= content_for :breadcrumbs do
+  Data &gt;
+  Logs
+.toolbar
+  %ul.actions
+    %li
+      = form_for( @search, :url => logs_path ) do |f|
+        = f.label :log_brief_contains, "Search"
+        = f.text_field :log_brief_contains, :size => 15
+        \&nbsp;
+        \#{button 'Search'}
+    %li
+      = button_link_to 'New Destination', 'destinations/new', {:icon => 'add', 'data-remote' => true}
+  %br.clear
+#edit_div.dialog-normal
+.data-pager
+  = will_paginate(@collection)
+%table#list_logs.data-list
+  %thead
+    %tr
+      %th= t("id")
+      %th level
+      %th= t("page_url")
+      %th= t("controller")
+      %th= t("action")
+      %th= t("log")
+      %th time
+      %th op
+  - @collection.each do |d|
+    = render :partial => 'row', :object => d
+= will_paginate(@collection)

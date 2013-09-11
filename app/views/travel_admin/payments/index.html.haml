@@ -1,0 +1,23 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Accounts
+      %span.divider /
+    %li.active Payments
+%section
+  = will_paginate(@collection)
+  %table#list_payments.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th id
+        %th bill_type
+        %th bill_id
+        %th before
+        %th amount
+        %th after
+        %th created_at
+        %th op
+    %tbody
+      - @collection.each do |p|
+        = render :partial => 'row', :object => p
+  = will_paginate(@collection)

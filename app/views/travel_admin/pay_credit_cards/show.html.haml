@@ -1,0 +1,88 @@
+.row
+  .span5
+    %h2 Look Card
+    = form_for(@object) do |f|
+      %table#pay_credit_cards.data-list.table.table-bordered.table-striped{:style => "width:auto;"}
+        %tr
+          %td.table-header ID:
+          %td= @object.id
+        %tr
+          %td.table-header Card type:
+          %td= @object.card_type
+        %tr
+          %td.table-header Card number:
+          %td= @object.card_number
+        %tr
+          %td.table-header Name:
+          %td= @object.full_name
+        %tr
+          %td.table-header Valid date:
+          %td= @object.valid_date
+        %tr
+          %td.table-header CVV
+          %td= @object.csc
+        %tr
+          %td.table-header Tel
+          %td= @object.telephone.tel if @object.telephone
+        %tr
+          %td.table-header Address
+          %td
+            - if @object.address
+              = @object.address.address1
+              %br/
+              = @object.address.state
+              , #{@object.address.country} ZIP: #{@object.address.zipcode}
+        %tr
+          %td.table-header Prof code
+          %td= f.text_field :prof_code
+        %tr
+          %td.table-header Status
+          %td= @object.status
+      %p
+        = hidden_field_tag :lookcard, '1'
+        %a.btn.btn-info{:href => "#", :onclick => "submit_this_form(this);"}
+          %i.icon-ok
+          Look Card Done
+  - order = @object.order
+  .span5
+    %h2 Order detail
+    %table#pay_credit_cards.data-list.table.table-bordered.table-striped{:style => "width:auto;"}
+      %tr
+        %td.table-header Order#
+        %td= order.order_number
+      %tr
+        %td.table-header Tour
+        %td
+          = order.schedule.tour.description.title
+          %br/
+          = order.schedule.tour.description.title_cn
+          %br/
+          = order.schedule.departure_date
+          \~ #{order.schedule.return_date}
+      %tr
+        %td.table-header Rooms
+        %td= order.order_price.num_rooms
+      %tr
+        %td.table-header PAX
+        %td= order.order_price.num_total
+      %tr
+        %td.table-header Amount
+        %td= order.order_price.actual_amount
+      %tr
+        %td.table-header Created at
+        %td= order.created_at
+    - user = order.order_detail.user_info
+    %h3 User info
+    %table.table.table-bordered
+      %tr
+        %td.table-header Display Name:
+        %td= user.full_name
+      %tr
+        %td.table-header Payment Name:
+        %td= user.payment_name
+      %tr
+        %td.table-header Tel:
+        %td= user.payment_tel
+      %tr
+        %td.table-header Email:
+        %td= user.user.email

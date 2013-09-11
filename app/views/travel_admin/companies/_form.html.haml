@@ -1,0 +1,47 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Company: #{@object.short_name}
+.modal-body
+  = form_for( @object, :remote => true) do |f|
+    .row
+      .span4
+        = f.label :short_name
+        = f.text_field :short_name
+        = f.label :company_name
+        = f.text_field :company_name
+        = f.label :company_type
+        = f.select :company_type, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'data-field'
+        = f.label :website
+        = f.text_field :website
+        = f.label :icon_url
+        = f.text_field :icon_url
+        %br/
+        = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
+      - if @object.id
+        .span4
+          %div
+            %b Accounts:
+            %br/
+            - if @object.company_account
+              %table
+                %tr
+                  %td Discount:
+                  %td= @object.company_account.discount
+                %tr
+                  %td Max credit:
+                  %td= @object.company_account.max_credit
+                %tr
+                  %td Balance:
+                  %td= @object.company_account.balance
+            %b Contacts:
+            | #{link_to 'add', "user_infos/new?edit_div=add_contact_div&agent_id=#{@object.id}&short=1", :remote => true}
+            %br/
+            %table#short_list_user_infos
+              - @object.contacts.each do |c|
+                %tr
+                  %td= raw c.to_s("<br />")
+                  %td= link_to 'del', 'c', 'data-confirm' => 'Are you sure to delete this contact?'
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

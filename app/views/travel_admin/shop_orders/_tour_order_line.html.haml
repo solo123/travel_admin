@@ -1,0 +1,10 @@
+%tr{:class => cycle('row', 'alt-row'), :id => dom_id order}
+  %td{:style => "font-weight:bold;text-align:center;text-decoration:underline;"}
+    = link_to order.id, shop_order_path(order)
+  %td= order.order_source_type
+  %td= order.order_source_id
+  %td
+  %td
+  %td= order.customer_name
+  %td phone
+  %td= order.state

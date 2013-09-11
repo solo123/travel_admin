@@ -1,0 +1,45 @@
+- @order = Order.find(params[:id])
+- refund = PayCash.new
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    %i.glyphicon-7-22>
+    Refund by Cash
+.modal-body
+  = form_for([@order, refund], :remote => true) do |f|
+    .row
+      .span4
+        %table
+          %tr
+            %td Refund:
+            %td
+              %input#recv_cash.large-number{:onchange => "recaculate_refund_cash();", :type => "text", :value => "0.00"}/
+          %tr
+            %td Refund fee:
+            %td
+              %input#refund_fee{:onchange => "recaculate_refund_cash();", :type => "text", :value => "0.00"}/
+          %tr
+            %td Casher:
+            %td
+              = render :partial => 'travel_admin/shared/select_employee', :locals => {:f => f, :field_name => :received_by_id , :role => '5'}
+      .span4
+        %table.table.table-bordered
+          %tr
+            %td Order
+            %td.cell-middle{:width => "150"}= @order.order_number
+          %tr
+            %td Order Amount
+            %td#tb_order_amount.cell-right= @order.order_price.actual_amount
+          %tr
+            %td Balance before
+            %td#tb_balance_before.cell-right= @order.order_price.balance_amount
+          %tr
+            %td Pay amount
+            %td#tb_pay_amount.large-number.cell-right
+          %tr
+            %td Balance after
+            %td#tb_balance.cell-right
+        = f.hidden_field :amount
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

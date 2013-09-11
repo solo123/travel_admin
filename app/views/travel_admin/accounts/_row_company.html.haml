@@ -1,0 +1,12 @@
+%tr{:id => dom_id row_company}
+  %td= row_company.id
+  %td= row_company.owner_type
+  %td= row_company.owner_id
+  %td= row_company.account_type
+  %td= row_company.account_brief
+  %td= row_company.balance
+  %td= row_company.status
+  %td= row_company.created_at
+  %td= row_company.updated_at
+  %td
+    = link_to 'detail', object_url(row_company) + '/pay'

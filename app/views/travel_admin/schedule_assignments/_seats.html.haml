@@ -1,0 +1,58 @@
+- seats = assignment.seats
+- total_seats = assignment.total_seats
+- seats_per_row = 4
+- passengeway = 2
+- if assignment.bus
+- seats_per_row = assignment.bus.seats_per_row || 4
+- passengeway = assignment.bus.passengeway || 2
+- end
+- total_rows = (total_seats + seats_per_row - 1) / seats_per_row
+- width = 95 / seats_per_row
+- i = 1
+#assignment_tab
+  .container
+    .span5
+      = render :partial => 'travel_admin/schedule_assignments/ass_info', :object => assignment
+    / end of span5
+    .span5{:style => "float:right;"}
+      %table.seat-table-intro
+        %tbody
+          %tr.diagram-exp
+            %td{:align => "center", :nowrap => "nowrap"}
+              %strong 圖示:
+            %td{:align => "center", :nowrap => "nowrap"}
+              .block.blnk &nbsp;
+              Avilible
+            %td{:align => "center", :nowrap => "nowrap"}
+              .block.hold &nbsp;
+              Hold
+            %td{:align => "center", :nowrap => "nowrap"}
+              .block.sold &nbsp;
+              Sold
+            %td{:align => "center", :nowrap => "nowrap"}
+              .block.fpaid &nbsp;
+              Full Paid
+            %td{:align => "center", :nowrap => "nowrap"}
+              .block.agent &nbsp;
+              Agent order
+  %div
+    = form_for assignment, :url => seats_schedule_schedule_assignment_path(assignment.schedule_id, assignment), :remote => true do |f|
+      %table.seat-table{:style => "width:100%;"}
+        %thead
+          %tr
+            - seats_per_row.times do |cnt|
+              %td{:width => "#{width}%"}
+              - if cnt + 1 == passengeway
+                %td
+        %tbody
+          - i = 1
+          - total_rows.times do
+            %tr
+              - seats_per_row.times do |cnt|
+                = render :partial => 'travel_admin/schedule_assignments/seat', :locals => {:i => i, :assignment => assignment, :seat => seats.detect{|s| s.seat_number == i}}
+                - if cnt + 1 == passengeway
+                  %td
+                - i += 1
+      = hidden_field_tag 'message1'
+      = hidden_field_tag 'operate'
+      = hidden_field_tag 'order_id'

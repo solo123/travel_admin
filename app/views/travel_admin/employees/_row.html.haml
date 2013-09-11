@@ -1,0 +1,13 @@
+<tr id="#{dom_id row}" #{'class=\'deleted\'' if row.locked_at}>
+%td= row.id
+%td= row.agent_id
+%td= row.nickname
+%td= row.employ_date
+%td= row.ssn
+%td= row.birthday
+%td= row.locked_at
+%td.actions
+  = link_to_show row
+  |
+  \#{link_to_edit row} |
+  \#{link_to_hide row, 'data-confirm' => 'Are you sure to hide/show this Employee?'}

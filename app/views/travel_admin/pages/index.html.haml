@@ -1,0 +1,23 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Data
+      %span.divider /
+    %li.active Pages
+= content_for :search_box do
+  = link_to_new 'New Page', new_page_path
+%section
+  %h1= "Pages List"
+  .data-pager
+    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  %table#list_pages.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th permalink
+        %th title
+        %th updated
+        %th Action
+    - @collection.each do |page|
+      = render :partial => 'row', :object => page
+  .data-pager
+    = will_paginate(@collection, :class => 'pagination pagination-mini')

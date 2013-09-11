@@ -1,5 +1,6 @@
 TravelAdmin::Engine.routes.draw do
 
+  get "pages/temp"
   resources :destinations do
     resources :photos do
       member do

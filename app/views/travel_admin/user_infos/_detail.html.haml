@@ -1,0 +1,60 @@
+- ui = @parent
+%h2 User details
+= image_tag ui.title_photo.pic.url(:small) if ui.title_photo
+.span4
+  %table.table.table-bordered.table-condensed
+    %tr
+      %td ID
+      %td= ui.id
+    %tr
+      %td Full name
+      %td= ui.full_name
+    %tr
+      %td level
+      %td= ui.user_level
+    %tr
+      %td status
+      %td= ui.status
+    %tr
+      %td Created at
+      %td= time_tag ui.created_at
+    %tr
+      %td Updated at
+      %td= time_tag ui.updated_at
+.span4
+  - ui.telephones.each do |tel|
+    %p
+      [#{tel.tel_type}] #{tel.tel}
+  - ui.emails.each do |email|
+    %p= email.email_address
+  - ui.addresses.each do |addr|
+    %p
+      = addr.address1
+      , #{addr.address2} ZIP:#{addr.zipcode}
+  %p
+    = icon_link_to 'Edit', edit_object_url(ui), :remote => true, :icon => 'icon-edit', :class => 'btn btn-mini btn-success'
+.span4
+  - if ui.user
+  - else
+    %p.text-info No login info.
+.span11
+  %table.table.table-bordered.table-condensed
+    %thead
+      %tr.table-header
+        %th ID
+        %th Schedule
+        %th method
+        %th Status
+        %th Created at
+        %th Updated at
+        %th amount
+    - ui.orders.each do |order|
+      %tr
+        %td= order.order_number
+        %td= order.schedule_id
+        %td= order.order_method
+        %td= order.status
+        %td= time_tag order.created_at
+        %td= time_tag order.updated_at
+        %td= order.order_price.actual_amount if order.order_price
+.clear

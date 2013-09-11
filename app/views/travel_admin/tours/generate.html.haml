@@ -1,0 +1,43 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Data
+      %span.divider /
+    %li
+      = link_to 'Tours', tours_path
+      %span.divider /
+    %li.active Generate schedules
+= content_for :search_box do
+  = icon_link_to 'Generate schedules for selected tours', '#', :class => 'btn btn-success', :icon => 'icon-plus', :onclick => 'generate_schedules()', :id => 'btn_auto_gen'
+%section
+  %p
+    %strong.text-info.larger Info:
+    Automatic generate schedules from now to
+    = succeed "," do
+      %span.text-info "Days in advance"
+    if set to
+    %strong 0
+    then using configuration:
+    %span.text-info "max_reservation_days" =
+    %strong.text-error= cfg.get_config :max_reservation_days
+    = icon_link_to 'change', app_configurations_path, :class => 'btn btn-mini', :icon => 'icon-edit'
+  %table#list_tours.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th
+          %label#cb_select_all.checkbox.inline
+            %input{:onchange => "$('#list_tours tbody input[type=checkbox]').prop('checked', $(this).prop('checked'))", :type => "checkbox", :value => "1"}
+              all
+        %th Title
+        %th Weekly
+        %th Days in advance
+        %th{:width => "100"} Price
+        %th{:width => "100"} last schedule
+        %th{:width => "80"} op
+    %tbody
+      - @collection.each do |tour|
+        = render :partial => 'row_gen', :object => tour
+#auto_gen_indicator{:onclick => "stop_auto_gen();", :style => "position:fixed; top: 122px; left: 20px; width: 168px; border:solid 1px gray; background-color:lightyellow;padding:8px;display:none;cursor:pointer;"}
+  Continue to generate next selected tours.
+  %br/
+  %b Click to stop

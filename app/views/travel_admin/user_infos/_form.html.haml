@@ -1,0 +1,52 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit User ##{@object.id}
+.modal-body
+  %div{:style => "min-height: 367px;"}
+    = form_for( @object, :remote => true) do |f|
+      = hidden_field_tag :edit_div, params[:edit_div]
+      = hidden_field_tag :short, params[:short]
+      .row
+        - if params[:agent_id]
+          = f.hidden_field :user_data_type, :value => 'Agent'
+          = f.hidden_field :user_data_id, :value => params[:agent_id]
+        .span4
+          = f.field_container :full_name do
+            = f.label :full_name
+            = f.text_field :full_name
+          = f.field_container :status do
+            = f.label :status
+            = f.text_field :status
+        .span4
+          - if @object.user
+            %p
+              email(login): #{@object.user.email}
+            %p
+              sign_in_count: #{@object.user.sign_in_count}
+            %p
+              last_sign_in: #{@object.user.last_sign_in_at}
+            %p
+              created at: #{@object.user.created_at}
+          Telephones:
+          \#{add_object_js_link 'Add', f, :telephones, 'form_tel', '#tels'}
+          %br/
+          #tels
+            = f.fields_for :telephones do |tel_form|
+              = render :partial => 'form_tel', :locals => { :f => tel_form}
+          Emails:
+          \#{add_object_js_link 'Add', f, :emails, 'form_email', '#emails'}
+          %br/
+          #emails
+            = f.fields_for :emails do |email_form|
+              = render :partial => 'form_email', :locals => { :f => email_form}
+          Addresses:
+          \#{add_object_js_link 'Add', f, :addresses, 'form_address', '#addresses'}
+          %br/
+          #addresses
+            = f.fields_for :addresses do |adr_form|
+              = render :partial => 'form_address', :locals => { :f => adr_form}
+.modal-footer
+  = icon_link 'User details', user_info_photos_path(@object), :target => 'edit-win', :icon => 'icon-list-alt', :class => 'pull-left'
+  %button.btn{:onclick => "remove_modal(this);"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

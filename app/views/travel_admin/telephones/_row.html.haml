@@ -1,0 +1,9 @@
+%tr{:id => dom_id row}
+  %td.cell-middle= row.id
+  %td= link_to "#{row.tel_number_type}: #{row.tel_number_id}", edit_object_url(row.tel_number), :remote => true
+  %td= row.tel_type
+  %td= number_to_phone row.tel
+  %td= time_tag row.created_at
+  %td= time_tag row.updated_at
+  %td.cell-middle
+    = row_link_to_edit row

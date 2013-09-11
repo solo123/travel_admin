@@ -1,0 +1,21 @@
+- @object.build_description if !@object.description
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Route# #{@object.id}
+.modal-body
+  = form_for([@tour, @object], :remote => true) do |f|
+    .row
+      .span4
+        = f.label :destination_id
+        = f.select(:destination_id, Destination.visible.collect{|d| [d.description.title, d.id]}, {:prompt => 'Select Destination'})
+      .span2
+        = f.label :visit_day
+        = f.text_field :visit_day, :class => 'span1'
+      .span2
+        = f.label :visit_order
+        = f.text_field :visit_order, :class => 'span1'
+    = render :partial => 'travel_admin/shared/description', :locals => {:f => f}
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

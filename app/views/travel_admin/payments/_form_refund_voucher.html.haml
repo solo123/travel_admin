@@ -1,0 +1,15 @@
+- voucher = Voucher.new
+= form_for( voucher, :remote => true) do |f|
+  = hidden_field_tag :order_id, params[:order_id]
+  %table{:style => "width:auto;"}
+    %tr
+      %td Amount:
+      %td= f.text_field :amount
+    %tr
+      %td Refund fee:
+      %td= f.text_field :refund_fee
+    %tr
+      %td Expire date:
+      %td= f.text_field :expire_date
+  %p
+    = f.submit

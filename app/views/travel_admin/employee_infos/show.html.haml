@@ -1,0 +1,19 @@
+%table.border-table
+  %tr
+    %td{:width => "200"} photo
+    %td.border-table{:style => "padding:6px;"}
+      %table{:padding => "4"}
+        %tr
+          %td{:width => "100"} Company:
+          %td{:width => "300"}= @object.company.company_name if @object.company
+        %tr
+          %td Name:
+          %td= @object.nickname
+        %tr
+          %td Employ from:
+          %td= @object.employ_date
+        %tr
+          %td Age:
+          %td
+            = Time.now.year - @object.birthday.year if @object.birthday
+            (#{@object.birthday})

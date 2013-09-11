@@ -1,0 +1,32 @@
+- content_for :head do
+  :javascript
+    $(function(){
+    	$('#edit_div').dialog({ autoOpen: false, width: 600});
+    });
+= render :partial => 'travel_admin/shared/product_sub_menu'
+.toolbar
+  %ul.actions
+    %li
+      = form_for [:admin, @search] do |f|
+        = f.label :title_contains, "Title"
+        = f.text_field :title_contains, :size => 15
+        \&nbsp;
+        \#{button t('search')}
+    %li#edit_location_link
+      %a#admin_edit_location.button{"data-remote" => "true", :href => "locations/new"}
+        %span
+          %img{:alt => "Add", :src => "/images/admin/icons/add.png?1305355888"} New location
+  %br.clear
+#edit_div{:style => "display:none;"}
+  #form
+    %form
+%table#locations.index
+  %tr
+    %th= t("id")
+    %th= t("abbr")
+    %th= t("title")
+    %th= t("title_cn")
+    %th operate
+  - @collection.each do |location|
+    = render location
+= will_paginate(@collection, :previous_label => "&#171; #{t('previous')}", :next_label => "#{t('next')} &#187;")

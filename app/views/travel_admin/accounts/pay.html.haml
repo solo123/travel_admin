@@ -1,0 +1,42 @@
+.container
+  .span-14
+    - bill = Bill.new
+    %h2 payments
+    = form_for [:admin, bill], :remote => true do |f|
+      = f.hidden_field :company_id, :value => @object.owner.id
+      %table.border-table
+        %thead
+          %tr
+            %th
+            %th ID
+            %th Amount
+            %th account
+            %th company discount
+            %th additional
+            %th receivable
+            %th created at
+        %tbody
+          - @object.owner.pay_companies.new_payments.each do |ap|
+            %tr
+              %td= check_box_tag "cb[#{ap.id}]"
+              %td= ap.id
+              %td= ap.amount
+              %td= ap.account_id
+              %td= ap.company_discount
+              %td= ap.additional_discount
+              %td= ap.account_receivable
+              %td= ap.created_at
+      .actions
+        = f.submit
+  .span-8.last
+    %h2 Bills
+    %table.border-table
+      %thead
+        %tr
+          %th ID
+          %th created at
+      %tbody
+        - @object.owner.bills.each do |bill|
+          %tr
+            %td= link_to bill.id, admin_bill_path(bill)
+            %td= bill.created_at

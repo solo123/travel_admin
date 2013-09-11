@@ -1,0 +1,31 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Manage
+      %span.divider /
+    %li.active Configurations
+= content_for :search_box do
+  = form_for( @search, :url => app_configurations_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on
+        %i.icon-tag
+      = f.text_field :key_contains
+      = search_button
+      = link_to_new 'Add', new_app_configuration_path
+      = icon_link_to 'Reload', app_configurations_path + '/reload', :icon => 'icon-refresh', :remote => true
+%section
+  = will_paginate(@collection)
+  %table#list_app_configurations.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th id
+        %th key
+        %th title
+        %th val
+        %th parent
+        %th created_at
+        %th updated_at
+        %th op
+    - @collection.each do |d|
+      = render :partial => 'row', :object => d
+  = will_paginate(@collection)

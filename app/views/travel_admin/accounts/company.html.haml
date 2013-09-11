@@ -1,0 +1,30 @@
+= content_for :breadcrumbs do
+  System &gt;
+  Accounts
+.toolbar
+  %ul.actions
+    %li
+      = form_for( @search, :url => admin_accounts_path ) do |f|
+        = f.label :account_brief_contains, "Account"
+        = f.text_field :account_brief_contains, :size => 15
+        \&nbsp;
+        \#{button 'Search'}
+  %br.clear
+.data-pager
+  = will_paginate(@collection)
+%table#list_accounts.data-list
+  %thead
+    %tr
+      %th id
+      %th type
+      %th related id
+      %th name
+      %th brief
+      %th balance
+      %th status
+      %th created_at
+      %th updated_at
+      %th op
+  - @collection.each do |d|
+    = render :partial => 'row_company', :object => d
+= will_paginate(@collection)

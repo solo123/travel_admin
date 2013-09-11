@@ -1,0 +1,18 @@
+.toolbar
+  %ul.actions
+    %li
+      = button_link_to 'New Order', new_shop_order_path, {:icon => 'add'}
+  %br.clear
+%table#listing_photos.index
+  %tr
+    %th= t("order_id")
+    %th Type
+    %th Related id
+    %th= t("tour")
+    %th Departure
+    %th Customer
+    %th Phone
+    %th Status
+  - @shop_orders.each do |order|
+    = render :partial => 'tour_order_line', :locals => {:order => order}
+= paginate(@shop_orders)

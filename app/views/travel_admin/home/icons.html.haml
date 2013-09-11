@@ -1,0 +1,44 @@
+%h2 admin - Home
+%h2 glyphicon-
+%table.span6.table.table-bordered.table-condensed
+  %thead
+    %tr.table-header
+      %th i
+      - 10.times do |c|
+        %th= c
+  %tbody
+    - 42.times do |i|
+      %tr
+        %td.cell-middle= i
+        - 10.times do |j|
+          - cs = "glyphicon-#{j}-#{i}"
+          %td{:title => cs}
+            %i{:class => cs}
+%h2 gicon-
+%table.span6.table.table-bordered.table-condensed
+  %thead
+    %tr.table-header
+      %th i
+      - 10.times do |c|
+        %th= c
+  %tbody
+    - 42.times do |i|
+      %tr
+        %td.cell-middle= i
+        - 10.times do |j|
+          - cs = "gicon-#{j}-#{i}"
+          %td{:title => cs}
+            %i{:class => cs}
+%hr/
+%table.span6
+  - 42.times do |i|
+    %tr
+      - 10.times do |j|
+        - ss = "background-position: #{-j * 24}px #{-i * 24}px;"
+        %td
+          %i{:class => "gicon-#{"#{j}-#{i}"}", :style => ss}
+- 42.times do |i|
+  - 10.times do |j|
+    = ".gicon-#{j}-#{i}   {background-position: #{-j * 24}px #{-i * 24}px;}"
+    %br/
+  %br/

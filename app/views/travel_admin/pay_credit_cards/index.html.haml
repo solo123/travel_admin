@@ -1,0 +1,24 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Orders
+      %span.divider /
+    %li.active Website Credit Cards
+%h2 Website Credit Cards
+%table#list_pay_credit_cards.data-list.table.table-bordered.table-striped
+  %thead
+    %tr
+      %th ID
+      %th Order
+      %th Card
+      %th amount
+      %th Created at
+      %th Op
+  - PayCreditCard.where(:status => 0).each do |pcc|
+    %tr
+      %td.cell-middle= pcc.id
+      %td= link_to pcc.order_id, pcc.order
+      %td.cell-middle= pcc.card_type
+      %td.cell-right= number_with_precision(pcc.total_amount, :precision => 2)
+      %td= pcc.created_at
+      %td.cell-middle= icon_link_to 'Look Card', object_url(pcc), :icon => 'icon-eye-open', :class => 'btn btn-small btn-success'

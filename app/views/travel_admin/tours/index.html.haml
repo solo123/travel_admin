@@ -1,0 +1,32 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Data
+      %span.divider /
+    %li.active Tours
+= content_for :search_box do
+  = form_for( @search, :url => tours_path ) do |f|
+    = f.select :tour_type_eq, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}.insert(0, ['All tours', nil]), {}, :class => 'span2'
+    = f.select :status_eq, [['All Status', nil],['show', 1], ['hide', 0]],{}, :class => 'span2'
+    .input-append
+      = f.text_field :description_title_contains, :class => 'span2'
+      = search_button
+      = link_to_new 'New Tour', 'tours/new'
+      = icon_link_to "Generate schedules", generate_tours_path, :icon => 'icon-share', :class => 'btn btn-info'
+%section
+  .data-pager
+    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  %table#list_tours.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th= sort_link @search,:id, 'ID', {}, {:title => ''}
+        %th Icon
+        %th Title
+        %th Price
+        %th Weekly
+        %th op
+    %tbody
+      - @collection.each do |tour|
+        = render :partial => 'row', :object => tour
+  .data-pager
+    = will_paginate(@collection)

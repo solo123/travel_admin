@@ -1,0 +1,30 @@
+%tr{:id => dom_id row_gen}
+  %td
+    %label.checkbox.inline
+      %input{:type => "checkbox", :value => "1"}
+        = row_gen.id
+  %td
+    = row_gen.description.title
+    %br/
+    = row_gen.description.title_cn
+  %td.cell-middle= row_gen.tour_setting.weekly
+  %td.cell-middle= row_gen.tour_setting.days_in_advance
+  %td.cell-middle
+    = number_with_precision row_gen.tour_price.price1, :precision => 2
+    ,
+    \#{number_with_precision row_gen.tour_price.price2, :precision => 2}
+    %br/
+    = number_with_precision row_gen.tour_price.price3, :precision => 2
+    ,
+    \#{number_with_precision row_gen.tour_price.price4, :precision => 2}
+  %td
+    = row_gen.schedules.maximum(:departure_date)
+    %br/
+    %b= row_gen.schedules.where('departure_date>?', Date.today).count
+    schedules
+  %td.cell-middle
+    = icon_link_to 'generate', gen_tour_path(row_gen), :icon => 'icon-plus', :class => 'btn btn-mini btn-success', :remote => true, :onclick => 'hotline_tr(this);'
+    - if defined? @gen_count
+      %br>/
+      added:
+      %b= @gen_count

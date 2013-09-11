@@ -1,0 +1,10 @@
+%h2= detail.title
+.row
+  .span4
+    %p
+      ID: #{detail.permalink}
+    = raw detail.description.en if detail.description
+  .span4
+    = raw detail.description.cn if detail.description
+%br/
+= row_link_to_edit detail

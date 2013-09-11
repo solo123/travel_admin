@@ -1,0 +1,5 @@
+.item-template
+  = f.email_field :email_address
+  %label.checkbox.inline
+    = f.check_box :_destroy, :onchange => 'rm_if_new_record(this);'
+    Del

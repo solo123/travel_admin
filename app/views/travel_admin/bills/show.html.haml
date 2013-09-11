@@ -1,0 +1,11 @@
+%h1 Bill
+%table
+  - @object.pay_companies.each do |pc|
+    %tr
+      %td= pc.id
+      %td= pc.amount
+      %td= pc.company_order_number
+      %td= pc.company_discount
+      %td= pc.additional_discount
+      %td= pc.account_receivable
+      %td= pc.created_at

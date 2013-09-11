@@ -1,0 +1,14 @@
+- emp = EmployeeInfo.find(params[:id])
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Set Password for Employee #{emp.nickname} (##{emp.id})
+.modal-body
+  = form_tag(set_psw_employee_info_path(emp), :remote => true) do |f|
+    %div
+      Password123:
+      %br/
+      = text_field_tag :password
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

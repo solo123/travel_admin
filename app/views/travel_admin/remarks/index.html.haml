@@ -1,0 +1,20 @@
+.toolbar
+  %ul.actions
+    %li
+      = button_link_to 'Add', 'remarks/new', {:icon => 'add', 'data-remote' => true}
+  %br.clear
+%h1 Notes
+%table#list_remarks.data-list
+  %thead
+    %tr
+      %th ID
+      %th type
+      %th ref-id
+      %th text
+      %th employee
+      %th created_at
+      %th= t(:op)
+  %tbody
+    - @collection.each do |obj|
+      = render :partial => 'row', :object => obj
+= will_paginate(@collection)

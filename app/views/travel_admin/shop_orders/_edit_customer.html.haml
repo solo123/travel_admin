@@ -1,0 +1,25 @@
+%p
+  %b Search(by Name, Tel, Email or address):
+  %br/
+  %input#search_customer{:type => "text"}/
+%hr/
+- @shop_order.build_customer unless @shop_order.customer
+= form_for(@shop_order, :url => shop_order_path(@shop_order), :remote => true) do |f|
+  = hidden_field_tag :p, 'customer'
+  = f.fields_for :customer do |c|
+    = c.text_field :customer_id
+    %p
+      = c.label :full_name
+      = c.text_field :full_name
+    %p
+      = c.label :telphone
+      = c.text_field :tel
+    %p
+      = c.label :bill_address
+      = c.text_field :bill_address
+    %p
+      = c.label :email
+      = c.text_field :email
+    %p
+  .actions
+    = f.submit

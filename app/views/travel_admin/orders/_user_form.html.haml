@@ -1,0 +1,31 @@
+%h3= t("customer_details")
+%table.index
+  %thead
+    %th{:colspan => "8"}= t('account')
+  %tbody
+    %tr
+      %td.lbl-col= f.label :email, t(:email)+':'
+      %td.val-col{:colspan => "3"}= f.text_field :email, :class => "fullwidth"
+      %td.lbl-col
+        %label
+          = t('guest_checkout')
+          \:
+      %td.val-col{:colspan => "3"}
+        - if @order.completed?
+          = @order.user.nil? ? "Yes" : "No"
+        - else
+          %label.sub
+            = radio_button_tag :guest_checkout, true, @order.user.nil?
+            = t("yes")
+          \&nbsp;
+          %label.sub
+            = radio_button_tag :guest_checkout, false, !@order.user.nil?, :disabled => @order.cart?
+            = t("no")
+          = hidden_field_tag :user_id, @order.user_id
+%h3= Address.model_name.human(:count => 2)
+= f.fields_for :bill_address do |ba_form|
+  = render :partial => "travel_admin/shared/address_form", :locals => {:f => ba_form, :name => t('billing_address'), :use_billing => false}
+= f.fields_for :ship_address do |sa_form|
+  = render :partial => "travel_admin/shared/address_form", :locals => {:f => sa_form, :name => t('shipping_address'), :use_billing => true}
+%p.form-buttons
+  = button @order.cart? ? t('continue') : t('update')

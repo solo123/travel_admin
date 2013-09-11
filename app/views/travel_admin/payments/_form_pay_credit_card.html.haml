@@ -1,0 +1,33 @@
+- pay_cc = PayCreditCard.new
+= form_for( pay_cc, :remote => true) do |f|
+  = hidden_field_tag :order_id, params[:order_id]
+  %table.compact
+    %tr
+      %td Full name:
+      %td= f.text_field :full_name
+    %tr
+      %td Card type:
+      %td= f.select( :card_type, %w[Visa Master AE])
+    %tr
+      %td Card Number:
+      %td= f.text_field :card_number
+    %tr
+      %td Valid date:
+      %td= f.text_field :valid_date
+    %tr
+      %td CSC:
+      %td= f.text_field :csc
+    %tr
+      %td Amount:
+      %td= f.text_field :amount
+    %tr
+      %td Prof code:
+      %td= f.text_field :prof_code
+    %tr
+      %td Service fee:
+      %td= f.text_field :service_fee
+    %tr
+      %td Total amount:
+      %td= f.text_field :total_amount
+  %p
+    = f.submit

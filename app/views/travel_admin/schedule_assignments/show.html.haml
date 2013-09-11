@@ -1,0 +1,28 @@
+= content_for :head do
+  = javascript_include_tag 'admin/seat_table'
+#schedule_title
+  = render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @schedule}
+  = hidden_field_tag 'assignment_id', @object.id
+#unseat_orders
+  = render 'travel_admin/schedules/orders', :orders => @schedule.orders
+%div
+  .row
+    .btn-group{:style => "float:right;"}
+      = icon_link_to 'Clear', 'javascript:clear_selected_seats()', :icon => 'icon-ok-circle', :title => 'Unselected all seats'
+      = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@schedule) + "?schedule_id=#{@schedule.id}", :remote => true, :icon => 'icon-plus-sign'
+      = icon_link_to 'Hold', 'javascript:hold()', :icon => 'icon-star', :class => 'btn btn-info'
+      = icon_link_to 'Release', 'javascript:release();', :icon => 'icon-star-empty'
+      = icon_link_to 'Order', 'javascript:order();', :icon => 'icon-shopping-cart', :class => 'btn btn-success'
+  %ul#list_emps.nav.nav-tabs
+    - @schedule.assignments.each do |ass|
+      - busname = ass.bus ? ass.bus.name : '<NA>'
+      - if ass.id == @object.id
+        %li.active
+          %a{:href => "#"}= busname
+      - else
+        %li
+          = link_to "#{busname}", schedule_schedule_assignment_path(@schedule, ass)
+  .container
+    = render :partial => 'seats', :locals => {:schedule => @schedule, :assignment => @object}
+#select_schedule_div.dialog-popup
+#select_customer_div.dialog-popup

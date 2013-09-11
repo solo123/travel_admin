@@ -1,0 +1,18 @@
+.toolbar
+  %ul.actions
+    %li
+      = button_link_to 'Add', new_position_path, {:remote => true, :icon => 'add', :id => 'new_position'}
+  %br.clear/
+%h1= raw "#{t("actions.listing")} #{t("positions")}"
+#edit_div.dialog-normal
+%table#list_positions.data-list
+  %thead
+    %tr
+      %th= t("id")
+      %th= t("title")
+      %th= t('status')
+      %th= t(:created_at)
+      %th op
+  - @collection.each do |c|
+    = render :partial => 'row', :object => c
+= will_paginate(@collection)

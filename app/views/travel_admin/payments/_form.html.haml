@@ -1,0 +1,31 @@
+- order = Order.find(params[:order_id])
+%p
+  Balance before:
+  %label#balance.pay-amount= order.order_price.balance_amount
+  Pay Amount:
+  %label#paid_amount.pay-amount 0.00
+  Balance after:
+  %label#balance_after.pay-amount= order.order_price.balance_amount
+%div
+  %ul#tabs_payment.tabs
+    %li
+      %a{:href => "#"} Cash
+    %li
+      %a{:href => "#"} Credit card
+    %li
+      %a{:href => "#"} Check
+    %li
+      %a{:href => "#"} Voucher
+    %li
+      %a{:href => "#"} Company
+  .panes
+    #tab-cash{:tag => "cash"}
+      = render 'form_pay_cash'
+    #tab-cc{:tag => "credit_card"}
+      = render 'form_pay_credit_card'
+    #tab-check{:tag => "check"}
+      = render 'form_pay_check'
+    #tab-voucher{:tag => "voucher"}
+      = render 'form_pay_voucher'
+    #tab-ap{:tag => "company_receivable"}
+      = render 'form_pay_company'

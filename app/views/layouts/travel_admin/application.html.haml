@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %title
+      admin-#{@title}
+    = favicon_link_tag
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => @title}
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css", :rel=>"stylesheet"}
+    = stylesheet_link_tag 'admin/admin', '/css/my_icons/glyphicons', '/css/my_icons/gicons'
+    = javascript_include_tag 'admin/admin', '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/bootstrap/js/bootstrap-datepicker'
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"}
+    = csrf_meta_tags
+    = render 'travel_admin/shared/head_script'
+    = yield :head
+  %body
+    = render 'travel_admin/shared/main_menu'
+    #top_breadcrumbs.navbar-fixed-top
+      .container
+        = yield :breadcrumbs
+    #top_place_holder &nbsp;
+    %header#toolbox.subhead
+      .container
+        .quick-go
+          = render 'travel_admin/shared/sidebar'
+        .search-box
+          = yield :search_box
+    #progress
+      = image_tag 'admin/progress.gif'
+      Loading ...
+    .container
+      = yield
+      #hide_contents
+        - if flash[:error]
+          .flash.notice
+            .alert.alert-error
+              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+              %span.label.label-important
+                ERROR
+                = raw flash[:error]
+        - if flash[:alert]
+          .flash.notice
+            .alert.alert-error
+              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+              %span.label.label-warning
+                Alert
+                = raw flash[:alert]
+      - if notice
+        .flash.notice
+          .alert.alert-info
+            %a.close{"data-dismiss" => "alert", :href => "#"} &times;
+            %span.label.label-info Notice
+            = raw notice
+      #dialog_place_holder
+    %footer.footer
+      .container
+        = render 'travel_admin/shared/footer'

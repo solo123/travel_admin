@@ -1,0 +1,24 @@
+%h1
+  Account: #{@object.account_type}
+%p.note-text
+  current balance:
+  %span.strong= @object.balance
+%table.data-list
+  %thead
+    %tr
+      %th Method
+      %th before
+      %th Amount
+      %th after
+      %th Operator
+      %th Date
+  %tbody
+    - @object.payments.each do |p|
+      %tr{:id => dom_id(p)}
+        %td= p.pay_method_type
+        %td= p.account_balance_before
+        %td= p.amount
+        %td= p.account_current_balance
+        %td
+          = p.operator.nickname if p.operator
+        %td= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at

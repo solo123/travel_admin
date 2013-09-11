@@ -1,0 +1,43 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    %i.glyphicon-0-15>
+    Pay Check
+.modal-body
+  = form_for([@order, @object], :remote => true) do |f|
+    .row
+      .span4
+        %table
+          %tr
+            %td Check number:
+            %td= f.text_field :check_number, :placeholder => 'input check number'
+          %tr
+            %td Amount:
+            %td= f.text_field :amount
+          %tr
+            %td Check received by:
+            %td
+              = render :partial => 'travel_admin/shared/select_employee', :locals => {:f => f, :field_name => :received_by_id , :role => '5'}
+          %tr
+            %td.cell-middle{:colspan => "2"}
+              %span#pcc_msg.text-error
+      .span4
+        %table.table.table-bordered
+          %tr
+            %td Order
+            %td.cell-middle{:width => "150"}= @order.order_number
+          %tr
+            %td Order Amount
+            %td.cell-right= number_with_precision @order.order_price.actual_amount, :precision => 2
+          %tr
+            %td Balance before
+            %td#tb_balance_before.cell-right= number_with_precision @order.order_price.balance_amount, :precision => 2
+          %tr
+            %td Pay amount
+            %td#tb_pay_amount.large-number.cell-right= @order.order_price.actual_amount
+          %tr
+            %td Balance after
+            %td#tb_balance.cell-right.large-number 0.00
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

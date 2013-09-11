@@ -1,0 +1,31 @@
+= content_for :breadcrumbs do
+  Data &gt;
+  Todos
+.toolbar
+  %ul.actions
+    %li
+      = form_for( @search, :url => todos_path ) do |f|
+        = f.label :message_contains, "Search"
+        = f.text_field :message_contains, :size => 15
+        \&nbsp;
+        \#{button 'Search'}
+    %li
+      = button_link_to 'Add Todo', 'todos/new', {:icon => 'add', 'data-remote' => true}
+  %br.clear
+#edit_div.dialog-normal
+.data-pager
+  = will_paginate(@collection)
+%table#list_todos.data-list
+  %thead
+    %tr
+      %th= t("id")
+      %th= t("level")
+      %th= t("message")
+      %th= t("from")
+      %th= t("status")
+      %th created
+      %th updated
+      %th op
+  - @collection.each do |d|
+    = render :partial => 'row', :object => d
+= will_paginate(@collection)

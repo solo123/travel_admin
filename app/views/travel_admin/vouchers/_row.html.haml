@@ -1,0 +1,12 @@
+<tr id="#{dom_id row}" #{'class=\'deleted\'' if !row.status || row.status < 1}>
+%td.cell-middle= row.id
+%td= row.amount
+%td= row.order_id
+%td= row.employee_info_id
+%td= row.expire_date
+%td= row.updated_at
+%td= row.status
+%td.cell-middle
+  .btn-group
+    = row_link_to_edit row
+    = row_link_to_hide row

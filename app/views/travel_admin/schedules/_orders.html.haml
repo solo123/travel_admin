@@ -1,0 +1,27 @@
+%table#list_schedule_orders.data-list.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr.table-header
+      %th Order#
+      %th Customer
+      %th Telephone
+      %th Pick up
+      %th Person
+      %th Status
+      %th Created at
+      %th Seat
+  %tbody
+    - biz = Biz::OrderPayment.new
+    - orders.includes(:order_detail, :order_price, :bus_seats).each do |order|
+    - biz.caculate_price(order) unless order.order_price
+    - next if order.order_price.num_total == order.bus_seats.count
+      %tr{:id => dom_id order}
+        %td.cell-middle
+          = link_to order.order_number, edit_order_path(order), :remote => true
+        %td= order.order_detail.full_name if order.order_detail
+        %td= order.order_detail.telephone if order.order_detail
+        %td= order.order_detail.pickup if order.order_detail
+        %td= order.order_price.num_total if order.order_price
+        %td= order.status
+        %td= order.updated_at
+        %td
+          %a{:href => "javascript:void(0)", :onclick => "assign_seat(#{order.id});"} seat

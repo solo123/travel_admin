@@ -1,0 +1,27 @@
+%h1
+  Company: #{detail.company_name}(#{detail.short_name})
+.row
+  .span4
+    = image_tag detail.title_photo.pic.url(:small) if detail.title_photo
+  .span4
+    %p
+      Company type: #{detail.company_type}
+    %p
+      Website: #{detail.website}
+    %p
+      Accounts:
+      \#{link_to image_tag('admin/add.gif'), new_company_account_path, :class => 'hot-link', :remote => true}
+    %table.border-table
+      %thead
+        %tr
+          %th Type
+          %th brief
+          %th Balance
+          %th Last updated
+      %tbody
+        - detail.accounts.each do |account|
+          %tr
+            %td= account.account_type
+            %td= account.account_brief
+            %td= account.balance
+            %td= time_tag account.updated_at

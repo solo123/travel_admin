@@ -1,0 +1,20 @@
+= render :partial => 'travel_admin/shared/order_tabs', :locals => {:current => "History"}
+%h2= t("history")
+%table.index
+  %tr
+    %th= t("event")
+    %th= t("from_state")
+    %th= t("to_state")
+    %th= t("user")
+    %th= "#{t('spree.date')}/#{t('spree.time')}"
+  - @order.state_events.sort.each do |event|
+    %tr
+      %td= t("#{event.name}") if event.name.present?
+      %td= t("#{event.name}_state#{'s' unless event.name == 'order'}.#{event.previous_state}")
+      %td= t("#{event.name}_state#{'s' unless event.name == 'order'}.#{event.next_state}")
+      %td= event.user.email if event.user
+      %td= event.created_at.to_s(:date_time24)
+  - if @order.state_events.empty?
+    %tr
+      %td{:colspan => "5"}= t("none_available")
+= button_link_to t('continue'), orders_url

@@ -1,0 +1,13 @@
+#myModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#myModalLabel Upload Photos
+  .modal-body
+    = form_for [@parent, @object], :html => { :multipart => true } do |f|
+      = f.file_field :pic
+      .alert
+        %strong Notice:
+        If you cannot upload a photo file with special character in the filename, please rename it and upload again. (It's uploader component problem. will be fixed after the uploader update later.)
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+    %button.btn.btn-primary{:onclick => "submit_dialog_form(this);"} Upload

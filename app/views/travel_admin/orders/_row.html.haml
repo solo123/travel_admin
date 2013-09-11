@@ -1,0 +1,8 @@
+%tr
+  %td= link_to row.order_number, order_path(row)
+  %td= row.order_detail.full_name if row.order_detail
+  %td= row.schedule.title if row.schedule
+  %td= time_tag row.created_at
+  %td= type_text.get_text('order.status', row.status)
+  %td.actions
+    = row_link_to_edit row

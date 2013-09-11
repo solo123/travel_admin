@@ -1,0 +1,31 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Orders
+      %span.divider /
+    %li
+      = link_to 'Users', user_infos_path
+      %span.divider /
+    %li.active Addresses
+= content_for :search_box do
+  = form_for( @search, :url => addresses_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on
+        %i.icon-envelop
+      = f.text_field :address1_or_address2_contains
+      = search_button
+%section
+  = will_paginate(@collection)
+  %table#list_addresses.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th.cell-middle ID
+        %th Ref.
+        %th Address
+        %th Zipcode
+        %th City
+        %th created/updated
+        %th op
+    - @collection.each do |d|
+      = render :partial => 'row', :object => d
+  = will_paginate(@collection)

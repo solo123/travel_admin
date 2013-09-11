@@ -1,0 +1,31 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Schedule# #{@object.id}
+.modal-body
+  = form_for( @object, :remote => true) do |f|
+    = f.fields_for :price do |fp|
+      .row
+        .span4
+          %div
+            = fp.label :price_adult
+            = fp.text_field :price_adult
+          %div
+            = fp.label :price_child
+            = fp.text_field :price_child
+        .span4
+          %div
+            = fp.label :price1
+            = fp.text_field :price1
+          %div
+            = fp.label :price2
+            = fp.text_field :price2
+          %div
+            = fp.label :price3
+            = fp.text_field :price3
+          %div
+            = fp.label :price4
+            = fp.text_field :price4
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

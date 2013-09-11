@@ -1,0 +1,22 @@
+.toolbar
+  %ul.actions
+    %li
+      = button_link_to 'Add Agent', new_agent_path, {:remote => true, :icon => 'add', :id => 'new_agent'}
+  %br.clear/
+%h1= raw "#{t("actions.listing")} #{t("agents")}"
+#edit_div.dialog-normal
+%table#list_agents.data-list
+  %thead
+    %tr
+      %th= t("id")
+      %th= t("short_name")
+      %th= t("company_name")
+      %th= t('company_type')
+      %th= t('icon')
+      %th= t('website')
+      %th= t('status')
+      %th op
+      %th
+  - @collection.each do |c|
+    = render :partial => 'row', :object => c
+= will_paginate(@collection)

@@ -1,0 +1,31 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Orders
+      %span.divider /
+    %li
+      = link_to 'Users', user_infos_path
+      %span.divider /
+    %li.active Phones
+= content_for :search_box do
+  = form_for( @search, :url => telephones_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on Tel
+      = f.text_field :tel_contains
+      = search_button
+%section
+  = will_paginate(@collection)
+  %table#list_telephones.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th id
+        %th data type
+        %th data id
+        %th type
+        %th Phone
+        %th created_at
+        %th updated_at
+        %th op
+    - @collection.each do |d|
+      = render :partial => 'row', :object => d
+  = will_paginate(@collection)

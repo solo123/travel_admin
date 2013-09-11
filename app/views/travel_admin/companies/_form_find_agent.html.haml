@@ -1,0 +1,16 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    %i.glyphicon-4-2
+    Find Agent
+.modal-body
+  .toolbar{:style => "padding:4px;"}
+    .input-prepend.input-append
+      %span.add-on Name/Tel
+      = text_field_tag :agent_find, params[:n], :onkeyup => 'find_agent()'
+      = link_to_new 'New Agent', new_company_path
+  .border-div{:style => "height:300px;overflow-y:scroll;"}
+    %table#list_result_agents.data-list.table.table-striped.table-hover
+      %tbody#search_result
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close

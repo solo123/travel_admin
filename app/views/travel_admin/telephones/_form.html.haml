@@ -1,0 +1,20 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Email# #{@object.id}
+.modal-body
+  = form_for( @object, :remote => true) do |f|
+    .row
+      .span3
+        = f.field_container :tel_type do
+          = f.label :tel_type
+          %br/
+          = f.text_field :tel_type
+        = f.field_container :tel do
+          = f.label :tel
+          %br/
+          = f.text_field :tel
+      .span3
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

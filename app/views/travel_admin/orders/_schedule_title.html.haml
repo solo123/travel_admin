@@ -1,0 +1,10 @@
+- if schedule
+  = schedule.tour.description.title
+  %br/
+  = schedule.tour.description.title_cn
+  %br/
+  .s-date
+    出發:
+    %b= schedule.departure_date.strftime("%Y-%m-%d")
+    返回:
+    %b= schedule.return_date.strftime("%Y-%m-%d")

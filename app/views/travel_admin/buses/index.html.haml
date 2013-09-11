@@ -1,0 +1,33 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Data
+      %span.divider /
+    %li.active Destinations
+= content_for :search_box do
+  = form_for( @search, :url => buses_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on Name
+      = f.text_field :name_contains, :class => 'span2'
+      = search_button
+      = link_to_new 'New Bus', 'buses/new'
+      = icon_link_to 'Shifts', 'buses/shifts', :icon => 'icon-list-alt'
+%section
+  .data-pager
+    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  %table#list_buses.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th= sort_link @search, :id, 'ID'
+        %th= sort_link @search, :name, t("name")
+        %th= sort_link @search, :bus_type, t("bus_type")
+        %th= sort_link @search, :seats, t("seats")
+        %th Plate / VIN
+        %th= sort_link @search, :inspection_date, 'Inspection'
+        %th= t(:created_at)
+        %th= t(:op)
+    %tbody
+      - @collection.each do |obj|
+        = render :partial => 'row', :object => obj
+  .data-pager
+    = will_paginate(@collection, :class => 'pagination pagination-mini')

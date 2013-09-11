@@ -1,0 +1,38 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Manage
+      %span.divider /
+    %li.active Employees
+= content_for :search_box do
+  = link_to_new 'Add Employee', new_employee_info_path
+%section
+  %ul#list_emps.nav.nav-tabs
+    - @ecs.each do |e|
+      <li #{"class=active" if e.company_id == @cid}>
+      %a{:href => "docs?c=#{e.company_id}"}
+        = e.company ? e.company.short_name : '(empty)'
+        \:#{e.count}p
+  .btn-group{"data-toggle" => "buttons-checkbox", :style => "margin-bottom:10px;"}
+    = link_to 'Current Employees', docs_employee_infos_path(:c => @cid), :class => @btn_css[0]
+    = link_to 'Disabled Employees', docs_employee_infos_path(:c => @cid, :s => 'hide'), :class => @btn_css[1]
+    = link_to 'Deleted Employees', docs_employee_infos_path(:c => @cid, :s => 'del'), :class => @btn_css[2]
+  - if @employee_infos
+    Total:
+    %b= @employee_infos.count
+    person.
+    %table#list_employee_infos.data-list.table.table-bordered.table-striped
+      %thead
+        %tr.table-header
+          %th= t("id")
+          %th= t("name")
+          %th= t("roles")
+          %th Login
+          %th Employ Date
+          %th SSN
+          %th Login count
+          %th= t('status')
+          %th{:width => "100"} op
+      %tbody
+        - @employee_infos.each do |e|
+          = render :partial => 'row_doc', :object => e

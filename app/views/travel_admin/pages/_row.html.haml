@@ -1,0 +1,9 @@
+<tr id="#{dom_id row}" #{'class=deleted' if row.status && row.status < 1}>
+%td= row.permalink
+%td= row.title
+%td= row.updated_at
+%td.cell-middle
+  .btn-group
+    = row_link_to_edit row
+    = row_link_to_hide row
+    = row_link_to_photo page_photos_path(row)

@@ -1,0 +1,19 @@
+- tour = Tour.find(params[:tour_id])
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel New Schedule *
+.modal-body
+  = form_tag tour_schedules_path(tour), :method => :post, :remote => true do
+    %p
+      Tour:
+      %br/
+      = tour.description.title
+      %br/
+      %span.text-success= tour.description.title_cn
+    %p
+      Departure at:
+      %br/
+      = text_field_tag :departure_date, '', :class => 'date-picker'
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

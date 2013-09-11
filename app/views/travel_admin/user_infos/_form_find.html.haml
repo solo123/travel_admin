@@ -1,0 +1,15 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    %i.glyphicon-3-0
+    Find Customer
+.modal-body
+  .toolbar{:style => "padding:4px;"}
+    .input-prepend.input-append
+      %span.add-on Name/Tel/Email
+      = text_field_tag :user_find, params[:n], :onkeyup => 'find_user()'
+      = link_to_new 'New customer', new_user_info_path
+  .border-div{:style => "height:300px;overflow-y:scroll;"}
+    %table#list_result_user_infos.data-list.table.table-striped.table-hover
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close

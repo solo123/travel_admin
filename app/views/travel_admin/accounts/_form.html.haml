@@ -1,0 +1,14 @@
+= form_for( [@parent, @object], :remote => true) do |f|
+  .container
+    .span-8
+      = f.field_container :account_type do
+        = f.label :account_type
+        %br/
+        = f.select :account_type, %w{PayCash PayCreditCard PayCheck PayVoucher PayCompany}
+      = f.field_container :account_brief do
+        = f.label :account_brief
+        %br/
+        = f.text_field :account_brief
+    .span-8.last
+  .actions
+    = f.submit

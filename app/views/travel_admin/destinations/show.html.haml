@@ -1,0 +1,13 @@
+= content_for :breadcrumbs do
+  Data &gt;
+  \#{link_to 'Destinations', admin_destinations_path} &gt;
+  \#{@object.title}
+%h1
+  = @object.title
+  \/ #{@object.title_cn}
+- if @object.description
+  .container
+    .span-8
+      = @object.description.en
+    .span-8.last
+      = @object.description.cn

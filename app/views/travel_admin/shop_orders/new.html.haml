@@ -1,0 +1,21 @@
+%h1 New Order
+= form_for( @shop_order, :url => shop_orders_path) do |f|
+  %div
+    = f.select :order_type, %w[tour hotel]
+  #dialog_order{:title => "Order"}
+    %p
+      Price: 123.00, 150.00, 160.00, 170.00
+    Rooms: #{link_to "Add room", 'javascript:add_room()', :id => 'btn_add_room'}
+    %br/
+    #rooms
+      .room
+        %span Room 1#
+        %select#num{:name => "num_per_room[1]"}
+          %option{:value => "1"} 1
+          %option{:value => "2"} 2
+          %option{:value => "3"} 3
+          %option{:value => "4"} 4
+        person.
+    %input#order_rooms{:type => "text"}/
+  %div
+    = f.submit 'submit'

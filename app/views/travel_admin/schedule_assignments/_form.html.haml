@@ -1,0 +1,22 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel Add Bus
+.modal-body
+  = form_for( [@schedule, @object], :remote => true) do |f|
+    %div
+      = f.label :bus
+      = f.select(:bus_id, @object.valid_buses_list, {:include_blank => true})
+    .row
+      .span4
+        = f.label :driver_id
+        = f.select :driver_id, []
+        = f.label :driver_assistance_id
+        = f.select :driver_assistance_id, []
+      .span4
+        = f.label :tour_guide_id
+        = f.select :tour_guide_id, []
+        = f.label :tour_guide_assistance_id
+        = f.select :tour_guide_assistance_id, []
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

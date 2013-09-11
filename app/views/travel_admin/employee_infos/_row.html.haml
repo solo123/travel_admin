@@ -1,0 +1,13 @@
+- tt = TypeText.instance
+<tr id="#{dom_id row}" #{'class=deleted' unless row.status && row.status == 1}>
+%td= row.id
+%td= row.company_id
+%td= row.nickname
+%td= tt.get_texts('roles', row.roles)
+%td= row.default_telephone
+%td= row.default_email
+%td= row.status
+%td.actions
+  .btn-group
+    = row_link_to_edit row
+    = row_link_to_photo employee_info_photos_path(row)

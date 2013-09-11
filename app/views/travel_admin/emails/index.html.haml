@@ -1,0 +1,29 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Orders
+      %span.divider /
+    %li
+      = link_to 'Users', user_infos_path
+      %span.divider /
+    %li.active Emails
+= content_for :search_box do
+  = form_for( @search, :url => emails_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on @
+      = f.text_field :email_address_contains
+      = search_button
+%section
+  = will_paginate(@collection)
+  %table#list_emails.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th ID
+        %th Email
+        %th Ref Data
+        %th Created_at
+        %th Updated_at
+        %th op
+    - @collection.each do |d|
+      = render :partial => 'row', :object => d
+  = will_paginate(@collection)

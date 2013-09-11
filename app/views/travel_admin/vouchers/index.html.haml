@@ -1,0 +1,22 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Accounts
+      %span.divider /
+    %li.active Vouchers
+%section
+  = will_paginate(@collection)
+  %table#list_vouchers.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.table-header
+        %th= t(:id)
+        %th= t(:amount)
+        %th= t(:order_id)
+        %th= t(:operator)
+        %th= t(:expire_date)
+        %th= t(:status)
+        %th= t(:updated_at)
+        %th op
+    - @collection.each do |c|
+      = render :partial => 'row', :object => c
+  = will_paginate(@collection)

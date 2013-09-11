@@ -1,0 +1,16 @@
+%tr{:id => dom_id row}
+  %td.cell-middle= row.id
+  %td= link_to "#{row.address_data_type}: #{row.address_data_id}", edit_object_url(row.address_data), :remote => true
+  %td
+    = row.address1
+    %br/
+    = row.address2
+  %td= row.zipcode
+  %td
+    = row.city
+    %td
+      = time_tag row.created_at
+      %br/
+      = time_tag row.updated_at
+    %td.cell-middle
+      = row_link_to_edit row

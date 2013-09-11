@@ -1,0 +1,19 @@
+- order = Order.find(params[:order_id])
+%p
+  Paid amount:
+  %label#paid_amount.pay-amount= order.order_price.actual_amount - order.order_price.balance_amount
+  Paid:
+  %label#refund_amount.pay-amount 0.00
+  Paid after:
+  %label#paid_amount_after.pay-amount= order.order_price.actual_amount - order.order_price.balance_amount
+%div
+  %ul#tabs_refund.tabs
+    %li
+      %a{:href => "#"} Cash
+    %li
+      %a{:href => "#"} Voucher
+  .panes
+    #tab-cash{:tag => "cash"}
+      = render 'form_refund_cash'
+    #tab-voucher{:tag => "voucher"}
+      = render 'form_refund_voucher'

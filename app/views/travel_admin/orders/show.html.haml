@@ -1,0 +1,96 @@
+- content_for :head do
+  = javascript_tag do
+    var credit_card_rate = "#{InputType.where(:type_name => 'credit.card.rate').collect{|ipt| [ipt.type_text, ipt.type_value]}.join('|') + '|'}";
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      = link_to 'Orders', orders_path
+      %span.divider /
+    %li.active
+      Order: #{@object.order_number}
+.row
+  .span6
+    %h4 Customer
+    - if @object.order_detail && @object.order_detail.user_info
+      %table.table.table-condensed{:style => "width:auto;"}
+        %tbody
+          %tr
+            %td.note-text Full name:
+            %td= @object.order_detail.user_info.payment_name
+          %tr
+            %td.note-text Telephone:
+            %td
+              = @object.order_detail.user_info.payment_tel
+          %tr
+            %td.note-text Email:
+            %td= @object.order_detail.user_info.user.email
+          %tr
+            %td.note-text Address:
+            %td= @object.order_detail.user_info.addresses.first
+  .span6
+    %h4 Order
+    .barcode{:style => "float:right;"}= @object.order_number
+    - if @object.schedule
+      %p{:style => "font-size:110%;font-weight:bold;"}
+        = @object.schedule.tour.description.title
+        %br/
+        = @object.schedule.tour.description.title_cn
+      %p
+        = date_tag @object.schedule.departure_date
+        \~
+        \#{date_tag @object.schedule.return_date}
+        \&nbsp;|&nbsp;(#{link_to 'Schedule: ' + @object.schedule_id.to_s, object_url(@object.schedule)})
+.row
+  .span8
+    %fieldset#list_payments
+      = render :partial => 'travel_admin/payments/payments', :object => @object
+  .span4
+    %h4 Detail
+    %table.table.table-bordered.table-condensed
+      %thead
+        %tr.table-header
+          %th Room
+          %th Adult
+          %th Child
+          %th Amount
+      %tbody
+        - @object.order_items.each_with_index do |item, i|
+          %tr
+            %td.cell-middle
+              \##{i + 1}
+            %td.cell-middle= item.num_adult
+            %td.cell-middle= item.num_child
+            %td.cell-right= item.amount
+        - if @object.order_price
+          %tr
+            %td.cell-middle Total:
+            %td.cell-middle{:colspan => "2"}
+              = @object.order_price.num_total
+              person
+            %td.cell-right= @object.order_price.total_amount
+          %tr
+            %td.cell-right{:colspan => "3"} Adjustment amount:
+            %td.cell-right= @object.order_price.adjustment_amount
+          %tr
+            %td.cell-right{:colspan => "3"} Actual Amount:
+            %td.cell-right= @object.order_price.actual_amount
+    %table
+      %tr
+        %td.cell-right{:width => "100"} Order method:
+        %td= @object.order_method
+      %tr
+        %td.cell-right Created at:
+        %td= time_tag @object.created_at, :class => 'local-datetime'
+      %tr
+        %td.cell-right Updated at:
+        %td= time_tag @object.updated_at, :class => 'local-datetime' if @object.updated_at
+      %tr
+        %td.cell-right Completed at:
+        %td= time_tag @object.completed_at, :class => 'local-datetime' if @object.completed_at
+      %tr
+        %td.cell-right Status:
+        %td= type_text.get_text('order.status', @object.status)
+= icon_link_to 'Add remark', new_order_remark_path(@object), :remote => true, :class => 'btn btn-small', :icon => 'icon-comment'
+#list_remarks.notes
+  - @object.remarks.each do |rmk|
+    = render :partial => 'travel_admin/remarks/row', :object => rmk

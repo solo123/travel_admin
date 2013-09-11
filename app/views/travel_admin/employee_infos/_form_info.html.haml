@@ -1,0 +1,27 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Employee# #{@object.id}
+.modal-body
+  = form_for( @object, :remote => true) do |f|
+    %div
+      %div
+        = f.field_container :ssn do
+          = f.label :ssn
+          = f.text_field :ssn
+        = f.field_container :employ_date do
+          = f.label :employ_date
+          = date_text_field(f, :employ_date)
+        = f.field_container :birthday do
+          = f.label :birthday
+          = date_text_field(f, :birthday)
+        Roles:
+        %br/
+        - InputType.get_list('roles').each do |role|
+          %label.checkbox.inline{:style => "white-space:nowrap;"}
+            = check_box_tag "role[#{role.type_value}]", 1, @object.roles && @object.roles.include?(role.type_value), {:id => dom_id(role), :onchange => 'roles_changed();'}
+            = role.type_text
+    = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

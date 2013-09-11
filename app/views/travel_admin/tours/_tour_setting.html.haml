@@ -1,0 +1,16 @@
+= f.fields_for :tour_setting do |s|
+  %fieldset
+    %legend Attrs
+    .row
+      .span3
+        Weekly(Sun..Sat = 0..6)
+        \#{s.text_field :weekly}
+        \#{s.label :is_auto_gen}
+        \#{s.select :is_auto_gen, [['manual', 0],['auto gen', 1]], {}}
+        Max reservation days(0=default)
+        \#{s.text_field :days_in_advance}
+      .span3
+        = s.label :has_seat_table
+        = s.select :has_seat_table, [['no seat table', 0],['has seat table', 1]], {}
+        = s.label :is_float_price
+        = s.select :is_float_price, [['cannot change price', 0],['can change price', 1]], {}

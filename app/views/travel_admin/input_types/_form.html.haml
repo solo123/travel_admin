@@ -1,0 +1,28 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    Edit Input type# #{@object.id}
+.modal-body
+  = form_for(@object, :remote => true) do |f|
+    .row
+      .span4
+        = f.field_container :type_name do
+          = f.label :type_name
+          %br/
+          = f.text_field :type_name
+        = f.field_container :status do
+          = f.label :status
+          %br/
+          = f.text_field :status
+      .span4
+        = f.field_container :type_text do
+          = f.label :type_text
+          %br/
+          = f.text_field :type_text
+        = f.field_container :type_value do
+          = f.label :type_value
+          %br/
+          = f.text_field :type_value
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

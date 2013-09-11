@@ -1,0 +1,79 @@
+- @object.build_order_detail unless @object.order_detail
+- @object.build_order_price unless @object.order_price
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel
+    %i.glyphicon-2-20>
+    Edit Order# #{@object.order_number}
+.modal-body
+  = form_for(@object, :remote => true, :html => {:class => 'small-form'}) do |f|
+    .row
+      .span4
+        = f.hidden_field :schedule_id
+        = f.hidden_field :schedule_assignment_id
+        = hidden_field_tag :seats, params[:seats]
+        %div{:style => "margin-bottom: 6px;"}
+          = render 'schedule_title', :schedule => @object.schedule
+          = icon_link_to 'Select Schdule', select_schedules_path + '?page=order', {:icon => 'icon-plus', :remote => true, :class => 'btn btn-success'} unless @object.schedule
+        = f.fields_for :order_detail do |detail|
+          %p
+            .btn-group
+              = icon_link_to 'from agent', '#', :onclick => 'goto_find_agent()', :icon => 'icon-font icon-white', :class => 'btn btn-mini btn-success'
+              = icon_link_to 'no agent', '#', :onclick => 'set_order_agent(0)', :icon => 'icon-remove icon-white', :class => 'btn btn-mini btn-info'
+            %br/
+            - if detail.object.from_agent
+              = label_tag nil, detail.object.from_agent.company_name, :id => 'agent_name'
+            - else
+              = label_tag nil, '(no agent)', :id => 'agent_name'
+          = detail.hidden_field :from_agent_id
+          = icon_link_to 'Customer', '#', :onclick => 'goto_find_user()', :icon => 'icon-user icon-white', :class => 'btn btn-mini btn-success'
+          %br/
+          = detail.text_field :user_info_id, :readonly => true
+          %br/
+          Full name:
+          %br/
+          = detail.text_field :full_name, :readonly => true
+          %br/
+          Telephone:
+          %br/
+          = detail.text_field :telephone, :readonly => true
+          %br/
+          Email:
+          %br/
+          = detail.text_field :email, :readonly => true
+          %br/
+          Bill address:
+          %br/
+          = detail.text_field :bill_address, :readonly => true
+          %br/
+          Pickup:
+          %br/
+          = detail.text_field :pickup
+          %br/
+      .span4
+        = add_object_js_link 'Add room', f, :order_items, 'form_room', '#rooms'
+        (price:
+        = succeed "," do
+          %span#order_price1= @object.schedule.price.price1
+        = succeed "," do
+          %span#order_price2= @object.schedule.price.price2
+        = succeed "," do
+          %span#order_price3= @object.schedule.price.price3
+        %span#order_price4= @object.schedule.price.price4
+        )
+        .row
+          .span1 Adult
+          .span1 Child
+          .span1 Amount
+        #rooms
+          = f.fields_for :order_items do |item|
+            = render 'form_room', :f => item
+        %div
+          total amount:
+          %span#total_amount.strong{:style => "font-size: 120%"}= number_with_precision(@object.order_price.total_amount, :precision => 2)
+      :javascript
+        var tmp = " generate_template f, :order_items, :partial => 'form_room'  ";
+.modal-footer
+  = icon_link_to 'Payment', order_path(@object.id), :class => 'pull-left btn btn-small btn-info', :icon => 'icon-shopping-cart' if @object.ready_to_payment?
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

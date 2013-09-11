@@ -1,0 +1,19 @@
+.modal-header
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+  %h3#myModalLabel Employee's Login
+.modal-body
+  = form_for( [@employee_info, @object], :remote => true) do |f|
+    = f.label :login_name
+    = f.text_field :login_name
+    %br/
+    = f.label :email, 'Email (for retrive password)'
+    = f.text_field :email
+    %br/
+    = f.label :password
+    = f.password_field :password
+    %br/
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+.modal-footer
+  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save

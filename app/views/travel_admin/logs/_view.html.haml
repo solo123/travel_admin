@@ -1,0 +1,9 @@
+.container
+  .span-16.large
+    = log.level
+    = log.log_brief
+  - log.attributes.each do |attr_name, attr_value|
+    .span-4.border= attr_name
+    .span-12.underline.last
+      = attr_value
+      \&nbsp;

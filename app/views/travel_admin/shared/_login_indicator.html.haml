@@ -1,0 +1,5 @@
+%div{:style => "float:right;color:white;"}
+  - if current_employee
+    Welcome #{link_to current_employee.employee_info.nickname, employees_path} |
+    \#{link_to 'Logout', main_app.destroy_employee_session_path, :method => :delete}
+

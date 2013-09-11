@@ -1,0 +1,45 @@
+- year = Date.today.year
+- month = Date.today.month
+- max_year = year + 1
+- min_year = year - 1
+- year = params[:year].to_i if params[:year]
+- month = params[:month].to_i if params[:month]
+- d_start = Date.new(year, month, 1)
+- d_end = d_start.end_of_month
+- shifts = BusShift.where(:date => [d_start..d_end]).order(:date).includes(:schedule_assignment)
+- buses = Bus.joins(:bus_shifts).where('bus_shifts.date' => [d_start..d_end]).uniq.order(:name)
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Reports
+      %span.divider /
+    %li.active Vehicles shifts
+= content_for :search_box do
+  .input-prepend.input-append
+    %span.add-on Year
+    %input#input_year.span2{:max => max_year, :min => min_year, :type => "number", :value => year}
+      %span.add-on Month
+      %input#input_month.span1{:max => "12", :min => "1", :type => "number", :value => month}
+        %a#go_shift_button.btn.btn-success{:href => "#", :onclick => "go_shift()"}
+          %i.icon-play
+          GO
+%h3
+  Shifts of #{year}.#{month}
+%table#list_shifts.shifts_table
+  %thead
+    %tr.table-header
+      %th Bus
+      - (d_start..d_end).each do |day|
+        %th= day.day
+  %tbody
+    - buses.each do |bus|
+      %tr
+        %td= bus.name
+        - (d_start..d_end).each do |d|
+          - if s = shifts.detect { |s| s.bus_id == bus.id && s.date == d }
+            - if s.schedule_assignment
+              %td.shift{:link => schedule_schedule_assignment_path(s.schedule_assignment.schedule_id, s.schedule_assignment), :schedule => s.schedule_assignment.schedule_id, :tag => s.schedule_assignment_id, :title => "Schedule: #{s.schedule_assignment.schedule_id}"} &nbsp;
+            - else
+              %td.text-error{:title => "Schedule: #{s.schedule_assignment_id} NOT EXIST!"} ERR
+          - else
+            %td &nbsp;

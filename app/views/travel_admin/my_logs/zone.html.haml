@@ -1,0 +1,12 @@
+.container
+  .span-3
+    %h1 Last operations
+  .span-2
+    = link_to_function image_tag('admin/refresh.png', :size => '10x10'), 'load_logs()', :class => 'hot-link'
+%table.compact
+  - @collection.each do |op|
+    %tr
+      %td= op.level
+      %td= link_to op.log_brief, log_path(op), :remote => true
+      %td.note-text
+        %time.timeago{:datetime => op.created_at.iso8601}= op.created_at

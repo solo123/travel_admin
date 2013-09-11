@@ -1,0 +1,30 @@
+= content_for :breadcrumbs do
+  %ul.breadcrumb
+    %li
+      Accounts
+      %span.divider /
+    %li.active Accounts List
+= content_for :search_box do
+  = form_for( @search, :url => accounts_path ) do |f|
+    .input-prepend.input-append
+      %span.add-on Account
+      = f.text_field :account_brief_contains
+      = search_button
+%section
+  = will_paginate(@collection)
+  %table#list_accounts.data-list.table.table-bordered.table-striped
+    %thead
+      %tr.cell-middle
+        %th id
+        %th type
+        %th related id
+        %th name
+        %th brief
+        %th balance
+        %th status
+        %th created_at
+        %th updated_at
+        %th op
+    - @collection.each do |d|
+      = render :partial => 'row', :object => d
+  = will_paginate(@collection)
