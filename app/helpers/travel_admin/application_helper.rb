@@ -21,9 +21,9 @@ module TravelAdmin
 
     def website_link_to_view(resource, options={})
       options[:target] = 'website'
-      options[:class] = 'btn'
+      options[:class] = 'btn btn-default'
       options[:title] = 'View on website'
-      link_to(raw('<i class="icon-globe"></i>'), website_url(resource), options)
+      link_to(raw('<i class="icon-file"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
       link_to raw("<i class=\"icon-plus icon-white\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
@@ -44,14 +44,14 @@ module TravelAdmin
 
     def row_link_to_photo(resource_path, options = {})
       options[:title] = 'Photos'
-      options[:class] = 'btn'
+      options[:class] = 'btn btn-default'
       options[:target] = 'edit-win'
       link_to(raw('<i class="icon-picture"></i>'), resource_path, options)
     end
 
     def row_link_to_hide(resource, options = {})
       options[:title] = 'Show/Hide'
-      options[:class] = 'btn'
+      options[:class] = 'btn btn-warning'
       options['data-method'] = 'delete'
       options[:remote] = true
       options['data-confirm'] = "Make this data Show/Hide from website.\n\nAre you sure?"

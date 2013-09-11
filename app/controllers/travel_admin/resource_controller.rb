@@ -47,11 +47,11 @@ module TravelAdmin
     
     protected
       def load_collection
-        params[:search] ||= {}
-        @search = object_name.classify.constantize.search(params[:q])
+        params[:q] ||= {}
+        @q = object_name.classify.constantize.search(params[:q])
         pages = cfg.get_config(:admin_list_per_page).to_i
         pages = 20 unless pages > 1
-        @collection = @search.paginate(:page => params[:page], :per_page => pages)
+        @collection = @q.result(distinct: true).paginate(:page => params[:page], :per_page => pages)
       end 
       def load_object
         @object = object_name.classify.constantize.find_by_id(params[:id])

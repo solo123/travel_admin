@@ -9,7 +9,7 @@
 %td= "#{c.city}, #{c.state}, #{c.country}" if c
 %td.cell-middle= row.status_text
 %td
-  .btn-group
+  .btn-group.btn-group-sm
     = website_link_to_view row
     = row_link_to_edit row
     = row_link_to_photo destination_photos_path(row)

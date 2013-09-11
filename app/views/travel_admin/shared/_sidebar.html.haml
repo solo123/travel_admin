@@ -1,17 +1,10 @@
 .sidebar
-  Schedule:
-  .input-append
-    %input#qg_schedule.span1{:onkeypress => "return quick_go_enter(this);", :type => "text"}/
-    %button.btn{:onclick => "quick_go_schedule();", :type => "button"}
-      %i.icon-search
-  Order:
-  .input-append
-    %input#qg_order.span1{:onkeypress => "return quick_go_enter(this);", :type => "text"}/
-    %button.btn{:onclick => "quick_go_order();", :type => "button"}
-      %i.icon-search
-  User:
-  .input-append
-    %input#qg_user.span1{:onkeypress => "return quick_go_enter(this);", :type => "text"}/
-    = icon_link_to '', '#', :icon => 'icon-search', :onclick => 'quick_go_user();'
-  #todos.zone
-  #last_logs.zone
+  = form_tag '', class: 'form-inline' do
+    .form-group
+      = text_field_tag 'schedule_id', '',  class: 'form-control col-md-2', placeholder: 'Schedule#'
+    .form-group
+      = text_field_tag 'tour_id', '', class: 'form-control col-md-2', placeholder: 'Tour#'
+    .form-group
+      = text_field_tag 'user_name', '', class: 'form-control col-md-2', placeholder: 'User name'
+    = submit_tag 'Go', class: 'btn btn-default'
+  

@@ -4,12 +4,16 @@
       Data
       %span.divider /
     %li.active Destinations
+
 = content_for :search_box do
-  = form_for( @search, :url => destinations_path ) do |f|
-    .input-prepend.input-append
-      %span.add-on Title
-      = search_button
-      = link_to_new 'New Destination', 'destinations/new'
+  = search_form_for @q, class: 'form-inline' do |f|
+    .col-lg-4
+      .input-group
+        = f.text_field :description_title_cont, class: 'form-control', placeholder: 'Search destinations'
+        .input-group-btn.btn-group
+          = f.submit 'Search', class: 'btn btn-info'
+          = link_to_new 'New Destination', 'destinations/new'
+
 %section
   = will_paginate(@collection)
   %table#list_destinations.data-list.table.table-bordered.table-striped
