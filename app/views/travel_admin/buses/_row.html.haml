@@ -1,21 +1,21 @@
-<tr id="#{dom_id row}" #{'class=deleted' if !row.status || row.status < 1}>
-%td.cell-middle= row.id
-%td
-  = row.name
-  %br/
-  %span.text-info= row.tel
-%td= row.bus_type
-%td= row.seats
-%td
-  = row.plate_number
-  %br/
-  %span.text-info= row.vin_number
-%td= row.inspection_date
-%td= row.created_at
-%td.actions
-  .btn-group
-    = icon_link_to '', shift_bus_path(row), :icon => 'icon-list-alt', :title => 'View bus shifts table'
-    = row_link_to_edit row
-    = row_link_to_photo bus_photos_path(row)
-    = icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'icon-ban-circle', :title => 'Bus reserved dates'
-    = row_link_to_hide row
+%tr{id: "#{dom_id row}", class: "#{(!row.status || row.status < 1) ? 'deleted' : '' }" }
+  %td.cell-middle= row.id
+  %td
+    = row.name
+    %br/
+    %span.text-info= row.tel
+  %td= row.bus_type
+  %td= row.seats
+  %td
+    = row.plate_number
+    %br/
+    %span.text-info= row.vin_number
+  %td= row.inspection_date
+  %td= row.created_at
+  %td.actions
+    .btn-group
+      = icon_link_to '', shift_bus_path(row), :icon => 'icon-list-alt', :title => 'View bus shifts table'
+      = row_link_to_edit row
+      = row_link_to_photo bus_photos_path(row)
+      = icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'icon-ban-circle', :title => 'Bus reserved dates'
+      = row_link_to_hide row

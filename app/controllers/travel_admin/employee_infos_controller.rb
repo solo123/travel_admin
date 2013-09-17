@@ -1,7 +1,7 @@
 module TravelAdmin
 	class EmployeeInfosController < ResourceController
 		def index
-      @search = EmployeeInfo.metasearch(params[:search])
+      @q = EmployeeInfo.search(params[:q])
       @ecs = EmployeeInfo.select('company_id, count(*) as count').where(:status => 1).group(:company_id).includes(:company)
       @cid = 0
       if params[:c]

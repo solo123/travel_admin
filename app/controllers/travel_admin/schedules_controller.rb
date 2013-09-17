@@ -24,9 +24,9 @@ module TravelAdmin
     def index
       @tt = 1
       @tt = params[:tour_type] if params[:tour_type]
-      params[:search] ||= {:departure_date_greater_than_or_equal_to => Date.current()}
-      @search = Schedule.joins(:tour).where(['tours.tour_type = ?', @tt]).metasearch(params[:search])
-      @collection = @search.page(params[:page]).per_page(cfg.get_config(:admin_list_per_page))
+      params[:q] ||= {:departure_date_gteq => Date.current()}
+      @q = Schedule.joins(:tour).where(['tours.tour_type = ?', @tt]).search(params[:q])
+      @collection = @q.result.page(params[:page]).per_page(cfg.get_config(:admin_list_per_page))
     end
     #override create
     def create

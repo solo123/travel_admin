@@ -1,8 +1,0 @@
-<h2>My Account</h2>
-<%= render :partial => 'travel_admin/employee_infos/detail_info', :object => current_employee.employee_info %>
-<hr />
-<ul>
-  <li><%= link_to "Change my password", main_app.edit_employee_registration_path %></li>
-  <li><%= link_to "Send me Welcome email", test_email_employee_info_path(current_employee) %></li>
-</ul>
-

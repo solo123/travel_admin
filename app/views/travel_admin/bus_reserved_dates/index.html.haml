@@ -1,7 +1,7 @@
 .toolbar
   %ul.actions
     %li
-      = button_link_to 'Add Reserved', bus_bus_reserved_dates_path(@parent) + '/new', {:icon => 'add', 'data-remote' => true}
+      = link_to 'Add Reserved', bus_bus_reserved_dates_path(@parent) + '/new', {'data-remote' => true}
   %br.clear
 %h1 Bus
 %table#list_bus_reserved_dates.data-list

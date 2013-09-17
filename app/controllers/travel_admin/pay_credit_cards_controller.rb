@@ -1,11 +1,11 @@
 module TravelAdmin
   class PayCreditCardsController < PayMethodsController
     def index
-      params[:search] ||= {}
-      @search = PayCreditCard.metasearch(params[:search]).where(:status => 0)
+      params[:q] ||= {}
+      @q = PayCreditCard.where('status>0').search(params[:q])
       pages = cfg.get_config(:admin_list_per_page).to_i
       pages = 20 unless pages > 1
-      @collection = @search.paginate(:page => params[:page], :per_page => pages)
+      @collection = @q.result.paginate(:page => params[:page], :per_page => pages)
     end
     def create
       @object = PayCreditCard.new(params[:pay_credit_card])

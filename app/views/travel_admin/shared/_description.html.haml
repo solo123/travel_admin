@@ -1,19 +1,19 @@
 = f.fields_for :description do |desc|
   .row
-    .span4
-      = f.field_container :title do
+    .col-md-6
+      .form-group
         = desc.label :title
-        = desc.text_field :title
-    .span4
-      = f.field_container :title_cn do
+        = desc.text_field :title, class: 'form-control'
+    .col-md-6
+      .form-group
         = desc.label :title_cn
-        = desc.text_field :title_cn
+        = desc.text_field :title_cn, class: 'form-control'
   .row
-    .span4
-      = f.field_container :en do
+    .col-md-6
+      .form-group
         = desc.label :en
         = desc.text_area :en, :class => 'html-editor', :style => 'width:100%;'
-    .span4
-      = f.field_container :cn do
+    .col-md-6
+      .form-group
         = desc.label :cn
         = desc.text_area :cn, :class => 'html-editor', :style => 'width:100%;'

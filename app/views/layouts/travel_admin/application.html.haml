@@ -29,6 +29,7 @@
       = image_tag 'admin/progress.gif'
       Loading ...
     .container
+      #dialog_place_holder
       = yield
       #hide_contents
         - if flash[:error]
@@ -51,7 +52,7 @@
             %a.close{"data-dismiss" => "alert", :href => "#"} &times;
             %span.label.label-info Notice
             = raw notice
-      #dialog_place_holder
+      .clear
     %footer.footer
       .container
         = render 'travel_admin/shared/footer'

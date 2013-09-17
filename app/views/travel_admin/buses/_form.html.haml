@@ -1,36 +1,50 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    Edit Bus# #{@object.id}
-.modal-body
-  = form_for( @object, :remote => true) do |f|
-    .row
-      .span4
-        = f.label :name
-        = f.text_field :name
-        = f.label :bus_type
-        = f.select(:bus_type, InputType.get_list('bus').collect{|d| [d.type_text, d.type_value]}, {:prompt => 'Select Bus Type'})
-        = f.label :seats
-        = f.text_field :seats
-        = f.label :seats_per_row
-        = f.text_field :seats_per_row
-        = f.label :passengeway
-        = f.text_field :passengeway
-        = f.label :reserved_seats
-        = f.text_field :reserved_seats
-      .span4
-        = f.label :company
-        = f.select(:company_id, Company.all.collect{|c| [c.short_name, c.id]}, {:prompt => 'Select Company'})
-        = f.label :contact_name
-        = f.text_field :contact_name
-        = f.label :tel
-        = f.text_field :tel
-        = f.label :plate_number
-        = f.text_field :plate_number
-        = f.label :vin_number
-        = f.text_field :vin_number
-        = f.label :inspection_date
-        = f.text_field :inspection_date, :value => formatted_date(@object.inspection_date), :class => 'date-picker'
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title#myModalLabel Edit Bus# #{@object.id}
+    .modal-body
+      = form_for( @object, :remote => true) do |f|
+        .row
+          .col-md-6
+            .form-group
+              = f.label :name
+              = f.text_field :name, class: 'form-control'
+            .form-group
+              = f.label :bus_type
+              = f.select(:bus_type, InputType.get_list('bus').collect{|d| [d.type_text, d.type_value]}, {:prompt => 'Select Bus Type'}, class: 'form-control')
+            .form-group
+              = f.label :seats
+              = f.text_field :seats, class: 'form-control'
+            .form-group
+              = f.label :seats_per_row
+              = f.text_field :seats_per_row, class: 'form-control'
+            .form-group
+              = f.label :passengeway
+              = f.text_field :passengeway, class: 'form-control'
+            .form-group
+              = f.label :reserved_seats
+              = f.text_field :reserved_seats, class: 'form-control'
+
+          .col-md-6
+            .form-group
+              = f.label :company
+              = f.select(:company_id, Company.all.collect{|c| [c.short_name, c.id]}, {:prompt => 'Select Company'}, class: 'form-control')
+            .form-group
+              = f.label :contact_name
+              = f.text_field :contact_name, class: 'form-control'
+            .form-group
+              = f.label :tel
+              = f.text_field :tel, class: 'form-control'
+            .form-group
+              = f.label :plate_number
+              = f.text_field :plate_number, class: 'form-control'
+            .form-group
+              = f.label :vin_number
+              = f.text_field :vin_number, class: 'form-control'
+            .form-group
+              = f.label :inspection_date
+              = f.text_field :inspection_date, :value => formatted_date(@object.inspection_date), :class => 'date-picker form-control'
+    .modal-footer
+      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

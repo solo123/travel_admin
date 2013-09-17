@@ -5,15 +5,15 @@
       %span.divider /
     %li.active Companies
 = content_for :search_box do
-  = form_for( @search, :url => companies_path ) do |f|
-    = f.select :company_type_eq, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'span2'
-    .input-append
-      = f.text_field :short_name_or_company_name_contains, :class => 'span2'
-      = search_button
-      = link_to_new 'Add Company', new_company_path
+  = search_form_for @q, class: 'form-inline' do |f|
+    .form-group
+      = f.select :company_type_eq, InputType.get_list('company').map{|t| [t.type_text, t.type_value]}.insert(0, ['All companies', nil]), {}, :class => 'form-control'
+    .form-group
+      = f.text_field :short_name_or_company_name_cont, :class => 'form-control'
+    = search_button
+    = link_to_new 'Add Company', new_company_path
 %section
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  = will_paginate @collection
   %table#list_companies.data-list.table.table-bordered.table-striped
     %thead
       %tr.table-header
@@ -23,8 +23,7 @@
         %th= t('company_type')
         %th Logo
         %th= t('website')
-        %th= t('op')
+        %th{style: 'width:140px;'}= t('op')
     - @collection.each do |c|
       = render :partial => 'row', :object => c
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  = will_paginate @collection

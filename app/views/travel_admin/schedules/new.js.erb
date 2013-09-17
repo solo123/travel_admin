@@ -9,7 +9,7 @@ var edit_div_id = "edit_schedule_div";
 var edit_div = '#' + edit_div_id;
 
 if ($(edit_div).length == 0){
-  $('#dialog_place_holder').append("<div id='"+ edit_div_id +"' class='modal hide fade' aria-hidden='true'></div>");
+  $('body').append("<div id='"+ edit_div_id +"' class='modal fade' aria-hidden='true'></div>");
 }
 
 $(edit_div)

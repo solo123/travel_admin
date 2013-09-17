@@ -8,8 +8,7 @@
   = link_to_new 'New Page', new_page_path
 %section
   %h1= "Pages List"
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  = will_paginate @collection
   %table#list_pages.data-list.table.table-bordered.table-striped
     %thead
       %tr.table-header
@@ -19,5 +18,4 @@
         %th Action
     - @collection.each do |page|
       = render :partial => 'row', :object => page
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  = will_paginate @collection

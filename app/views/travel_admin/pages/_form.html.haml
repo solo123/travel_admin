@@ -1,25 +1,30 @@
 - @object.build_description if !@object.description
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    Edit Page #{@object.permalink}
-.modal-body
-  = form_for @object, :remote => true do |f|
-    .row
-      .span4
-        = f.label :permalink, "Permalink *"
-        = f.text_field :permalink
-        = f.error_message_on :permalink
-        = f.label :meta_keywords, t("meta_keywords")
-        = f.text_field :meta_keywords, :class => 'fullwidth'
-      .span4
-        = f.label :title, "Title *"
-        = f.text_field :title, :class => 'fullwidth title'
-        = f.error_message_on :title
-        = f.label :meta_description, t("meta_description")
-        = f.text_field :meta_description, :class => 'fullwidth'
-    = render :partial => 'travel_admin/shared/description', :locals => {:f => f}
-    = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4.modal-title#myModalLabel Edit Page #{@object.permalink}
+    .modal-body
+      = form_for @object, :remote => true do |f|
+        .row
+          .col-md-6
+            .form-group
+              = f.label :permalink, "Permalink *"
+              = f.text_field :permalink, class: 'form-control'
+              = f.error_message_on :permalink
+            .form-group
+              = f.label :meta_keywords, t("meta_keywords")
+              = f.text_field :meta_keywords, :class => 'fullwidth'
+          .col-md-6
+            .form-group
+              = f.label :title, "Title *"
+              = f.text_field :title, :class => 'fullwidth title form-control'
+              = f.error_message_on :title
+            .form-group
+              = f.label :meta_description, t("meta_description")
+              = f.text_field :meta_description, :class => 'fullwidth form-control'
+        = render :partial => 'travel_admin/shared/description', :locals => {:f => f}
+        = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
+    .modal-footer
+      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

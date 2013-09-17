@@ -23,7 +23,7 @@ module TravelAdmin
       options[:target] = 'website'
       options[:class] = 'btn btn-default'
       options[:title] = 'View on website'
-      link_to(raw('<i class="icon-file"></i>'), website_url(resource), options)
+      link_to(raw('<i class="icon-eye-open"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
       link_to raw("<i class=\"icon-plus icon-white\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
@@ -62,9 +62,9 @@ module TravelAdmin
       icon = options[:icon]
       options.delete(:icon)
       if options[:class]
-        options[:class] += ' btn' if (options[:class].exclude? 'btn')
+        options[:class] += ' btn btn-default' if (options[:class].exclude? 'btn')
       else
-        options[:class] = 'btn'
+        options[:class] = 'btn btn-default'
       end
       lb = label_text
       lb = "<i class='#{icon}'></i> " + label_text if icon
@@ -86,7 +86,7 @@ module TravelAdmin
       end
     end
     def search_button
-      button_tag raw('<i class="icon-search"></i> Search'), :class => 'btn'
+      button_tag raw('<i class="icon-search"></i> Search'), :class => 'btn btn-default'
     end
 
     def edit_object_url(object, options = {})
