@@ -6,7 +6,7 @@
   .modal-content
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-      %h4.modal-title Edit Tour# #{@object.id}
+      %h4.modal-title #{@object.id ? "Edit Tour# #{@object.id}" : "New Tour *"}
     .modal-body
       = form_for( @object, :remote => true) do |f|
         .tabable

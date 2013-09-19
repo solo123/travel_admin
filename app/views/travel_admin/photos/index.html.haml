@@ -1,16 +1,16 @@
 = content_for :breadcrumbs do
   Data &gt;
-  \#{link_to @parent.class.name.pluralize.humanize, objects_url(@parent)} &gt;
-  Photos
+  =link_to @parent.class.name.pluralize.humanize, objects_url(@parent)
+  &gt; Photos
+
 = render :partial => objects_path(@parent) + '/detail', :object => @parent
-%section
-  = icon_link_to 'Add Photo', object_url(@parent) + '/photos/new', {:icon => 'icon-plus', :remote => true}
-%section
-  .row
-    - @collection.each do |p|
-      .span2.thumb
-        %a{:href => p.pic.url(:large)}= image_tag p.pic.url(:thumb)
-        %br/
-        .btn-group
-          = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'icon-circle-arrow-up', :class => 'btn btn-mini', :title => 'Set as this destination title icon'}
-          = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'icon-remove', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete', :class => 'btn btn-mini', :title => 'Delete this photo'}
+
+= icon_link_to 'Add Photo', object_url(@parent) + '/photos/new', {:icon => 'icon-plus', :remote => true}
+.my_div
+  - @collection.each do |p|
+    .thumb
+      %a{:href => p.pic.url(:large)}= image_tag p.pic.url(:thumb)
+      %br/
+      .btn-group
+        = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'icon-circle-arrow-up', :class => 'btn btn-default btn-mini', :title => 'Set as this destination title icon'}
+        = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'icon-remove', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete', :class => 'btn btn-default btn-mini', :title => 'Delete this photo'}
