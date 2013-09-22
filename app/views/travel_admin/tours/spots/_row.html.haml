@@ -1,19 +1,19 @@
 %section
-  <div id="#{dom_id row}" #{'class=deleted' if !row.status || row.status < 1} status='#{row.status}'>
-  .row
-    .color-title
-      Day #{row.visit_day}:
-      \#{row.visit_order})
-      \#{"#{row.destination.description.title}, #{row.destination.description.title_cn}" if row.destination}
-      .btn-group
-        = icon_link_to '',"spots/#{row.id}", :remote => true, :class => 'btn btn-mini', :icon => 'icon-picture', :title => "Use blow destination's thumb as spot's icon"
-        = icon_link_to '', "spots/#{row.id}/edit", :remote => true, :class => 'btn btn-success btn-mini', :icon => 'icon-pencil', :title => 'Edit'
-        = icon_link_to '', "spots/#{row.id}", :remote => true, :method => :delete, :confirm => 'Are you sure to delete this spot?', :icon => 'icon-trash', :title => 'Show/Hide this spot from website', :class => 'btn btn-mini'
-    .row
-      .span4
-        = image_tag row.destination.title_photo.pic.url(:thumb), :class => 'info-icon' if row.destination && row.destination.title_photo
-      - if row.description
+  %div{id: dom_id(row), class: ((!row.status || row.status < 1) ? 'deleted' : ''),  status: row.status}
+    .well
+      .color-title
+        Day #{row.visit_day}:
+        \#{row.visit_order})
+        \#{"#{row.destination.description.title}, #{row.destination.description.title_cn}" if row.destination}
+        .btn-group
+          = icon_link_to '',"spots/#{row.id}", :remote => true, :class => 'btn btn-default btn-mini', :icon => 'icon-picture', :title => "Use blow destination's thumb as spot's icon"
+          = icon_link_to '', "spots/#{row.id}/edit", :remote => true, :class => 'btn btn-success btn-mini', :icon => 'icon-pencil', :title => 'Edit'
+          = icon_link_to '', "spots/#{row.id}", :remote => true, :method => :delete, :confirm => 'Are you sure to delete this spot?', :icon => 'icon-trash', :title => 'Show/Hide this spot from website', :class => 'btn btn-default btn-mini'
+      .row
         .span4
-          = raw row.description.en
-        .span4
-          = raw row.description.cn
+          = image_tag row.destination.title_photo.pic.url(:thumb), :class => 'info-icon' if row.destination && row.destination.title_photo
+        - if row.description
+          .span4
+            = raw row.description.en
+          .span4
+            = raw row.description.cn
