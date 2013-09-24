@@ -1,16 +1,17 @@
 - @object.build_order_detail unless @object.order_detail
 - @object.build_order_price unless @object.order_price
+
 .modal-dialog
   .modal-content
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
       %h4.modal-title#myModalLabel
-        %i.glyphicon-2-20
+        %i.icon-edit.icon-3
         Edit Order# #{@object.order_number}
     .modal-body
       = form_for(@object, :remote => true, :html => {:class => 'small-form'}) do |f|
         .row
-          .span4
+          .col-md-6
             = f.hidden_field :schedule_id
             = f.hidden_field :schedule_assignment_id
             = hidden_field_tag :seats, params[:seats]
@@ -52,7 +53,7 @@
               %br/
               = detail.text_field :pickup
               %br/
-          .span4
+          .col-md-6
             = add_object_js_link 'Add room', f, :order_items, 'form_room', '#rooms'
             (price:
             = succeed "," do

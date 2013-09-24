@@ -5,21 +5,19 @@
       admin-#{@title}
     = favicon_link_tag
     %meta{:content => "width=device-width, initial-scale=1.0", :name => @title}
-      = stylesheet_link_tag '/css/bootstrap/css/bootstrap', '/css/bootstrap/css/datepicker', 'admin/admin', '/css/my_icons/glyphicons', '/css/my_icons/gicons'
-      = javascript_include_tag 'admin/admin', '/css/bootstrap/js/bootstrap.min', '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/bootstrap/js/bootstrap-datepicker'
-      = csrf_meta_tags
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css", :rel=>"stylesheet"}
+    %link{:href=>"//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel=>"stylesheet"}
+    = stylesheet_link_tag 'admin/admin'
+    = javascript_include_tag 'admin/admin', '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/bootstrap/js/bootstrap-datepicker'
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"}
+
+    = csrf_meta_tags
   %body
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          %a.brand{:href => "/"} Admin Home
-          %div{:style => "float:right;color:white;"}
-    #top_breadcrumbs.navbar.navbar-fixed-top
+    .navbar.navbar-static.navbar-inverse.navbar-fixed-top
       .container
-    %header#toolbox.subhead
-      .container
-        .quick-go
-        .search-box
+        .navbar-header
+          %b Admin Home
+    #top_place_holder &nbsp;
     .container
       = yield
       #hide_contents

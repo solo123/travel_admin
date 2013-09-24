@@ -24,11 +24,13 @@
             #tab2.tab-pane
               .row
                 .col-md-6
-                  = f.label :tour_type
-                  = f.select :tour_type, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}, {}, :class => 'data-field'
+                  .form-group
+                    = f.label :tour_type
+                    = f.select :tour_type, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}, {}, :class => 'data-field'
                 .col-md-6
-                  = f.label :days
-                  = f.text_field :days
+                  .form-group
+                    = f.label :days
+                    = f.text_field :days
               = render :partial => 'tour_setting', :locals => {:f => f}
             #tab3.tab-pane
               = render :partial => 'tour_price', :locals => {:f => f}
