@@ -1,10 +1,11 @@
 .sidebar
   = form_tag '', class: 'form-inline' do
-    .form-group
-      = text_field_tag 'schedule_id', '',  class: 'form-control col-md-2', placeholder: 'Schedule#'
-    .form-group
-      = text_field_tag 'tour_id', '', class: 'form-control col-md-2', placeholder: 'Tour#'
-    .form-group
-      = text_field_tag 'user_name', '', class: 'form-control col-md-2', placeholder: 'User name'
-    = submit_tag 'Go', class: 'btn btn-default'
+    .col
+      = text_field_tag 'schedule_id', '',  class: 'form-control', placeholder: 'Schedule#'
+    .col
+      = text_field_tag 'tour_id', '', class: 'form-control', placeholder: 'Tour#'
+    .col
+      = text_field_tag 'user_name', '', class: 'form-control', placeholder: 'User name'
+    .col
+      = submit_tag 'Go', class: 'btn btn-default'
   

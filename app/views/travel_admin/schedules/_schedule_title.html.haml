@@ -1,0 +1,43 @@
+%section
+  .well
+    .row
+      .col-md-2.alert-success.cell-middle
+        %h1= s.id
+      .col-md-8
+        %h4
+          = s.tour.description.title_cn
+          = s.tour.days
+          日游
+        %h4= s.tour.description.title
+        
+      .pull-right{:style => "text-align:right;"}
+        出發:
+        %b= date_tag s.departure_date
+        %br/
+        返回:
+        %b= date_tag s.return_date
+    .row
+      .col-md-6
+        价格:
+        1人:
+        %span.strong= s.price.price1
+        \/
+        2人:
+        %span.strong= s.price.price2
+        \/
+        3人:
+        %span.strong= s.price.price3
+        \/
+        4人:
+        %span.strong= s.price.price4
+        = icon_link_to 'Edit', object_url(s) + '/edit', :remote => true, :icon => 'icon-pencil', :class => 'btn btn-mini'
+      .pull-right{:style => "text-align:right;"}
+        预定人数:
+        %span.strong= s.book_customers
+        \/
+        已付款人数:
+        %span.strong= s.actual_customers
+        \/
+        客房总数:
+        %span.strong= s.actual_rooms
+

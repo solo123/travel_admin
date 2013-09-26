@@ -1,23 +1,21 @@
 - css = ''
 - if i > assignment.total_seats
-- css = 'unav'
+  - css = 'unav'
 - elsif seat
-- if seat.order
-- if seat.order.order_detail && seat.order.order_detail.from_agent
-- css = 'agent'
-- elsif seat.order.status == 3
-- css = 'fpaid'
-- elsif seat.order.status == 2
-- css = 'paid'
+  - if seat.order
+    - if seat.order.order_detail && seat.order.order_detail.from_agent
+      - css = 'agent'
+    - elsif seat.order.status == 3
+      - css = 'fpaid'
+    - elsif seat.order.status == 2
+      - css = 'paid'
+    - else
+      - css = 'sold'
+  - else
+    - css = 'hold'
 - else
-- css = 'sold'
-- end
-- else
-- css = 'hold'
-- end
-- else
-- css = 'blnk'
-- end
+  - css = 'blnk'
+
 %td{:class => "seat-td #{css}", :id => "seat_#{i}"}
   .seat
     .seat-check

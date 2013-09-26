@@ -86,7 +86,7 @@ module TravelAdmin
       end
     end
     def search_button
-      button_tag raw('<i class="icon-search"></i> Search'), :class => 'btn btn-default'
+      button_tag raw('<i class="icon-search"></i>'), :class => 'btn btn-default'
     end
 
     def edit_object_url(object, options = {})

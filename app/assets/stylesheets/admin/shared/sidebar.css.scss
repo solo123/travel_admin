@@ -1,2 +1,6 @@
 .search-label {width: 60px !important;}
-.quick-go { float:right;}
+.quick-go { 
+  float:right; width:380px;
+  .col {width: 25%; float:left;}
+
+}

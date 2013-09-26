@@ -1,9 +1,12 @@
 = content_for :head do
   = javascript_include_tag 'admin/seat_table'
+
 #schedule_title
-  = render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @object}
+  = render :partial => 'schedule_title', :locals => {:s => @object}
+
 %div
   = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@object) + "?schedule_id=#{@object.id}", :remote => true, :icon => 'icon-plus-sign'
+
 %section
   #unseat_orders
-    = render 'travel_admin/schedules/orders', :orders => @object.orders
+    = render 'orders', :orders => @object.orders

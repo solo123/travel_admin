@@ -1,9 +1,9 @@
 %h1
   Bus: #{detail.name}
-.container
-  .span-8
+.row
+  .col-md-6
     = image_tag detail.title_photo.pic.url(:small) if detail.title_photo
-  .span-8.last
+  .col-md-6
     - if detail.company
       %p
         Company: #{detail.company.company_name}(#{detail.company.short_name})

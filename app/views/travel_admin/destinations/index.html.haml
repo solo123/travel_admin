@@ -7,11 +7,11 @@
 
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline' do |f|
-    .col-lg-4
+    .col-md-4
       .input-group
         = f.text_field :description_title_cont, class: 'form-control', placeholder: 'Search destinations'
         .input-group-btn.btn-group
-          = f.submit 'Search', class: 'btn btn-info'
+          = search_button 
           = link_to_new 'New Destination', 'destinations/new'
 
 %section
