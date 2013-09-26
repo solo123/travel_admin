@@ -1,5 +1,6 @@
 class Employee < ActiveRecord::Base
 	has_one :employee_info
+  attr_accessor :login
 	
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
