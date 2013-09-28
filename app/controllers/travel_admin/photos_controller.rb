@@ -1,51 +1,53 @@
 module TravelAdmin
-class PhotosController < AdminController
-  def index
-    load_parent
-    load_collection
-  end
-  def show
-    load_parent
-    load_object
-  end
-  def new
-    load_parent
-    @object = @parent.photos.build
-  end
-  def edit
-    load_parent
-    load_object
-  end
-  def update
-    load_parent
-    load_object
-    @object = update_attributes(params[:photo])
-  end
-  def create
-    load_parent
-    @object = @parent.photos.build(params[:photo])
-    unless @object.save
-      flash[:error] = "Upload filename contains special charater. Please RENAME before upload again.<br />&nbsp;<br />#{@object.errors.full_messages.to_sentence}"
+  class PhotosController < AdminController
+    def index
+      load_parent
+      load_collection
     end
-    
-    redirect_to :action => :index
-  end
-  def destroy
-    load_object
-    @object.destroy
-    redirect_to :action => :index
-  end
+    def show
+      load_parent
+      load_object
+    end
+    def new
+      load_parent
+      @object = @parent.photos.build
+    end
+    def edit
+      load_parent
+      load_object
+    end
+    def update
+      load_parent
+      load_object
+		  params.permit!
+      @object = update_attributes(params[:photo])
+    end
+    def create
+      load_parent
+		  params.permit!
+      @object = @parent.photos.build(params[:photo])
+      unless @object.save
+        flash[:error] = "Upload filename contains special charater. Please RENAME before upload again.<br />&nbsp;<br />#{@object.errors.full_messages.to_sentence}"
+      end
 
-  def cover
-    load_parent
-    load_object
-    @parent.title_photo_id = params[:id]
-    @parent.save
-    redirect_to :action => :index
-  end
+      redirect_to :action => :index
+    end
+    def destroy
+      load_object
+      @object.destroy
+      redirect_to :action => :index
+    end
+
+    def cover
+      load_parent
+      load_object
+      @parent.title_photo_id = params[:id]
+      @parent.save
+      redirect_to :action => :index
+    end
 
 
-  protected
+    protected
     def load_collection
       @collection = @parent.photos if @parent
     end
@@ -67,5 +69,10 @@ class PhotosController < AdminController
                   Page.find(params[:page_id])
                 end
     end
-end
+
+    private
+    def photo_params
+      params.require(:photo).permit(:pic)
+    end
+  end
 end

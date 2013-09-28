@@ -7,6 +7,7 @@
         .small-image-left
           = image_tag detail.title_photo.pic.url(:small) if detail.title_photo
         = raw detail.description.en
+        .clear
     .col-md-6
       .well
         = raw detail.description.cn

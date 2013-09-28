@@ -1,3 +1,11 @@
-$("#dialog_place_holder").html("<%= j render 'form' %>");
-$('#dialog_place_holder .modal').modal();
+var edit_div_id = "upload_photo_div";
+var edit_div = "#" + edit_div_id;
+
+if ($(edit_div).length == 0){
+  $('body').append("<div id='"+ edit_div_id +"' class='modal fade' aria-hidden='true' tabindex='-1' role='dialog'></div>");
+}
+
+$(edit_div)
+	.html("<%= j render(:partial => "form") %>")
+  .modal();
 
