@@ -1,0 +1,9 @@
+= f.fields_for :description do |desc|
+  .row
+    .col-md-6
+      = desc.input :title
+      = desc.input :en, input_html: {:class => 'html-editor'}
+    .col-md-6
+      = desc.input :title_cn
+      = desc.input :cn, input_html: {class: 'html-editor'}
+

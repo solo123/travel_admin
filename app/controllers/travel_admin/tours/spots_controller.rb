@@ -3,9 +3,11 @@ module TravelAdmin
     def new
       load_parent
       @object = @tour.spots.build
+      @object.status = 1
     end
     def create
       load_parent
+      params.permit!
       @object = @tour.spots.build(params[:spot])
       @tour.save
     end
@@ -32,6 +34,9 @@ module TravelAdmin
       end
       def load_parent
         @parent = @tour = Tour.find(params[:tour_id])
+      end
+      def spot_params
+        params.require(:spot).permit()
       end
  
   end

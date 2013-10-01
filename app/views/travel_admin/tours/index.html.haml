@@ -11,7 +11,7 @@
         .input-group-addon
           = f.select :tour_type_eq, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}.insert(0, ['All tours', nil]), {}
         = f.text_field :description_title_cont, :class => 'form-control', placeholder: 'Search tours'
-        .input-group-btn.btn-group
+        .input-group-btn
           = search_button 
           = link_to_new 'New Tour', 'tours/new'
           = icon_link_to "Generate schedules", generate_tours_path, :icon => 'icon-share', :class => 'btn btn-info'
