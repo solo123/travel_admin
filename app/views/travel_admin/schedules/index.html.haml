@@ -5,31 +5,18 @@
       %span.divider /
     %li.active Schedules
 = content_for :search_box do
-  %form.form-inline{:role => "form"}
-    .col-md-6
-      .form-group
-        %label.sr-only{:for => "exampleInputEmail2"} Email address
-        %input#exampleInputEmail2.form-control{:placeholder => "Enter email", :type => "email"}
-      .form-group
-        %label.sr-only{:for => "exampleInputPassword2"} Password
-        %input#exampleInputPassword2.form-control{:placeholder => "Password", :type => "password"}
-      .checkbox
-        %label
-          %input{:type => "checkbox"}
-            Remember me
-      %button.btn.btn-default{:type => "submit"} Sign in
-
-
   = search_form_for @q, class: 'form-inline'  do |f|
-    .col-md-6
+    .col-md-4
       .form-group
-        .label 
-          From
+        .input-group
+          %span.input-group-addon From
           = f.text_field :departure_date_gteq, :class => 'form-control date-picker', placeholder: 'Date from'
-          To
+          %span.input-group-addon To
           = f.text_field :departure_date_lteq, :class => 'form-control date-picker'
-      .form-group
-        = search_button
+          .input-group-btn
+            = button_tag(type: 'submit', class: "btn btn-default") do
+              %i.icon-search
+
 %section
   %ul#list_emps.nav.nav-tabs
     - type_text.get_types('tour').each do |t|
