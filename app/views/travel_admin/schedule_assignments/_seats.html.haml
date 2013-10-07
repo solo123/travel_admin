@@ -3,18 +3,17 @@
 - seats_per_row = 4
 - passengeway = 2
 - if assignment.bus
-- seats_per_row = assignment.bus.seats_per_row || 4
-- passengeway = assignment.bus.passengeway || 2
-- end
+  - seats_per_row = assignment.bus.seats_per_row || 4
+  - passengeway = assignment.bus.passengeway || 2
+
 - total_rows = (total_seats + seats_per_row - 1) / seats_per_row
 - width = 95 / seats_per_row
 - i = 1
 #assignment_tab
-  .container
-    .span5
+  .row
+    .col-md-6
       = render :partial => 'travel_admin/schedule_assignments/ass_info', :object => assignment
-    / end of span5
-    .span5{:style => "float:right;"}
+    .col-md-6
       %table.seat-table-intro
         %tbody
           %tr.diagram-exp

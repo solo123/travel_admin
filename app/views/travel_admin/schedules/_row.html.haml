@@ -1,4 +1,4 @@
-%tr{:id => dom_id row}
+%tr{:id => dom_id(row) }
   %td.cell-middle.large-number= link_to row.id, schedule_path(row)
   %td
     %span.tour-name= row.tour.description.title_cn

@@ -6,12 +6,15 @@
     %li.active Destinations
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline' do |f|
-    .input-prepend.input-append
-      %span.add-on Name
-      = f.text_field :name_cont, :class => 'span2'
-      = search_button
-      = link_to_new 'New Bus', 'buses/new'
-      = icon_link_to 'Shifts', 'buses/shifts', :icon => 'icon-list-alt'
+    .col-md-4
+      .input-group
+        %span.input-group-addon Name
+        = f.text_field :name_cont, :class => 'form-control'
+        .input-group-btn
+          = button_tag(type: 'submit', class: "btn btn-default") do
+            %i.icon-search
+          = link_to_new 'New Bus', 'buses/new'
+          = icon_link_to 'Shifts', 'buses/shifts', :icon => 'icon-list-alt'
 %section
   = will_paginate @collection
   %table#list_buses.data-list.table.table-bordered.table-striped
