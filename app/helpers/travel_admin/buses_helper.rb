@@ -1,13 +1,13 @@
 module TravelAdmin
   module BusesHelper
     def gen_cal_table
-      year = Date.today.year
-      year = params[:year].to_i if params[:year]
-      d_start = Date.new(year, 1, 1)
-      d_end = Date.new(year, 12, 31)
+      @year = Date.today.year
+      @year = params[:year].to_i if params[:year]
+      d_start = Date.new(@year, 1, 1)
+      d_end = Date.new(@year, 12, 31)
       shifts = @bus.bus_shifts.where(:date => [d_start..d_end]).order(:date)
-      lnk_prev = shift_bus_path(@bus) + "?year=#{year - 1}"
-      lnk_next = shift_bus_path(@bus) + "?year=#{year + 1}"
+      @lnk_prev = shift_bus_path(@bus) + "?year=#{@year - 1}"
+      @lnk_next = shift_bus_path(@bus) + "?year=#{@year + 1}"
 
       r = []
       sc = 0
@@ -65,6 +65,7 @@ module TravelAdmin
         r << "<td></td>" * (7 - dd)
       end
       r << "</table></div>\n"
+      @r = r
     end
   end
 end
