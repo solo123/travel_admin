@@ -69,6 +69,9 @@ module TravelAdmin
         @parent = @schedule = Schedule.find(params[:schedule_id])
         @object = ScheduleAssignment.find(params[:id])
       end
+      def schedule_assignment_params
+        params.require(:schedule_assignment).permit()
+      end
 
   end
 end

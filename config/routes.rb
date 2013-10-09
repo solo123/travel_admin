@@ -37,7 +37,7 @@ TravelAdmin::Engine.routes.draw do
     end
     resources :schedule_assignments do
       resources :bus_seats
-      put :seats, :on => :member
+      patch :seats, :on => :member
     end
   end
   resources :user_infos do

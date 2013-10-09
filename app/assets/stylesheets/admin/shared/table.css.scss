@@ -3,7 +3,9 @@
 .table-header{background-color:#c8e0c0;}
 td.table-header{background-color:#c8e0c0 !important;}
 
-.deleted {text-decoration: line-through;}
+.deleted {text-decoration: line-through;
+  color: #aaa;
+}
 .table th {text-align: center;}
 .cell-middle {text-align: center; vertical-align: middle;}
 td.cell-middle {text-align: center; vertical-align: middle;}
