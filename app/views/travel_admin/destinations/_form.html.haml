@@ -11,10 +11,10 @@
           .row
             .col-md-6
               = desc.input :title
-              = desc.input :en, input_html: {:class => 'html-editor'}
+              = desc.input :en, input_html: {:class => 'html-editor', style: 'width:100%'}
             .col-md-6
               = desc.input :title_cn
-              = desc.input :cn, input_html: {class: 'html-editor'}
+              = desc.input :cn, input_html: {class: 'html-editor', style: 'width:100%;'}
         = f.input :status, collection: [['Show', 1],['Hide', 0]]
     .modal-footer
       %button.btn.btn-default{"data-dismiss" => "modal"} Close
