@@ -43,6 +43,7 @@ TravelAdmin::Engine.routes.draw do
   resources :user_infos do
     collection do
       get :select, :find, :search, :add_tel, :add_email, :add_address, :brief
+      get :autocomplete_user_info_search
     end
     resources :photos do
       get :cover, :on => :member
@@ -54,7 +55,9 @@ TravelAdmin::Engine.routes.draw do
     resources :remarks
     resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers, :pay_credit_cards
     resources :refund_cashes
+    resources :order_details
   end
+  resources :order_details
   resources :pay_credit_cards, :pay_checks
   resources :emps
   resources :employee_infos do

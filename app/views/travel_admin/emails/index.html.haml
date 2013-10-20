@@ -8,11 +8,12 @@
       %span.divider /
     %li.active Emails
 = content_for :search_box do
-  = form_for( @search, :url => emails_path ) do |f|
-    .input-prepend.input-append
-      %span.add-on @
-      = f.text_field :email_address_contains
-      = search_button
+  = search_form_for @q do |f|
+    .col-md-4
+      .input-group
+        = f.text_field :email_address_cont, class: 'form-control', placeholder: 'Email'
+        .input-group-btn
+          = search_button
 %section
   = will_paginate(@collection)
   %table#list_emails.data-list.table.table-bordered.table-striped

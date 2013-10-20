@@ -1,6 +1,25 @@
 - content_for :head do
-  = javascript_tag do
+  :javascript
     var credit_card_rate = "#{InputType.where(:type_name => 'credit.card.rate').collect{|ipt| [ipt.type_text, ipt.type_value]}.join('|') + '|'}";
+    $(function(){
+      $('#user_search_field').bind('railsAutocomplete.select', function(event, data){
+      var ns = $('#user_search_field').val().split('|');
+      $('#customer_name').val(ns[0]).attr('disabled', 'disabled');
+      $('#customer_phone').val(ns[1]).attr('disabled', 'disabled');
+      $('#customer_email').val(ns[2]).attr('disabled', 'disabled');
+      $('#user_info_id').text('User# ' + data.item.id);
+      });
+    });
+    function reset_customer(){
+      $('#customer_name').val('').removeAttr('disabled');
+      $('#customer_phone').val('').removeAttr('disabled');
+      $('#customer_email').val('').removeAttr('disabled');
+      $('#order_detail_user_info_id').val('');
+      $('#user_info_id').text('* New *');
+      $('#user_search_field').val('').focus();
+    }
+    
+
 = content_for :breadcrumbs do
   %ul.breadcrumb
     %li
@@ -8,26 +27,13 @@
       %span.divider /
     %li.active
       Order: #{@object.order_number}
+
 .row
-  .span6
+  .col-md-6
     %h4 Customer
-    - if @object.order_detail && @object.order_detail.user_info
-      %table.table.table-condensed{:style => "width:auto;"}
-        %tbody
-          %tr
-            %td.note-text Full name:
-            %td= @object.order_detail.user_info.payment_name
-          %tr
-            %td.note-text Telephone:
-            %td
-              = @object.order_detail.user_info.payment_tel
-          %tr
-            %td.note-text Email:
-            %td= @object.order_detail.user_info.user.email
-          %tr
-            %td.note-text Address:
-            %td= @object.order_detail.user_info.addresses.first
-  .span6
+    = render partial: 'order_user', locals: {order: @object} 
+
+  .col-md-6
     %h4 Order
     .barcode{:style => "float:right;"}= @object.order_number
     - if @object.schedule
@@ -40,11 +46,13 @@
         \~
         \#{date_tag @object.schedule.return_date}
         \&nbsp;|&nbsp;(#{link_to 'Schedule: ' + @object.schedule_id.to_s, object_url(@object.schedule)})
+
 .row
-  .span8
+  .col-md-8
     %fieldset#list_payments
-      = render :partial => 'travel_admin/payments/payments', :object => @object
-  .span4
+      - if @object.order_price
+        = render :partial => 'travel_admin/payments/payments', :object => @object
+  .col-md-4
     %h4 Detail
     %table.table.table-bordered.table-condensed
       %thead

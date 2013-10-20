@@ -8,12 +8,12 @@
       %span.divider /
     %li.active Addresses
 = content_for :search_box do
-  = form_for( @search, :url => addresses_path ) do |f|
-    .input-prepend.input-append
-      %span.add-on
-        %i.icon-envelop
-      = f.text_field :address1_or_address2_contains
-      = search_button
+  = search_form_for @q do |f|
+    .col-md-4
+      .input-group
+        = f.text_field :address1_or_address2_cont, class: 'form-control', placeholder: 'Address'
+        .input-group-btn
+          = search_button
 %section
   = will_paginate(@collection)
   %table#list_addresses.data-list.table.table-bordered.table-striped

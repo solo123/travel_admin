@@ -4,6 +4,8 @@
 //= require jquery/jquery.cookie
 //= require jquery/jquery.timeago
 //= require jquery_ujs
+//= require jquery.ui.autocomplete
+//= require autocomplete-rails
 //= require jquery/jquery-barcode-2.0.2.min
 //= require jquery/jquery.purr
 //= require_tree ./shared

@@ -1,11 +1,17 @@
 module TravelAdmin
   class UserInfosController < ResourceController
-
+    before_filter :set_no_log
+    def set_no_log
+      @no_log = 1
+    end
+    autocomplete :user_info, :search, :column_name => 'full_name', display_value: 'full_info'
+    def get_autocomplete_items(params)
+      items = UserInfo.all
+    end
     def find
       @no_log = 1
     end
 	  def search
-      @no_log = 1
       fields = 'user_infos.id, user_infos.full_name, telephones.tel, emails.email_address'
       max_count = 100
 	    r = []
@@ -20,7 +26,6 @@ module TravelAdmin
       render 'search_result', :layout => nil
 	  end
     def brief
-      @no_log = 1
       @object = UserInfo.find(params[:id]) if params[:id]
     end
     def select
@@ -31,6 +36,7 @@ module TravelAdmin
       end
     end
     def create
+		  params.permit!
       @object = UserInfo.new(params[:user_info])
       @object.payment_name = @object.full_name
       if @object.save
@@ -41,6 +47,7 @@ module TravelAdmin
     end
     def update
       load_object
+		  params.permit!
       @object.attributes = params[object_name.singularize.parameterize('_')]
       @object.payment_name = @object.full_name if @object.full_name_changed?
       if @object.changed_for_autosave?
@@ -52,6 +59,10 @@ module TravelAdmin
         end
       end
     end
+    private
+      def user_info_params
+        params.require(:user_info).permit(:full_name, :status, :telephones, :emails, :addresses)
+      end
 
   end
   

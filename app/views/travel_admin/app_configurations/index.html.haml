@@ -5,14 +5,14 @@
       %span.divider /
     %li.active Configurations
 = content_for :search_box do
-  = form_for( @search, :url => app_configurations_path ) do |f|
-    .input-prepend.input-append
-      %span.add-on
-        %i.icon-tag
-      = f.text_field :key_contains
-      = search_button
-      = link_to_new 'Add', new_app_configuration_path
-      = icon_link_to 'Reload', app_configurations_path + '/reload', :icon => 'icon-refresh', :remote => true
+  = search_form_for @q, class: 'form-inline' do |f|
+    .col-md-4
+      .input-group
+        = f.text_field :key_cont
+        .input-group-btn
+          = search_button
+          = link_to_new 'Add', new_app_configuration_path
+          = icon_link_to 'Reload', app_configurations_path + '/reload', :icon => 'icon-refresh', :remote => true
 %section
   = will_paginate(@collection)
   %table#list_app_configurations.data-list.table.table-bordered.table-striped

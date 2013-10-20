@@ -1,8 +1,0 @@
-<div class='item-template'>
-  <%= f.select :tel_type, InputType.where(:type_name => 'tel').map { |c| [c.type_text, c.type_text] }, {}, :style => 'width:90px;' %>
-  <%= f.telephone_field :tel, :class => 'span2' %>
-  <label class="checkbox inline">
-    <%= f.check_box :_destroy, :onchange => 'rm_if_new_record(this);' %>
-    Del
-  </label>
-</div>

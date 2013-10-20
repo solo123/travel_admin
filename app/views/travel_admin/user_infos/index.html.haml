@@ -5,11 +5,14 @@
       %span.divider /
     %li.active Users
 = content_for :search_box do
-  = form_for( @search, :url => user_infos_path ) do |f|
-    .input-prepend.input-append
-      = f.text_field :full_name_contains, :size => 15, :class => 'data-field'
-      = search_button
-      = link_to_new 'New user', 'user_infos/new'
+  = search_form_for @q, class: 'inline-form' do |f|
+    .col-md-4
+      .input-group
+        = f.text_field :full_name_cont, class: 'form-control', placeholder: 'Search by name'
+        .input-group-btn
+          = search_button
+          = link_to_new 'New user', 'user_infos/new'
+
 %section
   = will_paginate(@collection)
   %table#list_user_infos.data-list.table.table-bordered.table-striped

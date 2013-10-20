@@ -31,6 +31,8 @@
               = detail.hidden_field :from_agent_id
               = icon_link_to 'Customer', '#', :onclick => 'goto_find_user()', :icon => 'icon-user icon-white', :class => 'btn btn-mini btn-success'
               %br/
+              = autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#customer_id' }, class: ''
+              %br/
               = detail.text_field :user_info_id, :readonly => true
               %br/
               Full name:

@@ -25,12 +25,10 @@ function release(){
 }
 function order(){
   if (validate_order_seats()){
-    $.ajax({
-      type: "GET",
-      url: host_path + "/orders/new",
-      dataType: 'script',
-      data: 'assignment_id=' + $('#assignment_id').val() + '&seats=' + get_selected_seats()
-    });
+    $('<form action="/ewtt/orders" method="POST">' + 
+      '<input type="hidden" name="assignment_id" value="' + $('#assignment_id').val() + '">' +
+      '<input type="hidden" name="seats" value="' + get_selected_seats() + '">' +
+      '</form>').submit();
   }
 }
 

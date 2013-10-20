@@ -1,0 +1,13 @@
+- @object.build_order_detail
+- @object.order_detail.user_info_id = 1
+
+= simple_form_for(@object) do |f|
+  = f.input :schedule_id
+  = f.input :schedule_assignment_id
+  = hidden_field_tag :seats, params[:seats]
+  = f.input :order_method
+  - f.simple_fields_for :order_detail do |detail|
+    = detail.input :from_agent_id
+    = detail.input :user_info_id
+
+  = icon_link_to 'Payment', order_path(@object.id), :class => 'pull-left btn btn-small btn-info', :icon => 'icon-shopping-cart' if @object.ready_to_payment?

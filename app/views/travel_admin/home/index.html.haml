@@ -1,5 +1,10 @@
-= content_for :head do
-  = stylesheet_link_tag '/css/my_icons/glyphicons'
-  = stylesheet_link_tag '/css/my_icons/gicons'
 %h2 admin - Home
 = link_to 'reset session', reset_app_session_test_path
+
+
+= autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#customer_id' }, class: 'form-control'
+
+%input{type: 'text', id: 'customer_id'}
+
+
+  = link_to 'edit user info', edit_user_info_path(UserInfo.first), remote: true

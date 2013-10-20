@@ -8,11 +8,12 @@
       %span.divider /
     %li.active Phones
 = content_for :search_box do
-  = form_for( @search, :url => telephones_path ) do |f|
-    .input-prepend.input-append
-      %span.add-on Tel
-      = f.text_field :tel_contains
-      = search_button
+  = search_form_for @q do |f|
+    .col-md-4
+      .input-group
+        = f.text_field :tel_cont, class: 'form-control', placeholder: 'telephone number'
+        .input-group-btn
+          = search_button
 %section
   = will_paginate(@collection)
   %table#list_telephones.data-list.table.table-bordered.table-striped

@@ -1,28 +1,22 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    Edit Configuration# #{@object.id}
-.modal-body
-  = form_for( @object, :remote => true) do |f|
-    .row
-      .span4
-        = f.field_container :key do
-          = f.label :key
-          %br/
-          = f.text_field :key
-        = f.field_container :title do
-          = f.label :title
-          %br/
-          = f.text_field :title
-        = f.field_container :val do
-          = f.label :val
-          %br/
-          = f.text_field :val
-        Created at: #{@object.created_at}
-        %br/
-        Updated at: #{@object.updated_at}
-        %br/
-      .span4
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+      %h4.modal-title
+        Edit Configuration# #{@object.id}
+    .modal-body
+      = simple_form_for( @object, :remote => true) do |f|
+        .row
+          .col-md-6
+            = f.input :key
+            = f.input :title
+            = f.input :val
+
+            Created at: #{@object.created_at}
+            %br/
+            Updated at: #{@object.updated_at}
+            %br/
+          .col-md-6
+    .modal-footer
+      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
