@@ -20,27 +20,29 @@
           - unless order.status && order.status >= 1
             = link_to '(remove 重设顾客)', 'reset_customer_sales_sheet_path(sales_sheet)', :remote => true
 - else
-  = simple_form_for(order.build_order_detail, :remote => true) do |f|
-    %table.table.table-condensed
-      %tr
-        %td Search:
-        %td= autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#order_detail_user_info_id' }, class: 'form-control'
-      %tr
-        %td Name:
-        %td= text_field_tag 'customer_name', '', :placeholder => 'Name', class: 'form-control'
-      %tr
-        %td Phone:
-        %td= text_field_tag 'customer_phone', '', :placeholder => 'Phone', class: 'form-control'
-      %tr
-        %td Email:
-        %td= text_field_tag 'customer_email', '', :placeholder => 'Email', class: 'form-control'   
-      %tr
-        %td
-          %span#user_info_id * New *
-          = f.input :user_info_id, as: :hidden, style: 'width:80px;', :readonly => true, placeholder: 'User#', class: 'form-control'
-          = hidden_field_tag :op, 'set_order_customer'
-        %td
-          = f.submit 'Set Customer', class: 'btn btn-info'
-          %button.btn.btn-default{type: 'button', onclick: 'reset_customer()'} Clear
+  - order.build_order_detail
+  = simple_form_for(order, :remote => true) do |f|
+    = simple_fields_for :order_detail do |detail|
+      %table.table.table-condensed
+        %tr
+          %td Search:
+          %td= autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#order_detail_user_info_id' }, class: 'form-control'
+        %tr
+          %td Name:
+          %td= text_field_tag 'customer_name', '', :placeholder => 'Name', class: 'form-control'
+        %tr
+          %td Phone:
+          %td= text_field_tag 'customer_phone', '', :placeholder => 'Phone', class: 'form-control'
+        %tr
+          %td Email:
+          %td= text_field_tag 'customer_email', '', :placeholder => 'Email', class: 'form-control'   
+        %tr
+          %td
+            %span#user_info_id * New *
+            = detail.input :user_info_id, as: :hidden, style: 'width:80px;', :readonly => true, placeholder: 'User#', class: 'form-control'
+            = hidden_field_tag :op, 'set_order_customer'
+          %td
+            = f.submit 'Set Customer', class: 'btn btn-info'
+            %button.btn.btn-default{type: 'button', onclick: 'reset_customer()'} Clear
 
 
