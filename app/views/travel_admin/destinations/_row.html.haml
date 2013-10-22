@@ -1,16 +1,17 @@
 - c = row.city
-<tr id="#{dom_id row}" #{'class=deleted' if !row.status || row.status < 1}>
-%td.cell-middle= row.id
-%td= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo
-%td
-  = row.description.title
-  %br/
-  = row.description.title_cn
-%td= "#{c.city}, #{c.state}, #{c.country}" if c
-%td.cell-middle= row.status_text
-%td
-  .btn-group.btn-group-sm
-    = website_link_to_view row
-    = row_link_to_edit row
-    = row_link_to_photo destination_photos_path(row)
-    = row_link_to_hide row
+%tr{id: dom_id(row), class: (row.status && row.status == 1) ? '' : 'deleted'}
+  %td.cell-middle= row.id
+  %td= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo
+  %td
+    - if row.description
+      = row.description.title
+      %br/
+      = row.description.title_cn
+  %td= "#{c.city}, #{c.state}, #{c.country}" if c
+  %td.cell-middle= row.status_text
+  %td
+    .btn-group.btn-group-sm
+      = website_link_to_view row
+      = row_link_to_edit row
+      = row_link_to_photo destination_photos_path(row)
+      = row_link_to_hide row
