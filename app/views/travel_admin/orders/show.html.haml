@@ -22,11 +22,9 @@
 
 = content_for :breadcrumbs do
   %ul.breadcrumb
-    %li
-      = link_to 'Orders', orders_path
-      %span.divider /
-    %li.active
-      Order: #{@object.order_number}
+    %li= link_to "Schedule# #{@object.schedule_assignment.schedule_id}", schedule_path(@object.schedule_assignment.schedule)
+    %li= link_to 'Seat Table', schedule_schedule_assignment_path(@object.schedule_assignment.schedule, @object.schedule_assignment)
+    %li.active Order: #{@object.order_number}
 
 .row
   .col-md-6

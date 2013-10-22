@@ -26,7 +26,7 @@
     .seat-pickup
       - if seat
         - if seat.order
-          = seat.order.order_detail.pickup
+          = seat.order.order_detail.pickup if seat.order.order_detail
           %br/
           - if seat.order.order_detail && seat.order.order_detail.from_agent
             = label_tag nil, "A:" +  seat.order.order_detail.from_agent.short_name, :title => seat.order.order_detail.from_agent.company_name, :class => 'text-success'
@@ -35,7 +35,7 @@
       - if seat
         - if seat.order
           - if !seat.order.status || seat.order.status < 2
-            = link_to seat.order.order_number, edit_order_path(seat.order), :remote => true
+            = link_to seat.order.order_number, order_path(seat.order)
           - else
             = link_to seat.order.order_number, order_path(seat.order), :target => 'edit-win'
           (#{seat.order.order_price.num_total if seat.order.order_price}p)

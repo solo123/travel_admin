@@ -1,0 +1,51 @@
+/* Global style
+-------------------------------------------------- */
+/* container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 100%;
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+@media (min-width: 1350px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+@media (min-width: 1500px) {
+  .container {
+    max-width: 1470px;
+  }
+}
+
+
+/* Data Table style
+-------------------------------------------------- */
+/* only screen */
+.r-morethan-800 {
+  display: none;
+}
+@media only screen and (min-width: 800px){
+  .r-morethan-800 {
+    display: block;
+  }
+  .r-lessthan-800 {
+    display: none;
+  }
+}
+
+
