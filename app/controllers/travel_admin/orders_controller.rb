@@ -36,6 +36,14 @@ module TravelAdmin
         flash[:error] = biz.errors.to_sentence
       end
     end
+    def reset_customer
+      load_object
+      if @object.order_detail
+        @object.order_detail.user_info = nil
+        @object.order_detail.save
+      end
+      redirect_to order_path(@object)
+    end
     private
     def set_seats
       unless params[:seats].blank?

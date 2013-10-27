@@ -43,7 +43,6 @@
         = date_tag @object.schedule.departure_date
         \~
         \#{date_tag @object.schedule.return_date}
-        \&nbsp;|&nbsp;(#{link_to 'Schedule: ' + @object.schedule_id.to_s, object_url(@object.schedule)})
 
 .row
   .col-md-8

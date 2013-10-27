@@ -56,6 +56,7 @@ TravelAdmin::Engine.routes.draw do
     resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers, :pay_credit_cards
     resources :refund_cashes
     resources :order_details
+    get :reset_customer, :on => :member
   end
   resources :order_details
   resources :pay_credit_cards, :pay_checks
