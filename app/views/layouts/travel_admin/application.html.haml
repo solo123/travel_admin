@@ -1,60 +1,81 @@
 !!!
-%html
+/[if IE 8] <html lang="en" class="ie8">
+/ [if !IE]><!
+%html{:lang => "en"}
+  / <![endif]
+
   %head
-    %title
-      admin-#{@title}
-    = favicon_link_tag
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => @title}
-    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css", :rel=>"stylesheet"}
-    %link{:href=>"//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel=>"stylesheet"}
-    %link{:href=>"/css/bs3_datepicker/bs3_datepicker.css", :rel=>"stylesheet"}
-    = stylesheet_link_tag 'admin/admin'
-    = javascript_include_tag 'admin/admin', '/css/xheditor/xheditor-1.1.14-zh-cn.min' 
-    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"}
-    %script{:src=>"/css/bs3_datepicker/bs3_datepicker.js"}
-    = csrf_meta_tags
-    = render 'travel_admin/shared/head_script'
-    = yield :head
+    %meta{:charset => "utf-8"}/
+    %title Color Admin | Dashboard
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    / ================== BEGIN BASE CSS STYLE ==================
+    %link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/bootstrap-3.2.0/css/bootstrap.min.css", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    %link{:href => "assets/css/animate.min.css", :rel => "stylesheet"}/
+    %link{:href => "assets/css/style.min.css", :rel => "stylesheet"}/
+    %link{:href => "assets/css/style-responsive.min.css", :rel => "stylesheet"}/
+    %link#theme{:href => "assets/css/theme/default.css", :rel => "stylesheet"}/
+    / ================== END BASE CSS STYLE ==================
+    / ================== BEGIN PAGE LEVEL STYLE ==================
+    %link{:href => "assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/bootstrap-datepicker/css/datepicker.css", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/bootstrap-datepicker/css/datepicker3.css", :rel => "stylesheet"}/
+    %link{:href => "assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
+    / ================== END PAGE LEVEL STYLE ==================
+
   %body
-    = render 'travel_admin/shared/main_menu'
-    #top_breadcrumbs.navbar-fixed-top
-      .container
-        = yield :breadcrumbs
-    #top_place_holder &nbsp;
-    %header#toolbox.subhead
-      .container
-        .quick-go
-          = render 'travel_admin/shared/sidebar'
-        %div
-          = yield :search_box
-    #progress
-      = image_tag 'admin/progress.gif'
-      Loading ...
-    .container
-      #dialog_place_holder
-      = yield
-      #hide_contents
-        - if flash[:error]
-          .flash.notice
-            .alert.alert-error
-              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-              %span.label.label-important
-                ERROR
-                = raw flash[:error]
-        - if flash[:alert]
-          .flash.notice
-            .alert.alert-error
-              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-              %span.label.label-warning
-                Alert
-                = raw flash[:alert]
-      - if notice
-        .flash.notice
-          .alert.alert-info
-            %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-            %span.label.label-info Notice
-            = raw notice
-      .clear
-    %footer.footer
-      .container
-        = render 'travel_admin/shared/footer'
+    #page-loader.fade.in
+      %span.spinner
+    #page-container.fade.page-sidebar-fixed.page-header-fixed
+      = render 'travel_admin/shared/admin_top'
+      = render 'travel_admin/shared/side_bar'
+
+      #content.content
+        %ol.breadcrumb.pull-right
+          %li
+            %a{:href => "javascript:;"} Home
+          %li
+            %a{:href => "javascript:;"} Page Options
+          %li.active Blank Page
+        %h1.page-header
+          Blank Page
+          %small header small text goes here...
+        = yield 
+      
+      #footer.footer
+      %a.btn.btn-icon.btn-circle.btn-success.btn-scroll-to-top.fade{"data-click" => "scroll-top", :href => "javascript:;"}
+        %i.fa.fa-angle-up
+
+    / ================== BEGIN BASE JS ==================
+    %script{:src => "assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js"}
+    %script{:src => "assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js"}
+    %script{:src => "assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js"}
+    /[if lt IE 9]
+      <script src="assets/crossbrowserjs/html5shiv.js"></script>
+      <script src="assets/crossbrowserjs/respond.min.js"></script>
+      <script src="assets/crossbrowserjs/excanvas.min.js"></script>
+    %script{:src => "assets/plugins/slimscroll/jquery.slimscroll.min.js"}
+    %script{:src => "assets/plugins/jquery-cookie/jquery.cookie.js"}
+    / ================== END BASE JS ==================
+    / ================== BEGIN PAGE LEVEL JS ==================
+    %script{:src => "assets/plugins/gritter/js/jquery.gritter.js"}
+    %script{:src => "assets/plugins/flot/jquery.flot.min.js"}
+    %script{:src => "assets/plugins/flot/jquery.flot.time.min.js"}
+    %script{:src => "assets/plugins/flot/jquery.flot.resize.min.js"}
+    %script{:src => "assets/plugins/flot/jquery.flot.pie.min.js"}
+    %script{:src => "assets/plugins/sparkline/jquery.sparkline.js"}
+    %script{:src => "assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js"}
+    %script{:src => "assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"}
+    %script{:src => "assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"}
+    %script{:src => "assets/js/dashboard.min.js"}
+    %script{:src => "assets/js/apps.min.js"}
+    / ================== END PAGE LEVEL JS ==================
+    :javascript
+      $(document).ready(function() {
+        App.init();
+        Dashboard.init();
+      });          

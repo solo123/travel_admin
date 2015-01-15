@@ -1,0 +1,88 @@
+#header.header.navbar.navbar-default.navbar-fixed-top
+  / begin container-fluid
+  .container-fluid
+    / begin mobile sidebar expand / collapse button
+    .navbar-header
+      %a.navbar-brand{:href => "index.html"}
+        %span.navbar-logo
+        Color Admin
+      %button.navbar-toggle{"data-click" => "sidebar-toggled", :type => "button"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    / end mobile sidebar expand / collapse button
+    / begin header navigation right
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        %form.navbar-form.full-width
+          .form-group
+            %input.form-control{:placeholder => "Enter keyword", :type => "text"}
+              %button.btn.btn-search{:type => "submit"}
+                %i.fa.fa-search
+      %li.dropdown
+        %a.dropdown-toggle.f-s-14{"data-toggle" => "dropdown", :href => "javascript:;"}
+          %i.fa.fa-bell-o
+          %span.label 5
+        %ul.dropdown-menu.media-list.pull-right.animated.fadeInDown
+          %li.dropdown-header Notifications (5)
+          %li.media
+            %a{:href => "javascript:;"}
+              .pull-left.media-object.bg-red
+                %i.fa.fa-bug
+              .media-body
+                %h6.media-heading Server Error Reports
+                .text-muted 3 minutes ago
+          %li.media
+            %a{:href => "javascript:;"}
+              .pull-left
+                %img.media-object{:alt => "", :src => "assets/img/user-1.jpg"}/
+              .media-body
+                %h6.media-heading John Smith
+                %p Quisque pulvinar tellus sit amet sem scelerisque tincidunt.
+                .text-muted 25 minutes ago
+          %li.media
+            %a{:href => "javascript:;"}
+              .pull-left
+                %img.media-object{:alt => "", :src => "assets/img/user-2.jpg"}/
+              .media-body
+                %h6.media-heading Olivia
+                %p Quisque pulvinar tellus sit amet sem scelerisque tincidunt.
+                .text-muted 35 minutes ago
+          %li.media
+            %a{:href => "javascript:;"}
+              .pull-left.media-object.bg-green
+                %i.fa.fa-plus
+              .media-body
+                %h6.media-heading New User Registered
+                .text-muted 1 hour ago
+          %li.media
+            %a{:href => "javascript:;"}
+              .pull-left.media-object.bg-blue
+                %i.fa.fa-envelope
+              .media-body
+                %h6.media-heading New Email From John
+                .text-muted 2 hour ago
+          %li.dropdown-footer.text-center
+            %a{:href => "javascript:;"} View more
+      %li.dropdown.navbar-user.open
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "javascript:;"}
+          %img{:alt => "", :src => "assets/img/user-13.jpg"}
+            %span.hidden-xs Adam Schwartz
+            %b.caret
+        %ul.dropdown-menu.animated.fadeInLeft
+          %li.arrow
+          %li
+            %a{:href => "javascript:;"} Edit Profile
+          %li
+            %a{:href => "javascript:;"}
+              %span.badge.badge-danger.pull-right 2
+              Inbox
+          %li
+            %a{:href => "javascript:;"} Calendar
+          %li
+            %a{:href => "javascript:;"} Setting
+          %li.divider
+          %li
+            %a{:href => "javascript:;"} Log Out
+    / end header navigation right
+  / end container-fluid

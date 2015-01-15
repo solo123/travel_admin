@@ -1,0 +1,50 @@
+- ml = File.read('admin_menu.dat')
+/ begin #sidebar
+#sidebar.sidebar
+  / begin sidebar scrollbar
+  %div{"data-height" => "100%", "data-scrollbar" => "true"}
+    / begin sidebar user
+    %ul.nav
+      %li.nav-profile
+        .image
+          %a{:href => "javascript:;"}
+            %img{:alt => "", :src => "assets/img/user-11.jpg"}/
+        .info
+          Jonathan Wang
+          %small Boss
+    / end sidebar user
+    / begin sidebar nav
+    %ul.nav
+      %li.nav-header Navigation
+      %li
+        %a{:href => "/omeiadmin"}
+          %i.fa.fa-laptop
+          %span Dashboard
+      %li
+        %a{:href => "inbox.html"}
+          %span.badge.pull-right 10
+          %i.fa.fa-inbox
+          %span Inbox
+      - ml.split('>').each do |cat|
+        - next if cat.empty?
+        - arr = cat.split("\n")
+        %li.has-sub
+          %a{:href => "javascript:;"}
+            %i.fa.fa-suitcase
+            %b.caret.pull-right
+            %span= arr[0]
+          %ul.sub-menu
+            - (1..arr.length - 1).each do |line_index|
+              - dt = arr[line_index].split('|')
+              %li= link_to t(dt[0]), eval(dt[2])
+
+      / begin sidebar minify button
+      %li
+        %a.sidebar-minify-btn{"data-click" => "sidebar-minify", :href => "javascript:;"}
+          %i.fa.fa-angle-double-left
+      / end sidebar minify button
+    / end sidebar nav
+  / end sidebar scrollbar
+.sidebar-bg
+/ end #sidebar
+

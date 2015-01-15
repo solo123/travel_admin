@@ -6,8 +6,8 @@ class Destination < ActiveRecord::Base
   has_many :photos, :as => :photo_data, :dependent => :destroy
   belongs_to :city
 
-  scope :a_order, joins(:description).order('descriptions.title')
-  scope :visible, where(:status => 1)
+  scope :a_order, -> { joins(:description).order('descriptions.title') }
+  scope :visible, -> { where(:status => 1) }
   def status_text
     if self.status && self.status > 0
       'show'
