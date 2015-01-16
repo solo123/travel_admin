@@ -8,6 +8,7 @@ class Destination < ActiveRecord::Base
 
   scope :a_order, -> { joins(:description).order('descriptions.title') }
   scope :visible, -> { where(:status => 1) }
+  scope :recomment, -> {where(status: 1).limit(20)}
   def status_text
     if self.status && self.status > 0
       'show'
