@@ -8,7 +8,7 @@
       %li.nav-profile
         .image
           %a{:href => "javascript:;"}
-            %img{:alt => "", :src => "assets/img/user-11.jpg"}/
+            %img{:alt => "", :src => "/admin/assets/img/user-11.jpg"}/
         .info
           Jonathan Wang
           %small Boss
@@ -28,7 +28,7 @@
       - ml.split('>').each do |cat|
         - next if cat.empty?
         - arr = cat.split("\n")
-        %li.has-sub
+        %li.has-sub{class: "#{current_path.include?(arr[0]) ? 'active' : ''}"}
           %a{:href => "javascript:;"}
             %i.fa.fa-suitcase
             %b.caret.pull-right
@@ -36,13 +36,14 @@
           %ul.sub-menu
             - (1..arr.length - 1).each do |line_index|
               - dt = arr[line_index].split('|')
-              %li= link_to t(dt[0]), eval(dt[2])
+              %li{class: "#{current_path.include?(dt[0]) ? 'active' : ''}"}= link_to t(dt[0]), full_path(dt[2])
 
       / begin sidebar minify button
       %li
         %a.sidebar-minify-btn{"data-click" => "sidebar-minify", :href => "javascript:;"}
           %i.fa.fa-angle-double-left
       / end sidebar minify button
+      = current_path
     / end sidebar nav
   / end sidebar scrollbar
 .sidebar-bg

@@ -3,9 +3,9 @@
   .container-fluid
     / begin mobile sidebar expand / collapse button
     .navbar-header
-      %a.navbar-brand{:href => "index.html"}
-        %span.navbar-logo
-        Color Admin
+      %a.navbar-brand{:href => "#{APP_CONFIG.get('admin_path')}"}
+        %image{src: '/pics/website/logo.png'}
+
       %button.navbar-toggle{"data-click" => "sidebar-toggled", :type => "button"}
         %span.icon-bar
         %span.icon-bar
@@ -66,7 +66,7 @@
             %a{:href => "javascript:;"} View more
       %li.dropdown.navbar-user.open
         %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "javascript:;"}
-          %img{:alt => "", :src => "assets/img/user-13.jpg"}
+          %img{:alt => "", :src => "/admin/assets/img/user-13.jpg"}
             %span.hidden-xs Adam Schwartz
             %b.caret
         %ul.dropdown-menu.animated.fadeInLeft

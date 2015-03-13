@@ -11,11 +11,12 @@
           .row
             .col-md-6
               = desc.input :title
-              = desc.input :en, input_html: {:class => 'html-editor', style: 'width:100%'}
+              = desc.input :en, input_html: {rows: 15}
             .col-md-6
               = desc.input :title_cn
-              = desc.input :cn, input_html: {class: 'html-editor', style: 'width:100%;'}
+              = desc.input :cn, input_html: {rows: 15}
         = f.input :status, collection: [['Show', 1],['Hide', 0]]
+        = f.submit class: 'hidden'
     .modal-footer
       %button.btn.btn-default{"data-dismiss" => "modal"} Close
       %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

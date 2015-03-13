@@ -6,7 +6,7 @@
 
   %head
     %meta{:charset => "utf-8"}/
-    %title Color Admin | Dashboard
+    %title AE Travel | Data System
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
     %meta{:content => "", :name => "description"}/
     %meta{:content => "", :name => "author"}/
@@ -27,6 +27,7 @@
     %link{:href => "/admin/assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
     / ================== END PAGE LEVEL STYLE ==================
 
+    = javascript_include_tag 'travel_admin/application'
   %body
     #page-loader.fade.in
       %span.spinner
@@ -37,13 +38,10 @@
       #content.content
         %ol.breadcrumb.pull-right
           %li
-            %a{:href => "javascript:;"} Home
-          %li
-            %a{:href => "javascript:;"} Page Options
-          %li.active Blank Page
+            = link_to 'Home', full_path
+          = yield :breadcrumbs
         %h1.page-header
-          Blank Page
-          %small header small text goes here...
+          = yield :page_header
         = yield 
       
       #footer.footer
@@ -71,11 +69,24 @@
     %script{:src => "/admin/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js"}
     %script{:src => "/admin/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"}
     %script{:src => "/admin/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"}
-    %script{:src => "/admin/assets/js/dashboard.min.js"}
+    %script{:src => "/admin/assets/js/dashboard.js"}
     %script{:src => "/admin/assets/js/apps.min.js"}
     / ================== END PAGE LEVEL JS ==================
     :javascript
       $(document).ready(function() {
         App.init();
         Dashboard.init();
+
       });          
+
+    
+    - flash.each do |k, v|
+      :javascript
+        $.gritter.add({
+          title: "#{k}",
+            text: "#{v}",
+            image: '/admin/assets/img/user-2.jpg',
+            sticky: "#{ k == 'notices' }",
+            time: '5000',
+            class_name: 'my-sticky-class'
+        });

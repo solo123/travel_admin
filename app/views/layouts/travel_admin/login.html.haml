@@ -1,45 +1,70 @@
 !!!
-%html
+/[if IE 8] <html lang="en" class="ie8">
+/ [if !IE]><!
+%html{:lang => "en"}
+  / <![endif]
   %head
-    %title
-      admin-#{@title}
-    = favicon_link_tag
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => @title}
-    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css", :rel=>"stylesheet"}
-    %link{:href=>"//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css", :rel=>"stylesheet"}
-    = stylesheet_link_tag 'admin/admin'
-    = javascript_include_tag 'admin/admin', '/css/xheditor/xheditor-1.1.14-zh-cn.min', '/css/bootstrap/js/bootstrap-datepicker'
-    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"}
-
-    = csrf_meta_tags
+    %meta{:charset => "utf-8"}/
+    %title AE Travel | Login Page
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    / ================== BEGIN BASE CSS STYLE ==================
+    %link{:href => "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", :rel => "stylesheet"}
+      %link{:href => "/admin/assets/plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css", :rel => "stylesheet"}/
+      %link{:href => "/admin/assets/plugins/bootstrap-3.2.0/css/bootstrap.min.css", :rel => "stylesheet"}/
+      %link{:href => "/admin/assets/plugins/font-awesome-4.2.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+      %link{:href => "/admin/assets/css/animate.min.css", :rel => "stylesheet"}/
+      %link{:href => "/admin/assets/css/style.min.css", :rel => "stylesheet"}/
+      %link{:href => "/admin/assets/css/style-responsive.min.css", :rel => "stylesheet"}/
+      %link#theme{:href => "/admin/assets/css/theme/default.css", :rel => "stylesheet"}/
+      / ================== END BASE CSS STYLE ==================
   %body
-    .navbar.navbar-static.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          %b Admin Home
-    #top_place_holder &nbsp;
-    .container
-      = yield
-      #hide_contents
-        - if flash[:error]
-          .flash.notice
-            .alert.alert-error
-              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-              %span.label.label-important
-                ERROR
-                = raw flash[:error]
-        - if flash[:alert]
-          .flash.notice
-            .alert.alert-error
-              %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-              %span.label.label-warning
-                Alert
-                = raw flash[:alert]
-      - if notice
-        .flash.notice
-          .alert.alert-info
-            %a.close{"data-dismiss" => "alert", :href => "#"} &times;
-            %span.label.label-info Notice
-            = raw notice
-    %footer.footer
-      .container
+
+
+    / begin #page-loader
+    #page-loader.fade.in
+      %span.spinner
+    / end #page-loader
+    .login-cover
+      .login-cover-image
+        %img{:alt => "", "data-id" => "login-cover-image", :src => "/admin/assets/img/login-bg/bg-3.jpg"}/
+      .login-cover-bg
+    / begin #page-container
+    #page-container.fade
+      / begin login
+      .login.login-v2{"data-pageload-addclass" => "animated flipInX"}
+        / begin brand
+        .login-header
+          .brand
+            %image{src: '/pics/website/logo.png'}
+            %small bus tours, packages, cruises
+          .icon
+            %i.fa.fa-sign-in
+        / end brand
+        = yield
+      / end login
+    / end page container    
+
+    = yield
+
+    / ================== BEGIN BASE JS ==================
+    %script{:src => "/admin/assets/plugins/jquery-1.8.2/jquery-1.8.2.min.js"}
+    %script{:src => "/admin/assets/plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js"}
+    %script{:src => "/admin/assets/plugins/bootstrap-3.2.0/js/bootstrap.min.js"}
+    /[if lt IE 9]
+      <script src="/admin/assets/crossbrowserjs/html5shiv.js"></script>
+      <script src="/admin/assets/crossbrowserjs/respond.min.js"></script>
+      <script src="/admin/assets/crossbrowserjs/excanvas.min.js"></script>
+    %script{:src => "/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"}
+    %script{:src => "/admin/assets/plugins/jquery-cookie/jquery.cookie.js"}
+    / ================== END BASE JS ==================
+    / ================== BEGIN PAGE LEVEL JS ==================
+    %script{:src => "/admin/assets/js/login-v2.demo.min.js"}
+    %script{:src => "/admin/assets/js/apps.min.js"}
+    / ================== END PAGE LEVEL JS ==================
+    :javascript
+      $(document).ready(function() {
+        App.init();
+        LoginV2.init();
+      });

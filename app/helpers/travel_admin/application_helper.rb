@@ -7,6 +7,19 @@ module TravelAdmin
       TypeText.instance
     end
 
+    def full_path(related_path = '')
+      "#{APP_CONFIG.get('admin_path')}/#{related_path}"
+    end
+
+    def get_image_path(img_path, img_id)
+      if img_path.start_with?('destinations')
+        # e_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo
+        "/pics/website/logo.png"
+      else
+        "/pics/website/logo.png" 
+      end
+    end
+
     def has_auth(action_name)
       roles = current_employee.employee_info.roles
       auth = Auth.find_by_action(action_name)
@@ -23,7 +36,7 @@ module TravelAdmin
       options[:target] = 'website'
       options[:class] = 'btn btn-default'
       options[:title] = 'View on website'
-      link_to(raw('<i class="icon-eye-open"></i>'), website_url(resource), options)
+      link_to(raw('<i class="fa fa-file-o"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
       link_to raw("<i class=\"icon-plus icon-white\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
@@ -33,7 +46,7 @@ module TravelAdmin
       options[:remote] = true
       options[:title] = 'Edit'
       options[:class] = 'btn btn-success'
-      link_to(raw('<i class="icon-edit icon-white"></i>'), edit_object_url(resource), options)
+      link_to(raw('<i class="fa fa-pencil-square-o"></i>'), edit_object_url(resource), options)
     end
     def button_link_to_edit(resource, options = {})
       options[:remote] = true
@@ -46,7 +59,7 @@ module TravelAdmin
       options[:title] = 'Photos'
       options[:class] = 'btn btn-default'
       options[:target] = 'edit-win'
-      link_to(raw('<i class="icon-picture"></i>'), resource_path, options)
+      link_to(raw('<i class="fa fa-file-image-o"></i>'), resource_path, options)
     end
 
     def row_link_to_hide(resource, options = {})
@@ -55,7 +68,7 @@ module TravelAdmin
       options['data-method'] = 'delete'
       options[:remote] = true
       options['data-confirm'] = "Make this data Show/Hide from website.\n\nAre you sure?"
-      link_to(raw('<i class="icon-trash"></i>'), object_url(resource), options)
+      link_to(raw('<i class="fa fa-trash-o"></i>'), object_url(resource), options)
     end
 
     def icon_link_to(label_text, to_url, options = {})
@@ -172,6 +185,15 @@ var html = $("#{generate_template(form, method, :partial => partial)}".replace(/
       form.text_field field, :value => dt, :class => 'date-picker'
     end
 
+    def current_path
+      if controller_name == 'destinations'
+        "Data/Destinations"
+      elsif controller_name == 'tours'
+        "Data/Tours"
+      else
+        controller_name
+      end
+    end
 
 
     private
