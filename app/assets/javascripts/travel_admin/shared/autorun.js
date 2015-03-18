@@ -5,6 +5,7 @@ $(document).ajaxStop(function(){
   $("#progress").slideUp();
 });
 
+/*
 $(function(){
   $('.flash').purr({
     fadeInSpeed: 500,
@@ -18,3 +19,4 @@ $(function(){
   });
 
 });
+*/
