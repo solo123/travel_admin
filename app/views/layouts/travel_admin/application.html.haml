@@ -27,7 +27,7 @@
     %link{:href => "/admin/assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
     / ================== END PAGE LEVEL STYLE ==================
 
-    = javascript_include_tag 'travel_admin/application'
+
   %body
     #page-loader.fade.in
       %span.spinner
@@ -71,6 +71,7 @@
     %script{:src => "/admin/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"}
     %script{:src => "/admin/assets/js/dashboard.js"}
     %script{:src => "/admin/assets/js/apps.min.js"}
+    = javascript_include_tag 'travel_admin/application'
     = cloudinary_js_config
     / ================== END PAGE LEVEL JS ==================
     :javascript

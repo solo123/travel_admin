@@ -6,19 +6,33 @@
   %small all destinations list here for edit.
 
 %section
-  = will_paginate(@collection)
-  = link_to_new 'New Destination', new_destination_path
-  %table#list_destinations.data-list.table.table-hover.table-striped
-    %thead
-      %tr.table-header
-        %th ID
-        %th{:width => "50"} Photo
-        %th Title
-        %th= t("city")
-        %th= t("status")
-        %th{:width => "160"} operate
-    %tbody
-      - @collection.each do |d|
-        = render :partial => 'row', :object => d
-  = will_paginate(@collection)
+
+  .panel.panel-inverse
+    .panel-heading
+      .panel-heading-btn
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-default{"data-click" => "panel-expand", :href => "javascript:;"}
+          %i.fa.fa-expand
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-success{"data-click" => "panel-reload", :href => "javascript:;"}
+          %i.fa.fa-repeat
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-warning{"data-click" => "panel-collapse", :href => "javascript:;"}
+          %i.fa.fa-minus
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-danger{"data-click" => "panel-remove", :href => "javascript:;"}
+          %i.fa.fa-times
+      %h4.panel-title Destinations
+    .panel-body
+      = will_paginate(@collection)
+      = link_to_new 'New Destination', new_destination_path
+      %table#list_destinations.data-list.table.table-hover.table-striped
+        %thead
+          %tr.table-header
+            %th ID
+            %th{:width => "50"} Photo
+            %th Title
+            %th= t("city")
+            %th= t("status")
+            %th{:width => "160"} operate
+        %tbody
+          - @collection.each do |d|
+            = render :partial => 'row', :object => d
+      = will_paginate(@collection)
 

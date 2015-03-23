@@ -3,7 +3,7 @@
   .container-fluid
     / begin mobile sidebar expand / collapse button
     .navbar-header
-      %a.navbar-brand{:href => "#{APP_CONFIG.get('admin_path')}"}
+      %a.navbar-brand{:href => "#{$redis.get('admin_path')}"}
         %image{src: '/pics/website/logo.png'}
 
       %button.navbar-toggle{"data-click" => "sidebar-toggled", :type => "button"}

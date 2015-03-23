@@ -8,7 +8,7 @@ module TravelAdmin
     end
 
     def full_path(related_path = '')
-      "#{APP_CONFIG.get('admin_path')}/#{related_path}"
+      "#{$redis.get('admin_path')}/#{related_path}"
     end
 
     def get_image_path(img_path, img_id)
