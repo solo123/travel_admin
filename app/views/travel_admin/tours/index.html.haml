@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li.active Tours
+  %li Data
+  %li.active Tours
+
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline' do |f|
     .col-md-6
@@ -15,19 +13,30 @@
           = search_button 
           = link_to_new 'New Tour', 'tours/new'
           = icon_link_to "Generate schedules", generate_tours_path, :icon => 'icon-share', :class => 'btn btn-info'
+
+%h1.page-header
+  Tours
+  %small all tours
 %section
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
-  %table#list_tours.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= sort_link @q,:id, 'ID', {}, {:title => ''}
-        %th Icon
-        %th Title
-        %th Price
-        %th op
-    %tbody
-      - @collection.each do |tour|
-        = render :partial => 'row', :object => tour
-  .data-pager
-    = will_paginate(@collection)
+  .panel.panel-inverse
+    .panel-heading
+      %h4.panel-title
+        %span.m-r-10.pull-left
+          = link_to_new 'New', new_tour_path
+        Tours
+    .panel-body
+      .data-pager
+        = will_paginate(@collection, :class => 'pagination pagination-mini')
+      %table#list_tours.data-list.table.table-hover.table-striped
+        %thead
+          %tr.table-header
+            %th= sort_link @q,:id, 'ID', {}, {:title => ''}
+            %th Icon
+            %th Title
+            %th Price
+            %th op
+        %tbody
+          - @collection.each do |tour|
+            = render :partial => 'row', :object => tour
+      .data-pager
+        = will_paginate(@collection)

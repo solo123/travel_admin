@@ -51,8 +51,7 @@ module TravelAdmin
       def load_collection
         params[:q] ||= {}
         @q = object_name.classify.constantize.search(params[:q])
-        pages = cfg.get_config(:admin_list_per_page).to_i
-        pages = 20 unless pages > 1
+        pages = $redis.get(:admin_list_per_page).to_i
         @collection = @q.result(distinct: true).paginate(:page => params[:page], :per_page => pages)
       end 
       def load_object

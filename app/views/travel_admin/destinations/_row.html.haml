@@ -1,8 +1,7 @@
 - c = row.city
 %tr{id: dom_id(row), class: (row.status && row.status == 1) ? '' : 'deleted'}
   %td.cell-middle= row.id
-  %td= image_tag get_image_path('destinations', row.id), size: '40x40'
-  /%td= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo
+  %td= cl_image_tag(row.title_photo.public_id, width:50, height: 50, crop: :fill) if row.title_photo
   %td
     - if row.description
       = row.description.title

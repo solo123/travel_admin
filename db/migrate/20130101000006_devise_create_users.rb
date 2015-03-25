@@ -102,6 +102,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
     	t.integer :user_level, :default => 0
       t.string :login_name
     	t.string :pin
+      t.string :email
+      t.string :telephone
+      t.string :address
       t.integer :title_photo_id
     	t.integer :status, :default => 0
     	t.timestamps
@@ -115,6 +118,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :pin
       t.date :birthday  
       t.string :roles
+      t.string :email
+      t.string :address
+      t.string :telephone
       t.integer :title_photo_id
       t.integer :status, :default => 0
       t.timestamps    

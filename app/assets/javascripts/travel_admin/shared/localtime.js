@@ -1,4 +1,6 @@
+/*
 $.localtime.setFormat("MMM,dd hh:mm");
+
 function to_localtime(){
   $('time.local-datetime').each(function(){
     $(this).text($.localtime.toLocalTime($(this).attr('datetime'), "MMM,dd hh:mm"));
@@ -11,3 +13,5 @@ function to_localtime(){
 $(function(){
   to_localtime();
 });
+
+*/

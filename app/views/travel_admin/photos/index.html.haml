@@ -1,3 +1,51 @@
+= content_for :head_js do
+  /%link{rel: "stylesheet", href: "/admin/assets/plugins/lightbox/css/screen.css", media: "screen"}
+  %link{rel: "stylesheet", href: "/admin/assets/plugins/lightbox/css/lightbox.css", media: "screen"}
+
+  = javascript_include_tag '//widget.cloudinary.com/global/all.js'
+= content_for :foot_js do
+  / ================== BEGIN PAGE LEVEL JS ==================
+  %script{:src => "/admin/assets/plugins/isotope/jquery.isotope.min.js"}
+  %script{:src => "/admin/assets/plugins/lightbox/js/lightbox-2.6.min.js"}
+  %script{:src => "/admin/assets/js/gallery.demo.min.js"}
+  / ================== END PAGE LEVEL JS ==================
+
+  :javascript
+      $(function() {
+        Gallery.init();
+
+        $('#btn_photos').click(function(){
+          cloudinary.openUploadWidget(
+            { cloud_name: 'dxa6yzm41',
+              upload_preset: 'destinations',
+              folder: 'destination/#{@parent.tag_name}',
+              tags: '#{@parent.tag_name}',
+              public_id: 'd_#{Photo.maximum(:id) + 1}'
+            },
+            function(error, result) {
+              console.log(error, result);
+              if (error == null && result != null) {
+                var r = $.map(result, function(d){
+                  return {bytes: d.bytes, url: d.url, public_id: d.public_id, thumbnail_url: d.thumbnail_url}
+                  });
+
+                $.post( "photos", {data: JSON.stringify(r)},
+                  function() {
+                    location.reload();
+                })
+                  .done(function() {
+                    //alert( "second success" );
+                   })
+                  .fail(function() {
+                    alert( "error" );
+                  })
+                  .always(function() {
+                    //alert( "finished" );
+                });
+              }
+            });
+        });
+      });
 = content_for :breadcrumbs do
   Data &gt;
   =link_to @parent.class.name.pluralize.humanize, objects_url(@parent)
@@ -5,12 +53,26 @@
 
 = render :partial => objects_path(@parent) + '/detail', :object => @parent
 
-= icon_link_to 'Add Photo', object_url(@parent) + '/photos/new', {:icon => 'icon-plus', :remote => true}
-.my_div
+%br
+%br
+
+%h1.page-header
+  Gallery
+  %small
+    destination photos
+
+.m-b-10
+  %a.btn.btn-primary.btn-xs#btn_photos Add Photos
+
+.gallery#gallery
   - @collection.each do |p|
-    .thumb
-      %a{:href => p.pic.url(:large)}= image_tag p.pic.url(:thumb)
-      %br/
-      .btn-group
-        = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'icon-circle-arrow-up', :class => 'btn btn-default btn-mini', :title => 'Set as this destination title icon'}
-        = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'icon-remove', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete', :class => 'btn btn-default btn-mini', :title => 'Delete this photo'}
+    .image
+      .image-inner
+        %a{:href => p.url, 'data-lightbox': 'gallery-group-1' }
+          = cl_image_tag(p.public_id, width:320, height: 180, crop: :fill)
+        .image-caption= p.public_id
+      .image-info
+        .btn-group
+          = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}/cover", {:icon => 'fa fa-check-square-o', :class => 'btn btn-default btn-mini', :title => 'Set as this destination title icon'}
+          = icon_link_to '', "#{object_url(@parent)}/photos/#{p.id}", {:icon => 'fa fa-times', 'data-confirm' => 'Are you sure to Delete this photo?', 'data-method' => 'delete', :class => 'btn btn-default btn-mini', :title => 'Delete this photo'}
+

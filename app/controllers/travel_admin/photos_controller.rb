@@ -24,13 +24,15 @@ module TravelAdmin
     end
     def create
       load_parent
-		  params.permit!
-      @object = @parent.photos.build(params[:photo])
-      unless @object.save
-        flash[:error] = "Upload filename contains special charater. Please RENAME before upload again.<br />&nbsp;<br />#{@object.errors.full_messages.to_sentence}"
+      if params[:data]
+        dt = JSON.parse params[:data]
+        dt.each do |d|
+          pic = @parent.photos.build(d)
+          pic.save
+          flash[:notice] ||= []
+          flash[:notice] << "pic added to #{@parent.to_s}"
+        end
       end
-
-      redirect_to :action => :index
     end
     def destroy
       load_object

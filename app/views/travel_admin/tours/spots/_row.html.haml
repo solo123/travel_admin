@@ -6,12 +6,12 @@
         \#{row.visit_order})
         \#{"#{row.destination.description.title}, #{row.destination.description.title_cn}" if row.destination}
         .btn-group
-          = icon_link_to '',"spots/#{row.id}", :remote => true, :class => 'btn btn-default btn-mini', :icon => 'icon-circle-arrow-up', :title => "Use this destination's thumb as spot's icon"
-          = icon_link_to '', "spots/#{row.id}/edit", :remote => true, :class => 'btn btn-success btn-mini', :icon => 'icon-pencil', :title => 'Edit'
-          = icon_link_to '', "spots/#{row.id}", :remote => true, :method => :delete, :confirm => 'Are you sure to delete this spot?', :icon => 'icon-trash', :title => 'Show/Hide this spot from website', :class => 'btn btn-default btn-mini'
+          = icon_link_to '',"spots/#{row.id}", :remote => true, :icon => 'fa fa-check-square-o', :title => "Use this destination's thumb as spot's icon"
+          = icon_link_to '', "spots/#{row.id}/edit", :remote => true, :icon => 'fa fa-edit', :title => 'Edit'
+          = icon_link_to '', "spots/#{row.id}", :remote => true, :method => :delete, :confirm => 'Are you sure to delete this spot?', :icon => 'fa fa-trash-o', :title => 'Show/Hide this spot from website'
       .row
         .span4
-          = image_tag row.destination.title_photo.pic.url(:thumb), :class => 'info-icon' if row.destination && row.destination.title_photo
+          = cl_image_tag(row.destination.title_photo.public_id, width:50, height: 50, crop: :fill) if row.destination && row.destination.title_photo
         - if row.description
           .span4
             = raw row.description.en

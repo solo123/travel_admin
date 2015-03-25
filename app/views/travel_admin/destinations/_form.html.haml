@@ -4,9 +4,10 @@
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
       %h4.modal-title 
-        Edit Destination# #{@object.id}
+        Edit Destination (#{@object.id}# #{@object.tag_name})
     .modal-body
       = simple_form_for(@object, :remote => true) do |f|
+        = f.input :tag_name
         = f.fields_for :description do |desc|
           .row
             .col-md-6

@@ -10,6 +10,11 @@ class CreateRelatedTables < ActiveRecord::Migration
       t.string :photo_data_type
       t.integer :photo_data_id
       t.integer :created_by
+      t.integer :bytes
+      t.string :url
+      t.string :public_id
+      t.string :thumbnail_url
+
       t.timestamps
     end
     create_table :preferences, :force => true do |t|

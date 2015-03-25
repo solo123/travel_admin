@@ -1,6 +1,6 @@
 %tr{id: "#{dom_id row}", class: "#{(!row.status || row.status < 1) ? 'deleted' : ''}"}
   %td.cell-middle= row.id
-  %td.cell-middle= image_tag(row.title_photo.pic.url(:thumb), :size => '40x40' ) if row.title_photo
+  %td.cell-middle= cl_image_tag(row.title_photo.public_id, width:50, height: 50, crop: :fill) if row.title_photo
   %td
     %span.text-success
       [#{row.tour_type_name}]
@@ -30,7 +30,7 @@
   %td.cell-middle
     .btn-group.btn-group-sm
       = website_link_to_view row
-      = icon_link_to '', tour_spots_path(row), :icon => 'icon-list', :title => 'Tour route and visit schedule'
+      = icon_link_to '', tour_spots_path(row), :icon => 'fa fa-list-ol', :title => 'Tour route and visit schedule'
       = row_link_to_edit row
-      = icon_link_to '', new_tour_schedule_path(row), :icon => 'icon-plus', :title => 'Add 1 schedule to this tour.', :remote => true
+      = icon_link_to '', new_tour_schedule_path(row), :icon => 'fa fa-file-o', :title => 'Add 1 schedule to this tour.', :remote => true
       = row_link_to_hide row

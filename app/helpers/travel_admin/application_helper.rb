@@ -34,12 +34,13 @@ module TravelAdmin
 
     def website_link_to_view(resource, options={})
       options[:target] = 'website'
-      options[:class] = 'btn btn-default'
+      options[:class] = 'btn btn-default btn-xs'
       options[:title] = 'View on website'
-      link_to(raw('<i class="fa fa-file-o"></i>'), website_url(resource), options)
+      link_to(raw('<i class="fa fa-external-link"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
-      link_to raw("<i class=\"icon-plus icon-white\"></i> #{resource_label}"), resource_url, :remote => true, :class => 'btn btn-success'
+      link_to raw("<i class=\"fa fa-plus-square-o\"></i> #{resource_label}"), resource_url, :remote => true,
+              :class => 'btn btn-primary btn-xs'
     end
 
     def row_link_to_edit(resource, options = {})
@@ -51,7 +52,7 @@ module TravelAdmin
     def button_link_to_edit(resource, options = {})
       options[:remote] = true
       options[:title] = 'Edit'
-      options[:class] = 'btn btn-success'
+      options[:class] = 'btn btn-primary btn-sm'
       link_to(raw('<i class="icon-pencil"></i> Edit'), edit_object_url(resource), options)
     end
 
@@ -75,9 +76,9 @@ module TravelAdmin
       icon = options[:icon]
       options.delete(:icon)
       if options[:class]
-        options[:class] += ' btn btn-default' if (options[:class].exclude? 'btn')
+        options[:class] += ' btn btn-default btn-xs' if (options[:class].exclude? 'btn')
       else
-        options[:class] = 'btn btn-default'
+        options[:class] = 'btn btn-default btn-xs'
       end
       lb = label_text
       lb = "<i class='#{icon}'></i> " + label_text if icon

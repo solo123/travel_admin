@@ -1,4 +1,5 @@
 = content_for :breadcrumbs do
+  %li Data
   %li.active Destinations
 
 = content_for :page_header do
@@ -20,8 +21,8 @@
           %i.fa.fa-times
       %h4.panel-title Destinations
     .panel-body
-      = will_paginate(@collection)
       = link_to_new 'New Destination', new_destination_path
+      = will_paginate(@collection)
       %table#list_destinations.data-list.table.table-hover.table-striped
         %thead
           %tr.table-header

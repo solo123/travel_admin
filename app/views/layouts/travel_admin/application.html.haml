@@ -26,7 +26,8 @@
     %link{:href => "/admin/assets/plugins/bootstrap-datepicker/css/datepicker3.css", :rel => "stylesheet"}/
     %link{:href => "/admin/assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
     / ================== END PAGE LEVEL STYLE ==================
-
+    = stylesheet_link_tag "travel_admin/pages"
+    = yield :head_js
 
   %body
     #page-loader.fade.in
@@ -73,22 +74,34 @@
     %script{:src => "/admin/assets/js/apps.min.js"}
     = javascript_include_tag 'travel_admin/application'
     = cloudinary_js_config
+    = yield :foot_js
     / ================== END PAGE LEVEL JS ==================
     :javascript
       $(document).ready(function() {
         App.init();
         Dashboard.init();
-
-      });          
+      });
 
     
     - flash.each do |k, v|
-      :javascript
-        $.gritter.add({
-          title: "#{k}",
-            text: "#{v}",
-            image: '/admin/assets/img/user-2.jpg',
-            sticky: "#{ k == 'notices' }",
-            time: '5000',
-            class_name: 'my-sticky-class'
-        });
+      - if v.kind_of?(Array)
+        - v.each do |vv|
+          :javascript
+            $.gritter.add({
+              title: "#{k}",
+                text: '"#{vv}"',
+                image: '/admin/assets/img/user-2.jpg',
+                sticky: "#{ k != 'notice' }",
+                time: '5000',
+                class_name: 'my-sticky-class'
+            });
+      - else
+        :javascript
+          $.gritter.add({
+            title: "#{k}",
+              text: '"#{v.html_safe}"',
+              image: '/admin/assets/img/user-2.jpg',
+              sticky: "#{ k != 'notice' }",
+              time: '5000',
+              class_name: 'my-sticky-class'
+          });

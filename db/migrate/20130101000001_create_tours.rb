@@ -35,15 +35,13 @@ class CreateTours < ActiveRecord::Migration
     	t.integer :status, :default => 0
     	t.timestamps
     end
-
-
   	create_table :destinations do |t|
     	t.integer :city_id
     	t.integer :title_photo_id
+      t.string :tag_name
     	t.integer :status
     	t.timestamps
     end
-
 		create_table :schedules do |t|
     	t.integer :tour_id
     	t.string :title

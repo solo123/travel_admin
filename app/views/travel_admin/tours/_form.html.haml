@@ -2,38 +2,39 @@
 - @object.build_tour_setting.set_new_default unless @object.tour_setting
 - @object.build_tour_price.set_new_default unless @object.tour_price
 
-.modal-dialog
+.modal-dialog.modal-lg
   .modal-content
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
       %h4.modal-title #{@object.id ? "Edit Tour# #{@object.id}" : "New Tour *"}
-    .modal-body
+    .modal-body{style: 'bgcolor: #707478;'}
       = form_for( @object, :remote => true) do |f|
-        .tabable
-          %ul.nav.nav-tabs
-            %li.active
-              %a{"data-toggle" => "tab", :href => "#tab1"} Description
-            %li
-              %a{"data-toggle" => "tab", :href => "#tab2"} Attributes
-            %li
-              %a{"data-toggle" => "tab", :href => "#tab3"} Prices
-          .tab-content
-            #tab1.tab-pane.active
-              = render :partial => 'travel_admin/shared/description', :locals => {:f => f}
-              = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
-            #tab2.tab-pane
-              .row
-                .col-md-6
-                  .form-group
-                    = f.label :tour_type
-                    = f.select :tour_type, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}, {}, :class => 'data-field'
-                .col-md-6
-                  .form-group
-                    = f.label :days
-                    = f.text_field :days
-              = render :partial => 'tour_setting', :locals => {:f => f}
-            #tab3.tab-pane
-              = render :partial => 'tour_price', :locals => {:f => f}
+        %ul.nav.nav-tabs
+          %li.active
+            %a{"data-toggle" => "tab", :href => "#tab1"} Description
+          %li
+            %a{"data-toggle" => "tab", :href => "#tab2"} Attributes
+          %li
+            %a{"data-toggle" => "tab", :href => "#tab3"} Prices
+        .tab-content
+          #tab1.tab-pane.active
+            = render :partial => 'travel_admin/shared/description', :locals => {:f => f}
+            = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
+          #tab2.tab-pane
+            .row
+              .col-md-6
+                .form-group
+                  = f.label :tour_type
+                  = f.select :tour_type, InputType.get_list('tour').map{|t| [t.type_text, t.type_value]}, {}, :class => 'data-field'
+              .col-md-6
+                .form-group
+                  = f.label :days
+                  = f.text_field :days
+            = render :partial => 'tour_setting', :locals => {:f => f}
+          #tab3.tab-pane
+            = render :partial => 'tour_price', :locals => {:f => f}
+        = f.submit class: 'hidden'
+      .clear
     .modal-footer
-      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn{"data-dismiss" => "modal"} Close
       %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

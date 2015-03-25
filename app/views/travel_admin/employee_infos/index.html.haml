@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li.active Employees
+  %li Data
+  %li.active Employees
+
 %section
   %ul#list_emps.nav.nav-tabs
     - @ecs.each do |e|
@@ -12,20 +10,15 @@
         = e.company ? e.company.short_name : '(empty)'
         \:#{e.count}p
   - if @employee_infos
-    %table#list_employee_infos.data-list.table.table-bordered.table-striped
+    %table#list_employee_infos.data-list.table.table-hover.table-striped
       %thead
         %tr.table-header
           %th= t("id")
+          %th= t("login")
           %th= t("name")
           %th= t("roles")
           %th= t('telephone')
           %th= t('email')
       %tbody
-        - @employee_infos.each do |row|
-          - tt = TypeText.instance
-          <tr id="#{dom_id row}" #{'class=deleted' unless row.status && row.status == 1}>
-          %td= row.id
-          %td= row.nickname
-          %td= tt.get_texts('roles', row.roles)
-          %td= row.default_telephone
-          %td= row.default_email
+        - @employee_infos.each do |emp|
+          = render partial: "row", object: emp

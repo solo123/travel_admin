@@ -1,22 +1,26 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      = link_to 'Go Back', 'javascript:history.go(-1)'
-    %li
-      = link_to 'Tours', tours_path
-    %li.active Routes
+  %li= link_to 'Tours', 'javascript:history.go(-1)'
+  %li.active Spots
 
-= content_for :search_box do
-  = icon_link_to 'Add Spot', new_tour_spot_path, {:remote => true, :icon => 'icon-plus', :class => 'btn btn-success' }
 
-.row
-  - tour = Tour.find(params[:tour_id])
-  %h3
-    = tour.description.title
-    %br 
-    = tour.description.title_cn
-  = image_tag tour.title_photo.pic.url(:small), :id => 'tour_icon' if tour.title_photo
-
-#list_spots
-  - @collection.each do |sp|
-    = render :partial => 'row', :object => sp
+%h1.page-header
+  Tour Spots
+  %small tour visit squence.
+%section
+  .panel.panel-inverse
+    .panel-heading
+      %h4.panel-title
+        %span.m-r-10.pull-left
+          = link_to_new 'New', new_tour_spot_path
+        Spots
+    .panel-body
+      - tour = Tour.find(params[:tour_id])
+      %h3
+        = tour.description.title
+        %br
+        = tour.description.title_cn
+      = cl_image_tag(tour.title_photo.public_id, width:320, height: 180, crop: :fill) if tour.title_photo
+      %p
+      #list_spots
+        - @collection.each do |sp|
+          = render :partial => 'row', :object => sp

@@ -16,4 +16,12 @@ class Destination < ActiveRecord::Base
       'hide'
     end
   end
+
+  def to_s
+    if self.description
+      self.description.title
+    else
+      self.id.to_s
+    end
+  end
 end

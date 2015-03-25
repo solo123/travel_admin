@@ -1,0 +1,9 @@
+.clear{
+    clear: both;
+}
+
+.modal-body {background-color: #d9e0e7;}
+
+#tab1, #tab2, #tab3 {
+    height: 320px;
+}
