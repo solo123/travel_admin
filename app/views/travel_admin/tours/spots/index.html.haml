@@ -9,10 +9,9 @@
 %section
   .panel.panel-inverse
     .panel-heading
-      %h4.panel-title
-        %span.m-r-10.pull-left
-          = link_to_new 'New', new_tour_spot_path
-        Spots
+      .btn-group.pull-right
+        = link_to_new 'New', new_tour_spot_path
+      %h4.panel-title Spots
     .panel-body
       - tour = Tour.find(params[:tour_id])
       %h3

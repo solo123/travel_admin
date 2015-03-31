@@ -1,9 +1,0 @@
-<div id='employee_info'>
-  <%= render :partial => 'travel_admin/employee_infos/detail_info', :object => detail %>
-</div>
-<br />
-<div class='btn-group'>
-  <%= icon_link_to 'Edit', edit_employee_info_path(detail), :icon => 'icon-pencil', :remote => true, :class => 'btn btn-success' %>
-  <%= icon_link_to 'employ info', edit_info_employee_info_path(detail), :remote => true, :icon => 'icon-list-alt' %>
-  <%= icon_link_to 'Reset password', edit_employee_path(detail.employee), :remote => true, :icon => 'icon-lock' if detail.employee %>
-</div>

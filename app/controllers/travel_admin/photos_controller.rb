@@ -57,19 +57,22 @@ module TravelAdmin
       @object = Photo.find(params[:id])
     end
     def load_parent
-      @parent = if params[:company_id]
-                  Company.find(params[:company_id])
-                elsif params[:bus_id]
-                  Bus.find(params[:bus_id])
-                elsif params[:destination_id]
-                  Destination.find(params[:destination_id])
-                elsif params[:user_info_id]
-                  UserInfo.find(params[:user_info_id])
-                elsif params[:employee_info_id]
-                  EmployeeInfo.find(params[:employee_info_id])
-                elsif params[:page_id]
-                  Page.find(params[:page_id])
-                end
+      @tag = ''
+      if params[:company_id]
+        @parent = Company.find(params[:company_id])
+      elsif params[:bus_id]
+        @parent = Bus.find(params[:bus_id])
+      elsif params[:destination_id]
+        @parent = Destination.find(params[:destination_id])
+        @tag = @parent.tag_name
+      elsif params[:user_info_id]
+        @parent = UserInfo.find(params[:user_info_id])
+      elsif params[:employee_info_id]
+        @parent = EmployeeInfo.find(params[:employee_info_id])
+        @tag = @parent.nickname
+      elsif params[:page_id]
+        @parent = Page.find(params[:page_id])
+      end
     end
 
     private

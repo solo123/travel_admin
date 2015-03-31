@@ -9,9 +9,6 @@ module TravelAdmin
     def title
   	  @title ||=  controller_name + ' ' + action_name
     end
-  def cfg
-    AppConfig.instance
-  end
     def has_auth(action_name)
       roles = current_employee.employee_info.roles
       auth = Auth.find_by_action(action_name)

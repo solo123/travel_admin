@@ -26,7 +26,8 @@ module TravelAdmin
       @tt = params[:tour_type] if params[:tour_type]
       params[:q] ||= {:departure_date_gteq => Date.current()}
       @q = Schedule.joins(:tour).where(['tours.tour_type = ?', @tt]).search(params[:q])
-      @collection = @q.result.page(params[:page]).per_page(cfg.get_config(:admin_list_per_page))
+      pages = $redis.get(:admin_list_per_page).to_i
+      @collection = @q.result.page(params[:page]).per_page(pages)
     end
     #override create
     def create

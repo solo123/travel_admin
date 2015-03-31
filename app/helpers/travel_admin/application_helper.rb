@@ -1,8 +1,5 @@
 module TravelAdmin
   module ApplicationHelper
-    def cfg
-      AppConfig.instance
-    end
     def type_text
       TypeText.instance
     end
@@ -191,8 +188,22 @@ var html = $("#{generate_template(form, method, :partial => partial)}".replace(/
         "Data/Destinations"
       elsif controller_name == 'tours'
         "Data/Tours"
+      elsif controller_name == 'companies'
+        "Data/Companies"
+      elsif controller_name == 'photos'
+        "Data/#{request.fullpath.split('/')[2].capitalize}"
+      elsif controller_name == 'employees'
+        "Data/Employees"
       else
         controller_name
+      end
+    end
+
+    def class_if_deleted(dat)
+      if dat.status && dat.status == 1
+        ""
+      else
+        "deleted"
       end
     end
 

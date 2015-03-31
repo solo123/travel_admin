@@ -1,15 +1,16 @@
 - tt = TypeText.instance
-%div
-  %br/
-  %table
-    %tr
-      %td{:width => "330"}
-        = image_tag detail_info.title_photo.pic.url(:small), :class => 'img-polaroid' if detail_info.title_photo
-      %td{:style => "padding:6px;"}
-        %table.table.table-bordered{:padding => "4"}
+
+.row
+  .col-md-6
+    .panel.panel-inverse
+      .panel-heading
+        %h4.panel-title Employee info
+      .panel-body
+        = cl_image_tag(detail_info.title_photo.public_id, width:320, height: 180, crop: :fill) if detail_info.title_photo
+        %table.table.table-strip
           %tr
-            %td{:width => "100"} Company:
-            %td{:width => "300"}= detail_info.company.company_name if detail_info.company
+            %td Company:
+            %td= detail_info.company.company_name if detail_info.company
           %tr
             %td Name:
             %td= detail_info.nickname
@@ -19,45 +20,33 @@
           %tr
             %td Birthday:
             %td= detail_info.birthday
-        Created at: #{time_tag detail_info.created_at}
-        Last updated: #{time_tag detail_info.updated_at if detail_info.updated_at}
-        %br/
+          %tr
+            %td tel:
+            %td= detail_info.telephone
+          %tr
+            %td email:
+            %td= detail_info.email
+          %tr
+            %td address:
+            %td= detail_info.address
+        %p
+          Created at: #{time_tag detail_info.created_at}
+          Last updated: #{time_tag detail_info.updated_at if detail_info.updated_at}
+
         %strong Login account:
         - if detail_info.employee
           = render :partial => 'travel_admin/employees/employee', :object => detail_info.employee
         - else
           Cannot login. #{icon_link_to 'Create login', new_employee_info_employee_path(detail_info), :remote => true, :icon => 'icon-add'}
-    %tr
-      %td
-  %br/
-  Contact info:
-  %br/
-  %table.border-table
-    - detail_info.telephones.each do |tel|
-      %tr
-        %td{:width => "200"}
-          Tel(#{tel.tel_type})
-        %td{:width => "430"}= tel.tel
-    - detail_info.emails.each do |email|
-      %tr
-        %td Email
-        %td= email.email_address
-    - detail_info.addresses.each do |addr|
-      %tr
-        %td Address
-        %td= addr
-  %br/
-  %table.border-table
-    %thead
-      %tr
-        %th Type
-        %th brief
-        %th Balance
-        %th Last updated
-    %tbody
-      - detail_info.accounts.each do |account|
-        %tr
-          %td= account.account_type
-          %td= account.account_brief
-          %td= account.balance
-          %td= time_tag account.updated_at
+  .col-md-6
+    .panel.panel-inverse
+      .panel-heading
+        %h4.panel-title Account info
+      .panel-body
+        %table.table-strip
+          - detail_info.accounts.each do |account|
+            %tr
+              %td= account.account_type
+              %td= account.account_brief
+              %td= account.balance
+              %td= time_tag account.updated_at

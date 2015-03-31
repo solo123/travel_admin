@@ -1,13 +1,15 @@
 - tt = TypeText.instance
-<tr id="#{dom_id row}" #{'class=deleted' unless row.status && row.status == 1}>
-%td= row.id
-%td= row.employee.login_name if row.employee
-%td= row.nickname
-%td= tt.get_texts('roles', row.roles)
-%td= row.telephone
-%td= row.email
-%td= row.status
-%td.actions
-  .btn-group
-    = row_link_to_edit row
-    = row_link_to_photo employee_info_photos_path(row)
+
+%tr{id: "#{dom_id row}", class: '#{class_if_deleted(row)}'}
+  %td= row.company.short_name if row.company
+  %td= row.id
+  %td= row.employee.login_name if row.employee
+  %td= row.nickname
+  %td= tt.get_texts('roles', row.roles)
+  %td= row.telephone
+  %td= row.email
+  %td= row.status
+  %td.actions
+    .btn-group
+      = row_link_to_edit row
+      = row_link_to_photo employee_info_photos_path(row)

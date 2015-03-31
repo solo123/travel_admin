@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li.active Companies
+  %li Data
+  %li.active Companies
+
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline' do |f|
     .form-group
@@ -11,19 +9,30 @@
     .form-group
       = f.text_field :short_name_or_company_name_cont, :class => 'form-control'
     = search_button
-    = link_to_new 'Add Company', new_company_path
+
+
+%h1.page-header
+  Companies
+  %small all companies and agents.
+
 %section
-  = will_paginate @collection
-  %table#list_companies.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= t("id")
-        %th= t("short_name")
-        %th= t("company_name")
-        %th= t('company_type')
-        %th Logo
-        %th= t('website')
-        %th{style: 'width:140px;'}= t('op')
-    - @collection.each do |c|
-      = render :partial => 'row', :object => c
-  = will_paginate @collection
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'Add', new_company_path
+      %h4.panel-title Companies
+    .panel-body
+      = will_paginate @collection
+      %table#list_companies.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th= t("id")
+            %th= t("short_name")
+            %th= t("company_name")
+            %th= t('company_type')
+            %th Logo
+            %th= t('website')
+            %th{style: 'width:140px;'}= t('op')
+        - @collection.each do |c|
+          = render :partial => 'row', :object => c
+      = will_paginate @collection

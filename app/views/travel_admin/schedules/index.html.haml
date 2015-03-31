@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li.active Schedules
+  %li Data
+  %li.active Schedules
+
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline'  do |f|
     .col-md-4
@@ -17,22 +15,29 @@
             = button_tag(type: 'submit', class: "btn btn-default") do
               %i.icon-search
 
+%h1.page-header
+  Schedules
+  %small bus schedules, packages and curises.
+
 %section
   %ul#list_emps.nav.nav-tabs
     - type_text.get_types('tour').each do |t|
       <li #{"class=active" if t.type_value.to_i == @tt.to_i}>
       \#{link_to t.type_text, schedules_path(:tour_type => t.type_value)}
-  = will_paginate(@collection)
-  %table#list_schedules.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= t("schedule_id")
-        %th= t("tour")
-        %th= t("days")
-        %th Price
-        %th Departure / Return
-        %th Status
-    %tbody
-      - @collection.each do |s|
-        = render :partial => 'row', :object => s
-  = will_paginate(@collection)
+
+  .panel.panel-inverse
+    .panel-body
+      = will_paginate(@collection)
+      %table#list_schedules.data-list.table.table-hover.table-striped
+        %thead
+          %tr.table-header
+            %th= t("schedule_id")
+            %th= t("tour")
+            %th= t("days")
+            %th Price
+            %th Departure / Return
+            %th Status
+        %tbody
+          - @collection.each do |s|
+            = render :partial => 'row', :object => s
+      = will_paginate(@collection)

@@ -2,7 +2,7 @@
   %li Data
   %li.active Destinations
 
-= content_for :page_header do
+%h1.page-header
   Destinations
   %small all destinations list here for edit.
 
@@ -10,18 +10,10 @@
 
   .panel.panel-inverse
     .panel-heading
-      .panel-heading-btn
-        %a.btn.btn-xs.btn-icon.btn-circle.btn-default{"data-click" => "panel-expand", :href => "javascript:;"}
-          %i.fa.fa-expand
-        %a.btn.btn-xs.btn-icon.btn-circle.btn-success{"data-click" => "panel-reload", :href => "javascript:;"}
-          %i.fa.fa-repeat
-        %a.btn.btn-xs.btn-icon.btn-circle.btn-warning{"data-click" => "panel-collapse", :href => "javascript:;"}
-          %i.fa.fa-minus
-        %a.btn.btn-xs.btn-icon.btn-circle.btn-danger{"data-click" => "panel-remove", :href => "javascript:;"}
-          %i.fa.fa-times
+      .btn-group.pull-right
+        = link_to_new 'New', new_destination_path
       %h4.panel-title Destinations
     .panel-body
-      = link_to_new 'New Destination', new_destination_path
       = will_paginate(@collection)
       %table#list_destinations.data-list.table.table-hover.table-striped
         %thead

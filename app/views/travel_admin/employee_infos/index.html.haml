@@ -2,23 +2,37 @@
   %li Data
   %li.active Employees
 
+%h1.page-header
+  Employees
+  %small all employee
+
 %section
-  %ul#list_emps.nav.nav-tabs
-    - @ecs.each do |e|
-      <li #{"class=active" if e.company_id == @cid}>
-      %a{:href => "employee_infos?c=#{e.company_id}"}
-        = e.company ? e.company.short_name : '(empty)'
-        \:#{e.count}p
-  - if @employee_infos
-    %table#list_employee_infos.data-list.table.table-hover.table-striped
-      %thead
-        %tr.table-header
-          %th= t("id")
-          %th= t("login")
-          %th= t("name")
-          %th= t("roles")
-          %th= t('telephone')
-          %th= t('email')
-      %tbody
-        - @employee_infos.each do |emp|
-          = render partial: "row", object: emp
+  .panel.panel-inverse
+    .panel-heading
+      .panel-heading-btn
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-default{"data-click" => "panel-expand", :href => "javascript:;"}
+          %i.fa.fa-expand
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-success{"data-click" => "panel-reload", :href => "javascript:;"}
+          %i.fa.fa-repeat
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-warning{"data-click" => "panel-collapse", :href => "javascript:;"}
+          %i.fa.fa-minus
+        %a.btn.btn-xs.btn-icon.btn-circle.btn-danger{"data-click" => "panel-remove", :href => "javascript:;"}
+          %i.fa.fa-times
+      %h4.panel-title Destinations
+    .panel-body
+      %table#list_employee_infos.data-list.table.table-hover.table-striped
+        %thead
+          %tr.table-header
+            %th= Company
+            %th= t("id")
+            %th= t("login")
+            %th= t("name")
+            %th= t("roles")
+            %th= t('telephone')
+            %th= t('email')
+            %th
+        %tbody
+          - @collection.each do |e|
+            = render partial: "row", object: e
+
+      = will_paginate(@collection)

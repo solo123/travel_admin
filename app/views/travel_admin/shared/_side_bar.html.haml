@@ -37,7 +37,7 @@
             - (1..arr.length - 1).each do |line_index|
               - dt = arr[line_index].split('|')
               %li{class: "#{current_path.include?(dt[0]) ? 'active' : ''}"}= link_to t(dt[0]), full_path(dt[2])
-
+      = current_path
       / begin sidebar minify button
       %li
         %a.sidebar-minify-btn{"data-click" => "sidebar-minify", :href => "javascript:;"}

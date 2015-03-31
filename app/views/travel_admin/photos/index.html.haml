@@ -18,9 +18,8 @@
           cloudinary.openUploadWidget(
             { cloud_name: 'dxa6yzm41',
               upload_preset: 'destinations',
-              folder: 'destination/#{@parent.tag_name}',
-              tags: '#{@parent.tag_name}',
-              public_id: 'd_#{Photo.maximum(:id) + 1}'
+              folder: '#{@parent.class.name}/#{@tag}',
+              tags: '#{@tag}'
             },
             function(error, result) {
               console.log(error, result);

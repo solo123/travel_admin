@@ -1,4 +1,4 @@
-.modal-dialog
+.modal-dialog.modal-lg
   .modal-content
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times; 
@@ -14,6 +14,7 @@
             = f.input :website
             = f.input :icon_url
             = f.input :status, collection: [['Show', 1],['Hide', 0]]
+            = f.submit class: 'hidden'
           - if @object.id
             .col-md-6
               %div

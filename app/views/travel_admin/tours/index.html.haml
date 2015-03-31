@@ -20,10 +20,9 @@
 %section
   .panel.panel-inverse
     .panel-heading
-      %h4.panel-title
-        %span.m-r-10.pull-left
-          = link_to_new 'New', new_tour_path
-        Tours
+      .btn-group.pull-right
+        = link_to_new 'New', new_tour_path
+      %h4.panel-title Tours
     .panel-body
       .data-pager
         = will_paginate(@collection, :class => 'pagination pagination-mini')
