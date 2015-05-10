@@ -23,6 +23,7 @@
             .form-group
               = f.label :tour_guide_assistance_id
               = f.select :tour_guide_assistance_id, [], {}, class: 'form-control'
+          = f.submit class: 'hidden'
     .modal-footer
       %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
       %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

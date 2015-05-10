@@ -1,27 +1,35 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Manage
-      %span.divider /
-    %li.active Input types
+  %li Manage
+  %li.active Input types
+
 = content_for :search_box do
-  = form_for(@search, :url => input_types_path ) do |f|
-    .input-append
-      = f.select :type_name_eq, InputType.group(:type_name).map{|t| [t.type_name, t.type_name]}.insert(0, ['Select Type', '']), {}, :class => 'span2', :onchange => 'this.form.submit();'
-      = link_to_new 'Add Input Type', new_input_type_path
+  = link_to_new 'Add Input Type', new_input_type_path
+
+%h1.page-header
+  Presettings
+  %small system presettings.
 %section
-  = will_paginate(@collection)
-  %table#list_input_types.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= t("id")
-        %th= t("type_name")
-        %th= t("type_text")
-        %th= t('type_value')
-        %th status
-        %th= t('created_at')
-        %th= t('updated_at')
-        %th= t('op')
-    - @collection.each do |c|
-      = render :partial => 'row', :object => c
-  = will_paginate(@collection)
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'Add Input Type', new_input_type_path
+      %h4.panel-title Presettings
+    .panel-body
+      = search_form_for @q, class: 'inline-form search-form' do |f|
+        .input-group.col-md-2
+          = f.select :type_name_eq, InputType.group(:type_name).map{|t| [t.type_name, t.type_name]}.insert(0, ['All', '']), {}, :class => 'form-control', :onchange => 'this.form.submit();'
+        .clear
+      %table#list_input_types.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th= t("id")
+            %th= t("type_name")
+            %th= t("type_text")
+            %th= t('type_value')
+            %th status
+            %th= t('created_at')
+            %th= t('updated_at')
+            %th= t('op')
+        - @collection.each do |c|
+          = render :partial => 'row', :object => c
+      = will_paginate(@collection)

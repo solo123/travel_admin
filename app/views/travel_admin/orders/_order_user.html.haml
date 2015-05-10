@@ -1,47 +1,49 @@
-- if order.order_detail && order.order_detail.user_info
-  %table.table.table-condensed{:style => "width:auto;"}
-    %tbody
-      %tr
-        %td.note-text Full name:
-        %td= order.order_detail.user_info.payment_name
-      %tr
-        %td.note-text Telephone:
-        %td
-          = order.order_detail.user_info.payment_tel
-      %tr
-        %td.note-text Email:
-        %td= order.order_detail.user_info.user.email if order.order_detail.user_info.user
-      %tr
-        %td.note-text Address:
-        %td= order.order_detail.user_info.addresses.first
-      %tr
-        %td
-        %td
-          - unless order.status && order.status >= 1
-            = link_to '(remove 重设顾客)', reset_customer_order_path(order)
-- else
-  = simple_form_for(order.build_order_detail, remote: true) do |f|
-    = f.input :order_id, as: :hidden, input_html: {value: order.id}
-    %table.table.table-condensed
-      %tr
-        %td Search:
-        %td= autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#order_detail_user_info_id' }, class: 'form-control'
-      %tr
-        %td Name:
-        %td= text_field_tag 'customer_name', '', :placeholder => 'Name', class: 'form-control'
-      %tr
-        %td Phone:
-        %td= text_field_tag 'customer_phone', '', :placeholder => 'Phone', class: 'form-control'
-      %tr
-        %td Email:
-        %td= text_field_tag 'customer_email', '', :placeholder => 'Email', class: 'form-control'   
-      %tr
-        %td
-          %span#user_info_id * New *
-          = f.input :user_info_id, as: :hidden, style: 'width:80px;', :readonly => true, placeholder: 'User#', class: 'form-control'
-          = hidden_field_tag :op, 'set_order_customer'
-        %td
-          = f.submit 'Set Customer', class: 'btn btn-info'
-          %button.btn.btn-default{type: 'button', onclick: 'reset_customer()'} Clear
+.panel.panel-inverse
+  .panel-heading
+    .btn-group.pull-right
+      - if order.order_detail && !(order.status && order.status >= 1)
+        = link_to 'remove 重设顾客', reset_customer_order_path(order)
+    %h4.panel-title Customer
+  .panel-body
+    - if order.order_detail && order.order_detail.user_info
+      %table.table.table-condensed{:style => "width:auto;"}
+        %tbody
+          %tr
+            %td.note-text Full name:
+            %td= order.order_detail.full_name
+          %tr
+            %td.note-text Telephone:
+            %td
+              = order.order_detail.telephone
+          %tr
+            %td.note-text Email:
+            %td= order.order_detail.email
+          %tr
+            %td.note-text Address:
+            %td= order.order_detail.bill_address
+    - else
+      = simple_form_for(order.build_order_detail, remote: true, html: {class: 'form-horizontal'}) do |f|
+        = f.input :order_id, as: :hidden, input_html: {value: order.id}
+        %table.table.table-condensed
+          %tr
+            %td Search:
+            %td= autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#order_detail_user_info_id' }, class: 'form-control'
+          %tr
+            %td Name:
+            %td= f.input :full_name, label: false, placeholder: 'Name'
+          %tr
+            %td Phone:
+            %td= f.input :telephone, label: false, :placeholder => 'Phone'
+          %tr
+            %td Email:
+            %td= f.input :email, label: false, :placeholder => 'Email'
+          %tr
+            %td
+              %span#user_info_id * New *
+              = f.input :user_info_id, as: :hidden, style: 'width:80px;', :readonly => true, placeholder: 'User#', class: 'form-control'
+              = hidden_field_tag :op, 'set_order_customer'
+            %td
+              = f.submit 'Set Customer', class: 'btn btn-info'
+              %button.btn.btn-default{type: 'button', onclick: 'reset_customer()'} Clear
 
 

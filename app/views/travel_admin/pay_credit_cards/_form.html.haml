@@ -1,60 +1,64 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    %i.glyphicon-3-15>
-    Pay Credit Card
-.modal-body
-  = form_for( [@order, @object], :remote => true) do |f|
-    .row
-      .span4
-        %table
-          %tr
-            %td Card type:
-            %td= f.select( :card_type, %w[Visa Master AE])
-          %tr
-            %td Card Number:
-            %td= f.text_field :card_number
-          %tr
-            %td Valid date:
-            %td= f.text_field :valid_date, :placeholder => 'MM/YY'
-          %tr
-            %td CVV:
-            %td= f.text_field :csc, :placeholder => 'xxx'
-          %tr
-            %td Name:
-            %td= f.text_field :full_name
-          %tr
-            %td Prof code:
-            %td= f.text_field :prof_code
-          %tr
-            %td.cell-middle{:colspan => "2"}
-              %span#pcc_msg.text-error
-      .span4
-        %table.table.table-bordered
-          %tr
-            %td Order
-            %td.cell-middle{:width => "150"}= @order.order_number
-          %tr
-            %td Order Amount
-            %td.cell-right= @order.order_price.actual_amount
-          %tr
-            %td Balance before
-            %td#tb_balance_before.cell-right= @order.order_price.balance_amount
-        %table.table.table-bordered
-          %tr
-            %td Amount:
-            %td.cell-right{:width => "150"}= f.text_field :amount, :class => 'span2 large-number'
-          %tr
-            %td Service fee:
-            %td#td_service_fee.cell-right
-          %tr
-            %td Card amount:
-            %td#td_card_amount.cell-right.large-number
-          %tr
-            %td Balance after
-            %td#td_balance.cell-right.large-number.text-success
+.modal-dialog.modal-lg
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+      %h4.modal-title 
+        %i.fa.fa-credit-card
+        Pay Credit Card
+    .modal-body
+      = form_for( [@order, @object], :remote => true) do |f|
+        .row
+          .col-md-6
+            %table.table.table-bordered
+              %tr
+                %td Card type:
+                %td= f.select :card_type, %w[Visa Master AE],{}, {class: 'form-control'}
+              %tr
+                %td Card Number:
+                %td= f.text_field :card_number, class: 'form-control'
+              %tr
+                %td Valid date:
+                %td= f.text_field :valid_date, placeholder: 'MM/YY', class: 'form-control'
+              %tr
+                %td CVV:
+                %td= f.text_field :csc, placeholder: 'xxx', class: 'form-control'
+              %tr
+                %td Name:
+                %td= f.text_field :full_name, class: 'form-control'
+              %tr
+                %td Prof code:
+                %td= f.text_field :prof_code, class: 'form-control'
+              %tr
+                %td.cell-middle{:colspan => "2"}
+                  %span#pcc_msg.text-error
+          .col-md-6
+            %table.table.table-bordered
+              %tr
+                %td Order
+                %td.cell-middle{:width => "250"}= @order.order_number
+              %tr
+                %td Order Amount
+                %td.cell-right= @order.order_price.actual_amount
+              %tr
+                %td Balance before
+                %td#tb_balance_before.cell-right= @order.order_price.balance_amount
+
+              %table.table.table-bordered
+                %tr
+                  %td Amount:
+                  %td.cell-right{:width => "250"}= f.text_field :amount, :class => 'span2 large-number'
+                %tr
+                  %td Service fee:
+                  %td#td_service_fee.cell-right
+                %tr
+                  %td Card amount:
+                  %td#td_card_amount.cell-right.large-number
+                %tr
+                  %td Balance after
+                  %td#td_balance.cell-right.large-number.text-success
         = f.hidden_field :service_fee
         = f.hidden_field :total_amount
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+        = f.submit class: 'hidden'
+    .modal-footer
+      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

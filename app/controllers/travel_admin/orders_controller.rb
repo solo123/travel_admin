@@ -12,6 +12,7 @@ module TravelAdmin
     end
     def update
       load_object
+		  params.permit!
       @object.attributes = params[:order]
       if @object.changed_for_autosave?
         @changes = @object.all_changes
@@ -45,10 +46,14 @@ module TravelAdmin
       redirect_to order_path(@object)
     end
     private
-    def set_seats
-      unless params[:seats].blank?
-        @object.set_seats(params[:seats])
+			def set_seats
+				unless params[:seats].blank?
+					@object.set_seats(params[:seats])
+				end
+			end
+      def order_params
+				params.require(:order).permit()
+				#:schedule_id, :schedule_assignment_id, :order_detail_attributes => [:from_agent_id , :pickup, :id], :order_items_attributes => [:num_adult, :num_child])
       end
-    end
   end
 end

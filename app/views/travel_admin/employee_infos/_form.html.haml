@@ -13,8 +13,8 @@
         = f.input :address
 
         = f.input :ssn
-        = f.input :birthday
-        = f.input :employ_date
+        = f.input :birthday, as: :string, input_html: {class: 'date date-picker'}
+        = f.input :employ_date, as: :string, input_html: {class: 'date date-picker'}
         = f.submit class: 'hidden'
     .modal-footer
       %button.btn.btn-default{"data-dismiss" => "modal"} Close

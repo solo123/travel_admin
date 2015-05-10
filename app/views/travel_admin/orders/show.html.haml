@@ -1,19 +1,21 @@
-- content_for :head do
+- content_for :foot_js do
+  = javascript_include_tag 'admin/seat_table' 
   :javascript
     var credit_card_rate = "#{InputType.where(:type_name => 'credit.card.rate').collect{|ipt| [ipt.type_text, ipt.type_value]}.join('|') + '|'}";
     $(function(){
       $('#user_search_field').bind('railsAutocomplete.select', function(event, data){
-      var ns = $('#user_search_field').val().split('|');
-      $('#customer_name').val(ns[0]).attr('disabled', 'disabled');
-      $('#customer_phone').val(ns[1]).attr('disabled', 'disabled');
-      $('#customer_email').val(ns[2]).attr('disabled', 'disabled');
+      console.log(data);
+      var ns = data.item.value.split('|');
+      $('#order_detail_full_name').val(ns[0]).attr('disabled', 'disabled');
+      $('#order_detail_telephone').val(ns[1]).attr('disabled', 'disabled');
+      $('#order_detail_email').val(ns[2]).attr('disabled', 'disabled');
       $('#user_info_id').text('User# ' + data.item.id);
       });
     });
     function reset_customer(){
-      $('#customer_name').val('').removeAttr('disabled');
-      $('#customer_phone').val('').removeAttr('disabled');
-      $('#customer_email').val('').removeAttr('disabled');
+      $('#order_detail_full_name').val('').removeAttr('disabled');
+      $('#order_detail_telephone').val('').removeAttr('disabled');
+      $('#order_detail_email').val('').removeAttr('disabled');
       $('#order_detail_user_info_id').val('');
       $('#user_info_id').text('* New *');
       $('#user_search_field').val('').focus();
@@ -21,81 +23,78 @@
     
 
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li= link_to "Schedule# #{@object.schedule_assignment.schedule_id}", schedule_path(@object.schedule_assignment.schedule)
-    %li= link_to 'Seat Table', schedule_schedule_assignment_path(@object.schedule_assignment.schedule, @object.schedule_assignment)
-    %li.active Order: #{@object.order_number}
+  %li= link_to "Schedule# #{@object.schedule_assignment.schedule_id}", schedule_path(@object.schedule_assignment.schedule)
+  %li= link_to 'Seat Table', schedule_schedule_assignment_path(@object.schedule_assignment.schedule, @object.schedule_assignment)
+  %li.active Order: #{@object.order_number}
 
+%h1.page-header
+  Order ##{@object.order_number}
+  %small order detail.
 .row
   .col-md-6
-    %h4 Customer
     = render partial: 'order_user', locals: {order: @object} 
 
   .col-md-6
-    %h4 Order
-    .barcode{:style => "float:right;"}= @object.order_number
-    - if @object.schedule
-      %p{:style => "font-size:110%;font-weight:bold;"}
-        = @object.schedule.tour.description.title
-        %br/
-        = @object.schedule.tour.description.title_cn
-      %p
-        = date_tag @object.schedule.departure_date
-        \~
-        \#{date_tag @object.schedule.return_date}
-
+    .panel.panel-inverse
+      .panel-heading
+        .btn-group.pull-right
+        %h4.panel-title Order detail
+      .panel-body
+        .barcode{:style => "float:right;"}= @object.order_number
+        - if @object.schedule
+          %p{:style => "font-size:110%;font-weight:bold;"}
+            = @object.schedule.tour.description.title
+            %br/
+            = @object.schedule.tour.description.title_cn
+          %p
+            = date_tag @object.schedule.departure_date
+            \~
+            \#{date_tag @object.schedule.return_date}
+            
+        %table
+          %tr
+            %td.cell-right{:width => "100"} Order method:
+            %td{width: '12'}
+            %td= @object.order_method
+          %tr
+            %td.cell-right Seats:
+            %td
+              %td= @object.bus_seats.order(:seat_number).map{|s| s.seat_number}.join(',')
+          %tr
+            %td.cell-right Status:
+            %td
+            %td= type_text.get_text('order.status', @object.status)
+          %tr
+            %td.cell-right Created at:
+            %td
+            %td= time_tag @object.created_at, :class => 'local-datetime'
+          %tr
+            %td.cell-right Updated at:
+            %td
+            %td= time_tag @object.updated_at, :class => 'local-datetime' if @object.updated_at
+          %tr
+            %td.cell-right Completed at:
+            %td
+            %td= time_tag @object.completed_at, :class => 'local-datetime' if @object.completed_at
 .row
   .col-md-8
-    %fieldset#list_payments
-      - if @object.order_price
-        = render :partial => 'travel_admin/payments/payments', :object => @object
-  .col-md-4
-    %h4 Detail
-    %table.table.table-bordered.table-condensed
-      %thead
-        %tr.table-header
-          %th Room
-          %th Adult
-          %th Child
-          %th Amount
-      %tbody
-        - @object.order_items.each_with_index do |item, i|
-          %tr
-            %td.cell-middle
-              \##{i + 1}
-            %td.cell-middle= item.num_adult
-            %td.cell-middle= item.num_child
-            %td.cell-right= item.amount
+    .panel.panel-inverse
+      .panel-heading
+        .btn-group.pull-right
+        %h4.panel-title Payment
+      .panel-body#payments
         - if @object.order_price
-          %tr
-            %td.cell-middle Total:
-            %td.cell-middle{:colspan => "2"}
-              = @object.order_price.num_total
-              person
-            %td.cell-right= @object.order_price.total_amount
-          %tr
-            %td.cell-right{:colspan => "3"} Adjustment amount:
-            %td.cell-right= @object.order_price.adjustment_amount
-          %tr
-            %td.cell-right{:colspan => "3"} Actual Amount:
-            %td.cell-right= @object.order_price.actual_amount
-    %table
-      %tr
-        %td.cell-right{:width => "100"} Order method:
-        %td= @object.order_method
-      %tr
-        %td.cell-right Created at:
-        %td= time_tag @object.created_at, :class => 'local-datetime'
-      %tr
-        %td.cell-right Updated at:
-        %td= time_tag @object.updated_at, :class => 'local-datetime' if @object.updated_at
-      %tr
-        %td.cell-right Completed at:
-        %td= time_tag @object.completed_at, :class => 'local-datetime' if @object.completed_at
-      %tr
-        %td.cell-right Status:
-        %td= type_text.get_text('order.status', @object.status)
-= icon_link_to 'Add remark', new_order_remark_path(@object), :remote => true, :class => 'btn btn-small', :icon => 'icon-comment'
+          = render :partial => 'travel_admin/payments/payments', :object => @object
+  .col-md-4
+    .panel.panel-inverse
+      .panel-heading
+        .btn-group.pull-right
+          = link_to_new 'Edit', edit_order_path(@object)
+        %h4.panel-title Rooms
+      .panel-body#show_rooms
+        = render 'rooms'
+
+= icon_link_to 'Remark', new_order_remark_path(@object), :remote => true, :class => 'btn btn-sm btn-info', :icon => 'fa fa-file-text-o'
 #list_remarks.notes
   - @object.remarks.each do |rmk|
     = render :partial => 'travel_admin/remarks/row', :object => rmk

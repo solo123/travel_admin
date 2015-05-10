@@ -1,15 +1,13 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li
-      = link_to 'Tours', tours_path
-      %span.divider /
-    %li.active Generate schedules
-= content_for :search_box do
-  = icon_link_to 'Generate schedules for selected tours', '#', :class => 'btn btn-success', :icon => 'icon-plus', :onclick => 'generate_schedules()', :id => 'btn_auto_gen'
+  %li Data
+  %li= link_to 'Tours', tours_path
+  %li.active Generate schedules
+
 %section
+  %h1.page-header
+    Generate Schedules
+    %small automatic generate schedules for all show tours.
+
   %p
     %strong.text-info.larger Info:
     Automatic generate schedules from now to
@@ -19,24 +17,32 @@
     %strong 0
     then using configuration:
     %span.text-info "max_reservation_days" =
-    %strong.text-error= cfg.get_config :max_reservation_days
-    = icon_link_to 'change', app_configurations_path, :class => 'btn btn-mini', :icon => 'icon-edit'
-  %table#list_tours.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th
-          %label#cb_select_all.checkbox.inline
-            %input{:onchange => "$('#list_tours tbody input[type=checkbox]').prop('checked', $(this).prop('checked'))", :type => "checkbox", :value => "1"}
-              all
-        %th Title
-        %th Weekly
-        %th Days in advance
-        %th{:width => "100"} Price
-        %th{:width => "100"} last schedule
-        %th{:width => "80"} op
-    %tbody
-      - @collection.each do |tour|
-        = render :partial => 'row_gen', :object => tour
+    %strong.text-error= $redis.get(:max_reservation_days)
+    = icon_link_to 'change', app_configurations_path, :class => 'btn btn-xs', :icon => 'fa fa-edit'
+
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = icon_link_to 'Generate schedules for selected tours', '#', :class => 'btn btn-success btn-xs', :icon => 'fa fa-cogs', :onclick => 'generate_schedules()', :id => 'btn_auto_gen'
+      %h4.panel-title Tours
+    .panel-body
+      %table#list_tours.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th.center{width: '100'}
+              %label#cb_select_all.checkbox.inline
+                %input{:onchange => "$('#list_tours tbody input[type=checkbox]').prop('checked', $(this).prop('checked'))", :type => "checkbox", :value => "1"}
+                  select all
+            %th Title
+            %th Weekly
+            %th Days in advance
+            %th{:width => "100"} Price
+            %th{:width => "110"} last schedule
+            %th{:width => "80"} op
+        %tbody
+          - @collection.each do |tour|
+            = render :partial => 'row_gen', :object => tour
+
 #auto_gen_indicator{:onclick => "stop_auto_gen();", :style => "position:fixed; top: 122px; left: 20px; width: 168px; border:solid 1px gray; background-color:lightyellow;padding:8px;display:none;cursor:pointer;"}
   Continue to generate next selected tours.
   %br/

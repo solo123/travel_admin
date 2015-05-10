@@ -1,0 +1,56 @@
+- content_for :foot_js do
+  :javascript
+    $(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+      });
+
+= render layout: 'message_layout' do
+  .wrapper.bg-white
+    %h4.m-b-15.m-t-0.p-b-10.underline= @object.message_title
+    %ul.media-list.underline.m-b-20.p-b-15
+      %li.media.media-sm.clearfix
+        %a.pull-left{:href => "javascript:;"}
+          %img.media-object.rounded-corner{:alt => "", :src => "/admin/assets/img/user-14.jpg"}/
+        .media-body
+          %span.email-from.text-inverse.f-w-600
+            from
+            = @object.creator.name_with_company
+          %span.text-muted.m-l-5
+            %i.fa.fa-clock-o.fa-fw
+            = @object.created_at
+          %br/
+          %span.email-to
+            To:
+            - @object.message_receipts.each do |r|
+              = r.employee_info.name_with_company
+              %span.label.label-theme
+                = r.status
+              ;
+            %i.fa.fa-info-circle.fa-fw{'data-toogle': :tooltip, 'title': "#{@object.send_to}"}
+    %ul.attached-document.clearfix
+      %li
+        .document-name
+          %a{:href => "#"} flight_ticket.pdf
+        .document-file
+          %a{:href => "#"}
+            %i.fa.fa-file-pdf-o
+      %li
+        .document-name
+          %a{:href => "#"} front_end_mockup.jpg
+        .document-file
+          %a{:href => "#"}
+            %img{:alt => "", :src => "/admin/assets/img/login-bg/bg-1.jpg"}/
+    %div
+      = @object.message_body
+  / end wrapper
+  / begin wrapper
+  .wrapper.bg-silver-lighter.text-right.clearfix
+    .btn-group.btn-toolbar
+      %a.btn.btn-white.btn-sm.disabled{:href => "inbox_v2.html"}
+        %i.fa.fa-arrow-up
+      %a.btn.btn-white.btn-sm{:href => "inbox_v2.html"}
+        %i.fa.fa-arrow-down
+    .btn-group.m-l-5
+      %a.btn.btn-white.btn-sm{:href => "inbox_v2.html"}
+        %i.fa.fa-times
+  / end wrapper

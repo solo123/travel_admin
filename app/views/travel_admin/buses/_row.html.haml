@@ -13,9 +13,9 @@
   %td= row.inspection_date
   %td= row.created_at
   %td.actions
-    .btn-group
-      = icon_link_to '', shift_bus_path(row), :icon => 'icon-list-alt', :title => 'View bus shifts table'
+    .btn-group.btn-group-sm
+      = icon_link_to '', shift_bus_path(row), :icon => 'fa fa-bus', :title => 'View bus shifts table'
       = row_link_to_edit row
       = row_link_to_photo bus_photos_path(row)
-      = icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'icon-ban-circle', :title => 'Bus reserved dates'
+      = icon_link_to '', bus_bus_reserved_dates_path(row), :icon => 'fa fa-ban', :title => 'Bus reserved dates'
       = row_link_to_hide row

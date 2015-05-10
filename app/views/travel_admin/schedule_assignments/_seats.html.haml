@@ -9,31 +9,44 @@
 - total_rows = (total_seats + seats_per_row - 1) / seats_per_row
 - width = 95 / seats_per_row
 - i = 1
+
 #assignment_tab
   .row
     .col-md-6
       = render :partial => 'travel_admin/schedule_assignments/ass_info', :object => assignment
     .col-md-6
-      %table.seat-table-intro
-        %tbody
-          %tr.diagram-exp
-            %td{:align => "center", :nowrap => "nowrap"}
-              %strong 圖示:
-            %td{:align => "center", :nowrap => "nowrap"}
-              .block.blnk &nbsp;
-              Avilible
-            %td{:align => "center", :nowrap => "nowrap"}
-              .block.hold &nbsp;
-              Hold
-            %td{:align => "center", :nowrap => "nowrap"}
-              .block.sold &nbsp;
-              Sold
-            %td{:align => "center", :nowrap => "nowrap"}
-              .block.fpaid &nbsp;
-              Full Paid
-            %td{:align => "center", :nowrap => "nowrap"}
-              .block.agent &nbsp;
-              Agent order
+      %table{style: 'float: right;'}
+        %tr
+          %td
+            %table.seat-table-intro
+              %tbody
+                %tr.diagram-exp
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    %strong 圖示:
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    .block.blnk &nbsp;
+                    Avilible
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    .block.hold &nbsp;
+                    Hold
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    .block.sold &nbsp;
+                    Sold
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    .block.fpaid &nbsp;
+                    Full Paid
+                  %td{:align => "center", :nowrap => "nowrap"}
+                    .block.agent &nbsp;
+                    Agent order
+        %tr
+          %td
+            .btn-group
+              = icon_link_to 'Uncheck', 'javascript:clear_selected_seats()', :icon => 'fa fa-eraser', :title => 'Unselected all seats'
+              = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@schedule) + "?schedule_id=#{@schedule.id}", :remote => true, :icon => 'fa fa-plus'
+              = icon_link_to 'Hold', 'javascript:hold()', :icon => 'fa fa-check', :class => 'btn btn-info btn-xs'
+              = icon_link_to 'Release', 'javascript:release();', :icon => 'fa fa-times'
+              = icon_link_to 'Order', 'javascript:order();', :icon => 'fa fa-shopping-cart', :class => 'btn btn-success btn-xs'
+
   %div
     = form_for assignment, :url => seats_schedule_schedule_assignment_path(assignment.schedule_id, assignment), :remote => true do |f|
       %table.seat-table{:style => "width:100%;"}

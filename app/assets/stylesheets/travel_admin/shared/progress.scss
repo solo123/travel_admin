@@ -1,0 +1,27 @@
+#progress{
+  display:none;
+  background: #4c773e;
+  color:#fff;
+  font-size:19px;
+  height:50px;
+  padding:10px 0 15px;
+  position:fixed;
+  top: 0px;
+  right: 1em;
+  left: 50%;
+  margin-left: -160px;
+  width:320px;
+  text-align:center;
+  font-weight:bold;
+  -moz-border-radius-bottomleft:15px;
+  -moz-border-radius-bottomright:15px;
+  -webkit-border-bottom-left-radius: 15px;
+  -webkit-border-bottom-right-radius: 15px;
+  z-index: 2000;
+  line-height:32px;
+}
+#progress img{
+  vertical-align:middle;
+  padding-right:10px;
+}
+

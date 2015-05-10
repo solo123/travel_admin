@@ -5,7 +5,7 @@
   = render :partial => 'schedule_title', :locals => {:s => @object}
 
 %div
-  = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@object) + "?schedule_id=#{@object.id}", :remote => true, :icon => 'icon-plus-sign'
+  = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@object) + "?schedule_id=#{@object.id}", :remote => true, :icon => 'fa fa-plus'
 
 %section
   #unseat_orders

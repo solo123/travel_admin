@@ -1,5 +1,5 @@
 %tr{id: dom_id(row_gen)}
-  %td
+  %td{align: 'center'}
     %label.checkbox.inline
       %input{type: "checkbox", value: "1"}
         = row_gen.id
@@ -23,7 +23,7 @@
     %b= row_gen.schedules.where('departure_date>?', Date.today).count
     schedules
   %td.cell-middle
-    = icon_link_to 'generate', gen_tour_path(row_gen), :icon => 'icon-plus', :class => 'btn btn-mini btn-success', :remote => true, :onclick => 'hotline_tr(this);'
+    = icon_link_to 'generate', gen_tour_path(row_gen), :icon => 'fa fa-cogs', :class => 'btn btn-xs btn-success', :remote => true, :onclick => 'hotline_tr(this);'
     - if defined? @gen_count
       %br/
       added:

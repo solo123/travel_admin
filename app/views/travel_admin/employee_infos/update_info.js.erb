@@ -3,6 +3,7 @@
   <% flash.discard %>
 <% else %>
   
+	
 $("#employee_info")
 	.replaceWith("<%= escape_javascript(render(:partial => 'detail_info', :object => @object)) %>");
 $("#edit_employee_info_div").dialog('close');

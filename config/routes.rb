@@ -51,7 +51,7 @@ TravelAdmin::Engine.routes.draw do
   end
   resources :emails, :telephones, :addresses
   resources :orders do
-    get :add_room, :on => :collection
+    get :add_room, :on => :member
     resources :remarks
     resources :pay_cashes, :pay_checks, :pay_companies, :pay_vouchers, :pay_credit_cards
     resources :refund_cashes
@@ -132,7 +132,13 @@ TravelAdmin::Engine.routes.draw do
       get :reset_app_session
     end
   end
-
+  resources :messages
+	resources :message_receipts
+	resources :transfers do
+		collection do
+			get :to_company
+		end
+	end
   #match 'home(/:action)', :to => 'home'
   #match 'admin(/:action)', :to => 'admin_tools'
 end

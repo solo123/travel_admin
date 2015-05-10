@@ -1,7 +1,6 @@
 .a-note
-  .content
-    %small.muted
-      = row.employee_info.nickname if row.employee_info
-      %br/
-      = time_tag row.created_at
-    %p= row.note_text
+  .note-title
+    = row.employee_info.nickname if row.employee_info
+    \@
+    = time_tag row.created_at
+  %p=raw row.note_text

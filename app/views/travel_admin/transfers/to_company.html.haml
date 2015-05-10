@@ -1,0 +1,10 @@
+- from_account = Account.find(params[:account_id])
+- to_account = from_account.owner.company.accounts.find_or_create_by(account_type: from_account.account_type)
+- @object = Transfer.new(from_account: from_account, to_account: to_account, amount: from_account.balance, employee_info: current_employee.employee_info)
+
+= simple_form_for @object do |f|
+  = f.input :amount
+  = f.input :from_account_id, as: :hidden
+  = f.input :to_account_id, as: :hidden
+  = f.submit
+

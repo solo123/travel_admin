@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Data
-      %span.divider /
-    %li.active Destinations
+  %li Data
+  %li.active Vehicles
+
 = content_for :search_box do
   = search_form_for @q, class: 'form-inline' do |f|
     .col-md-4
@@ -13,23 +11,33 @@
         .input-group-btn
           = button_tag(type: 'submit', class: "btn btn-default") do
             %i.icon-search
-          = link_to_new 'New Bus', 'buses/new'
-          = icon_link_to 'Shifts', 'buses/shifts', :icon => 'icon-list-alt'
+
+%h1.page-header
+  Vehicles
+  %small vehicles
+
 %section
-  = will_paginate @collection
-  %table#list_buses.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= sort_link @q, :id, 'ID'
-        %th= sort_link @q, :name, t("name")
-        %th= sort_link @q, :bus_type, t("bus_type")
-        %th= sort_link @q, :seats, t("seats")
-        %th Plate / VIN
-        %th= sort_link @q, :inspection_date, 'Inspection'
-        %th= t(:created_at)
-        %th{style: 'width:210px;'}= t(:op)
-    %tbody
-      - @collection.each do |obj|
-        = render :partial => 'row', :object => obj
-  .data-pager
-    = will_paginate(@collection, :class => 'pagination pagination-mini')
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'New Bus', 'buses/new'
+        = icon_link_to 'Shifts', 'buses/shifts', :icon => 'fa fa-bus'
+      %h4.panel-title Vehicles
+    .panel-body
+      = will_paginate @collection
+      %table#list_buses.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th= sort_link @q, :id, 'ID'
+            %th= sort_link @q, :name, t("name")
+            %th= sort_link @q, :bus_type, t("bus_type")
+            %th= sort_link @q, :seats, t("seats")
+            %th Plate / VIN
+            %th= sort_link @q, :inspection_date, 'Inspection'
+            %th= t(:created_at)
+            %th{style: 'width:210px;'}= t(:op)
+        %tbody
+          - @collection.each do |obj|
+            = render :partial => 'row', :object => obj
+      .data-pager
+        = will_paginate(@collection, :class => 'pagination pagination-mini')

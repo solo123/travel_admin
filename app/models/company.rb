@@ -14,4 +14,7 @@ class Company < ActiveRecord::Base
   def show_name
     short_name
   end
+	def to_s
+		short_name
+	end
 end

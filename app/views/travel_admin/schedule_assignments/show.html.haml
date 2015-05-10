@@ -1,28 +1,35 @@
-= content_for :head do
+= content_for :head_js do
   = javascript_include_tag 'admin/seat_table'
 
-#schedule_title
-  = render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @schedule}
-  = hidden_field_tag 'assignment_id', @object.id
-#unseat_orders
-  = render 'travel_admin/schedules/orders', :orders => @schedule.orders
+= content_for :breadcrumbs do
+  %li Data
+  %li= link_to 'Tours', tours_path
+  %li= link_to 'Schedules', schedules_path
+  %li.active Seats
 
-%div
-  .btn-group.pull-right
-    = icon_link_to 'Clear', 'javascript:clear_selected_seats()', :icon => 'icon-ok-circle', :title => 'Unselected all seats'
-    = icon_link_to 'Add bus', new_schedule_schedule_assignment_path(@schedule) + "?schedule_id=#{@schedule.id}", :remote => true, :icon => 'icon-plus-sign'
-    = icon_link_to 'Hold', 'javascript:hold()', :icon => 'icon-star', :class => 'btn btn-info'
-    = icon_link_to 'Release', 'javascript:release();', :icon => 'icon-star-empty'
-    = icon_link_to 'Order', 'javascript:order();', :icon => 'icon-shopping-cart', :class => 'btn btn-success'
-    
-  %ul#list_emps.nav.nav-tabs
-    - @schedule.assignments.each do |ass|
-      - busname = ass.bus ? ass.bus.name : '<NA>'
-      - if ass.id == @object.id
-        %li.active
-          %a{:href => "#"}= busname
-      - else
-        %li= link_to "#{busname}", schedule_schedule_assignment_path(@schedule, ass)
-  .container
-    = render :partial => 'seats', :locals => {:schedule => @schedule, :assignment => @object}
+%h1.page-header
+  Schedule:
+  %small schedule seats
+%section
+  .panel.panel-inverse
+    .panel-heading
+    .panel-body
+      #schedule_title
+        = render :partial => 'travel_admin/schedules/schedule_title', :locals => {:s => @schedule}
+        = hidden_field_tag 'assignment_id', @object.id
+      #unseat_orders
+        = render 'travel_admin/schedules/orders', :orders => @schedule.orders
+
+  .panel.panel-inverse
+    .panel-heading
+    .panel-body.bg-grn
+      %ul#list_emps.nav.nav-tabs
+        - @schedule.assignments.each do |ass|
+          - busname = ass.bus ? ass.bus.name : '<NA>'
+          - if ass.id == @object.id
+            %li.active
+              %a{:href => "#"}= busname
+          - else
+            %li= link_to "#{busname}", schedule_schedule_assignment_path(@schedule, ass)
+      = render :partial => 'seats', :locals => {:schedule => @schedule, :assignment => @object}
 

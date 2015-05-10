@@ -1,32 +1,8 @@
-<%
-  tour = Tour.find(params[:tour_id])
-  datelist = tour.schedules.ready_schedules.map {|s| s.departure_date.strftime('%Y.%m.%d' + '|' + s.id.to_s)}.join(',')
-  rsv_date = tour.tour_setting.days_in_advance
-  rsv_date = cfg.get_config('max_reservation_days').to_i if rsv_date == 0
-%>
-var datelist = "<%= datelist %>";
-var edit_div_id = "edit_schedule_div";
-var edit_div = '#' + edit_div_id;
-
-if ($(edit_div).length == 0){
-  $('body').append("<div id='"+ edit_div_id +"' class='modal fade' aria-hidden='true'></div>");
-}
-
-$(edit_div)
-  .html("<%= j render(:partial => "form_new") %>")
-  .modal();
-
-  $('.date-picker').datepicker({ format: 'yyyy-mm-dd', todayBtn: 'linked', beforeShowDay: schedule_showdate, startDate: '<%= Date.today %>', endDate: '<%= Date.today + rsv_date %>'  });
-
-  function schedule_showdate(date){
-    var datelist = "<%= datelist %>,";
-    var dt = '' + date.getFullYear() + '.' + ('0' + (date.getMonth()+1)).slice(-2) + '.' + ('0' + date.getDate()).slice(-2);
-    var pos_dt = datelist.indexOf(dt);
-    if (pos_dt >= 0) {
-      var pos_s = datelist.indexOf('|', pos_dt);
-      var pos_e = datelist.indexOf(',', pos_dt);
-      var sid   = datelist.slice(pos_s+1, pos_e);
-      return {enabled: false, classes: 'dt-schedule', tooltip: 'Schedule id: ' + sid};
-    } else
-      return true;
-  }
+$.gritter.add({
+    title: 'New Schedule added to Tour!',
+    text: '<%= @msg %>',
+    image: '/admin/assets/img/user-2.jpg',
+    sticky: true,
+    time: '',
+    class_name: 'my-sticky-class'
+});

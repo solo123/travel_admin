@@ -28,6 +28,29 @@ module TravelAdmin
     end
     def set_psw
     end
+		def edit_info
+			load_object
+		end
+    def update
+      load_object
+		  params.permit!
+      @object.attributes = params[:employee_info]
+			if params[:roles]
+				@object.roles = params[:roles].map{|k,v| k}.join()
+			end
+      if @object.changed_for_autosave?
+        @changes = @object.all_changes
+        if @object.save
+        else
+          flash[:error] = @object.errors.full_messages.to_sentence
+          @no_log = 1
+        end
+      end
+    end
+		def name_list
+			@no_log = 1
+			@collection = EmployeeInfo.all
+		end
 
     private
     def employee_info_params

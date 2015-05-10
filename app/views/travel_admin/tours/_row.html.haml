@@ -30,7 +30,7 @@
   %td.cell-middle
     .btn-group.btn-group-sm
       = website_link_to_view row
-      = icon_link_to '', tour_spots_path(row), :icon => 'fa fa-list-ol', :title => 'Tour route and visit schedule'
+      = icon_link_to '', tour_spots_path(row), :icon => 'fa fa-list-ol', :title => 'Tour route and visit order'
       = row_link_to_edit row
-      = icon_link_to '', new_tour_schedule_path(row), :icon => 'fa fa-file-o', :title => 'Add 1 schedule to this tour.', :remote => true
+      = icon_link_to '', tour_path(row), :icon => 'fa fa-file-o', :title => 'Tour schedules.'
       = row_link_to_hide row

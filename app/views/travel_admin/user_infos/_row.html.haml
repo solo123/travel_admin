@@ -1,13 +1,11 @@
 <tr id="#{dom_id row}" #{'class=deleted' if !row.status || row.status < 1}>
 %td.cell-middle= row.id
 %td= row.full_name
-%td= row.user_type
-%td= row.status
+%td= row.telephone
+%td= row.email
 %td= row.created_at
 %td= row.updated_at
 %td.cell-middle
   .btn-group
     = row_link_to_edit row
     = row_link_to_photo user_info_photos_path(row)
-    = row_link_to_hide row
-    = link_to 'edit', edit_user_info_path(row), remote: true

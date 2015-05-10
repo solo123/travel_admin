@@ -2,6 +2,13 @@ module TravelAdmin
   class BusesController < ResourceController
     def shift
       @bus = Bus.find(params[:id])
+      @year = Date.today.year
+      @year = params[:year].to_i if params[:year]
+      d_start = Date.new(@year, 1, 1)
+      d_end = Date.new(@year, 12, 31)
+			@shifts = @bus.bus_shifts.where(:date => [d_start..d_end]).order(:date).map{ |s|
+				  s.date.strftime('%Y-%m-%d') + '|' + s.schedule_assignment.schedule_id.to_s
+			}.join(',')
     end
 
     private

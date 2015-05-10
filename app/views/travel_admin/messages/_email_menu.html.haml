@@ -1,0 +1,26 @@
+%form
+  .input-group.m-b-15
+    %input.form-control.input-sm.input-white{:placeholder => "Search Mail", :type => "text"}/
+    %span.input-group-btn
+      %button.btn.btn-sm.btn-inverse{:type => "button"}
+        %i.fa.fa-search
+.hidden-sm.hidden-xs
+  %h5.m-t-20 Messages
+  %ul.nav.nav-pills.nav-stacked.nav-inbox
+    - cnt = current_employee.employee_info.message_receipts.where(status: 0).count
+    %li{class: "#{!params[:m] ? 'active' : ''}"}= icon_link "Inbox (#{cnt})", messages_path, icon: 'fa fa-inbox fa-fw m-r-5'
+    %li{class: "#{params[:m] == 'sent' ? 'active' : ''}"}= icon_link 'Sent', messages_path(m: :sent), icon: 'fa fa-inbox fa-fw m-r-5'
+    %li{class: "#{params[:m] == 'draft' ? 'active' : ''}"}= icon_link 'Draft', messages_path(m: :draft), icon: 'fa fa-pencil fa-fw m-r-5'
+    %li{class: "#{params[:m] == 'trash' ? 'active' : ''}"}= icon_link 'Trash', messages_path(m: :trash), icon: 'fa fa-trash-o fa-fw m-r-5'
+    %li{class: "#{params[:m] == 'archive' ? 'active' : ''}"}= icon_link 'Archive', messages_path(m: :archive), icon: 'fa fa-star fa-fw m-r-5'
+  %h5.m-t-20 Labels
+  %ul.nav.nav-pills.nav-stacked.nav-inbox
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-fw.m-r-5.fa-circle.text-primary
+        Message
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-fw.m-r-5.fa-circle.text-warning
+        Todo
+

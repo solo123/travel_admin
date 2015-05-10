@@ -1,16 +1,5 @@
 module TravelAdmin
   class PayCreditCardsController < PayMethodsController
-    def index
-      params[:q] ||= {}
-      @q = PayCreditCard.where('status>0').search(params[:q])
-      pages = cfg.get_config(:admin_list_per_page).to_i
-      pages = 20 unless pages > 1
-      @collection = @q.result.paginate(:page => params[:page], :per_page => pages)
-    end
-    def create
-      @object = PayCreditCard.new(params[:pay_credit_card])
-      super
-    end
     def destroy
       @object = PayCreditCard.find(params[:id])
       biz = Biz::OrderPayment.new
@@ -39,14 +28,6 @@ module TravelAdmin
     end
     def look_card
     end
-    protected
-      def load_collection
-        params[:search] ||= {}
-        @search = PayCreditCard.metasearch(params[:search]).where(:status => 0)
-        pages = cfg.get_config(:admin_list_per_page).to_i
-        pages = 20 unless pages > 1
-        @collection = @search.paginate(:page => params[:page], :per_page => pages)
-      end 
   end
 end
 

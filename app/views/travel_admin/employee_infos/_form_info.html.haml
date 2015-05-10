@@ -1,27 +1,32 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    Edit Employee# #{@object.id}
-.modal-body
-  = form_for( @object, :remote => true) do |f|
-    %div
-      %div
-        = f.field_container :ssn do
-          = f.label :ssn
-          = f.text_field :ssn
-        = f.field_container :employ_date do
-          = f.label :employ_date
-          = date_text_field(f, :employ_date)
-        = f.field_container :birthday do
-          = f.label :birthday
-          = date_text_field(f, :birthday)
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+      %h4.modal-title
+        Edit Employee info# #{@object.id}
+    .modal-body
+      = simple_form_for( @object, :remote => true) do |f|
+        = f.input :ssn
+        = f.input :employ_date, as: :string, input_html: {class: 'date date-picker'}
+        = f.input :birthday, as: :string, input_html: {class: 'date date-picker'}
+
         Roles:
         %br/
         - InputType.get_list('roles').each do |role|
-          %label.checkbox.inline{:style => "white-space:nowrap;"}
-            = check_box_tag "role[#{role.type_value}]", 1, @object.roles && @object.roles.include?(role.type_value), {:id => dom_id(role), :onchange => 'roles_changed();'}
-            = role.type_text
-    = render :partial => 'travel_admin/shared/status', :locals => {:f => f}
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+          .checkbox.checkbox-inline.checkbox-success
+            = check_box_tag "roles[#{role.type_value}]", 1, @object.roles && @object.roles.include?(role.type_value), {:id => dom_id(role)}
+            %label{for: "#{dom_id(role)}"}= role.type_text
+        %br/
+        %br/
+        Status:
+        %br/
+        .radio.radio-inline.radio-success
+          = f.radio_button :status, '1', id: 'status_1'
+          %label{for: 'status_1'} On duty
+        .radio.radio-inline.radio-warning
+          = f.radio_button :status, '0', id: 'status_0'
+          %label{for: 'status_0'} Leaved
+        = f.submit class: 'hidden'
+    .modal-footer
+      %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

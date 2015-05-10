@@ -5,6 +5,7 @@ module TravelAdmin
       @object = object_name.classify.constantize.new
     end
     def create
+		  params.permit!
       @order = Order.find(params[:order_id])
       @object = object_name.classify.constantize.new(params[object_name.singularize.parameterize('_')])
       order = Order.find(params[:order_id])

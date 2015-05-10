@@ -1,31 +1,35 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Orders
-      %span.divider /
-    %li.active Users
-= content_for :search_box do
-  = search_form_for @q, class: 'inline-form' do |f|
-    .col-md-4
-      .input-group
-        = f.text_field :full_name_cont, class: 'form-control', placeholder: 'Search by name'
-        .input-group-btn
-          = search_button
-          = link_to_new 'New user', 'user_infos/new'
+  %li Orders
+  %li.active Users
+
+%h1.page-header
+  Users
+  %small all customers.
 
 %section
-  = will_paginate(@collection)
-  %table#list_user_infos.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th= t("id")
-        %th= t("full_name")
-        %th= t("user_type")
-        %th= t('status')
-        %th= t('created_at')
-        %th= t('updated_at')
-        %th op
-    %tbody
-      - @collection.each do |obj|
-        = render :partial => 'row', :object => obj
-  = will_paginate(@collection)
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'New user', 'user_infos/new'
+      %h4.panel-title Users
+    .panel-body
+      = search_form_for @q, class: 'inline-form search-form' do |f|
+        .input-group.col-md-2
+          = f.text_field :full_name_or_telephone_or_email_cont, class: 'form-control ', placeholder: 'Search by name/tel/email'
+          .input-group-btn
+            = search_button
+      = will_paginate(@collection)
+      %table#list_user_infos.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th= t("id")
+            %th= t("full_name")
+            %th= t("tel")
+            %th= t('email')
+            %th= t('created_at')
+            %th= t('updated_at')
+            %th op
+        %tbody
+          - @collection.each do |obj|
+            = render :partial => 'row', :object => obj
+      = will_paginate(@collection)

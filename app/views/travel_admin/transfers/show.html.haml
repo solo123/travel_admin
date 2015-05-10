@@ -1,0 +1,38 @@
+%h1.page-header
+  Transfer ##{@object.id}
+  %small transfer detail.
+.row
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+      %h4.panel-title Transfer detail
+    .panel-body
+      %table.table.table-stripped
+        %thead
+          %tr
+            %th abc
+            %th def
+        %tbody
+          %tr
+            %td id
+            %td= @object.id
+          %tr
+            %td from account
+            %td= @object.from_account
+          %tr
+            %td to account
+            %td= @object.to_account
+          %tr
+            %td amount
+            %td= @object.amount
+          %tr
+            %td operator
+            %td= @object.employee_info
+          %tr
+            %td created at
+            %td= @object.created_at
+          %tr
+            %td status
+            %td= @object.status
+
+

@@ -1,42 +1,43 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    %i.glyphicon-7-22>
-    Pay Cash
-.modal-body
-  = form_for([@order, @object], :remote => true) do |f|
-    .row
-      .span4
-        %table
-          %tr
-            %td Pay:
-            %td
-              %input#recv_cash.large-number{:onchange => "recaculate_pay_cash();", :type => "text", :value => "0.00"}/
-          %tr
-            %td Casher:
-            %td
+.modal-dialog.modal-lg
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+      %h4.modal-title 
+        %i.fa.fa-dollar
+        Pay Cash
+    .modal-body
+      = form_for([@order, @object], :remote => true) do |f|
+        .row
+          .col-md-6
+            %label{for: 'recv_cash'}
+              Pay:
+              %input#recv_cash.large-number{:onchange => "recaculate_pay_cash();", :type => "text", :value => "0.00", autofocus: 'autofocus', autoselect: 'autoselect'}/
+            %label
+              Received by:
               = render :partial => 'travel_admin/shared/select_employee', :locals => {:f => f, :field_name => :received_by_id , :role => '1'}
-      .span4
-        %table.table.table-bordered
-          %tr
-            %td Order
-            %td.cell-middle{:width => "150"}= @order.order_number
-          %tr
-            %td Order Amount
-            %td.cell-right= @order.order_price.actual_amount
-          %tr
-            %td Balance before
-            %td#tb_balance_before.cell-right= @order.order_price.balance_amount
-          %tr
-            %td Pay amount
-            %td#tb_pay_amount.large-number.cell-right
-          %tr
-            %td Balance after
-            %td#tb_balance.cell-right
-          %tr
-            %td Change:
-            %td#tb_change.large-number.cell-right.text-success 0.00
-        = f.hidden_field :amount
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+          .col-md-6
+            %table.table.table-bordered
+              %tr
+                %td Order
+                %td.cell-middle{:width => "150"}= @order.order_number
+              %tr
+                %td Order Amount
+                %td.cell-right= @order.order_price.actual_amount
+              %tr
+                %td Balance before
+                %td#tb_balance_before.cell-right= @order.order_price.balance_amount
+              %tr
+                %td Pay amount
+                %td#tb_pay_amount.large-number.cell-right
+              %tr
+                %td Balance after
+                %td#tb_balance.cell-right
+              %tr
+                %td Change:
+                %td#tb_change.large-number.cell-right.text-success 0.00
+            = f.hidden_field :amount
+        = f.submit class: 'hidden'
+    .modal-footer
+      %button.btn.btn-default{"data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+ 

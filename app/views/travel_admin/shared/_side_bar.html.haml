@@ -1,4 +1,5 @@
 - ml = File.read('admin_menu.dat')
+- boss = EmployeeInfo.find(2)
 / begin #sidebar
 #sidebar.sidebar
   / begin sidebar scrollbar
@@ -8,23 +9,28 @@
       %li.nav-profile
         .image
           %a{:href => "javascript:;"}
-            %img{:alt => "", :src => "/admin/assets/img/user-11.jpg"}/
+            = cl_image_tag(boss.title_photo.public_id, :width => 30, :height => 30, :crop => :thumb, :gravity => :face, :radius => :max) if boss.title_photo
         .info
-          Jonathan Wang
+          = boss.nickname
           %small Boss
     / end sidebar user
     / begin sidebar nav
     %ul.nav
       %li.nav-header Navigation
       %li
-        %a{:href => "/omeiadmin"}
+        %a{href: "#{$redis.get(:admin_path)}"}
           %i.fa.fa-laptop
           %span Dashboard
-      %li
-        %a{:href => "inbox.html"}
-          %span.badge.pull-right 10
+      %li{class: "#{current_path.include?('messages') ? 'active' : ''}" }
+        %a{href: "#{$redis.get(:admin_path)}/messages"}
+          - msg_cnt = current_employee.employee_info.message_receipts.where(status: 0).count
+          %span.badge.pull-right= msg_cnt
           %i.fa.fa-inbox
-          %span Inbox
+          %span
+            Messages
+            - if msg_cnt > 0
+              %span.label.label-theme.m-l-5
+                NEW
       - ml.split('>').each do |cat|
         - next if cat.empty?
         - arr = cat.split("\n")
@@ -37,7 +43,6 @@
             - (1..arr.length - 1).each do |line_index|
               - dt = arr[line_index].split('|')
               %li{class: "#{current_path.include?(dt[0]) ? 'active' : ''}"}= link_to t(dt[0]), full_path(dt[2])
-      = current_path
       / begin sidebar minify button
       %li
         %a.sidebar-minify-btn{"data-click" => "sidebar-minify", :href => "javascript:;"}

@@ -1,7 +1,6 @@
 %tr{id: dom_id(row)}
   %td.cell-middle= row.id
-  %td= row.owner_type
-  %td= row.owner_id
+  %td= row.owner
   %td= row.account_type
   %td= row.account_brief
   %td= row.balance
@@ -9,4 +8,5 @@
   %td= row.created_at
   %td= row.updated_at
   %td.cell-middle
-    = icon_link_to '', account_path(row), :icon => 'icon-list-alt'
+    = icon_link_to '', account_path(row), icon: 'fa fa-list-alt'
+    = icon_link_to '', to_company_transfers_path(account_id: row), icon: 'fa fa-sign-in'

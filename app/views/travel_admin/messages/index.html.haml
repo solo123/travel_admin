@@ -1,0 +1,61 @@
+= render layout: 'message_layout' do
+  .email-btn-row.hidden-xs
+    = icon_link 'New', new_message_path, class: 'btn btn-sm btn-inverse', icon: 'fa fa-plus m-r-5'
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Reply
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Delete
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Archive
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Junk
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Swwep
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Move to
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Categories
+  .email-content
+    %table.table.table-email#list_messages
+      %thead
+        %tr
+          %th.email-select
+            %a{"data-click" => "email-select-all", :href => "#"}
+              %i.fa.fa-square-o.fa-fw
+          %th{:colspan => "2"}
+            .dropdown
+              %a.email-header-link{"data-toggle" => "dropdown", :href => "#"}
+                View All
+                %i.fa.fa-angle-down.m-l-5
+              %ul.dropdown-menu
+                %li.active
+                  %a{:href => "#"} All
+                %li
+                  %a{:href => "#"} Unread
+                %li
+                  %a{:href => "#"} Contacts
+                %li
+                  %a{:href => "#"} Groups
+                %li
+                  %a{:href => "#"} Newsletters
+                %li
+                  %a{:href => "#"} Social updates
+                %li
+                  %a{:href => "#"} Everything else
+          %th
+            .dropdown
+              %a.email-header-link{"data-toggle" => "dropdown", :href => "#"}
+                Arrange by
+                %i.fa.fa-angle-down.m-l-5
+              %ul.dropdown-menu
+                %li.active
+                  %a{:href => "#"} Date
+                %li
+                  %a{:href => "#"} From
+                %li
+                  %a{:href => "#"} Subject
+                %li
+                  %a{:href => "#"} Size
+                %li
+                  %a{:href => "#"} Conversation
+      %tbody
+        - @collection.each do |msg|
+          = render partial: 'row', object: msg 
+    .email-footer.clearfix
+      = current_employee.employee_info.message_receipts.count
+      messages
+      .pull-right
+        = will_paginate(@collection)

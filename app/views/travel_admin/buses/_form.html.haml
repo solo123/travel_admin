@@ -21,6 +21,7 @@
             = f.input :plate_number
             = f.input :vin_number
             = f.input :inspection_date, as: :string, input_html: {class: 'date-picker'}
+        = f.submit class: 'hidden'
     .modal-footer
       %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
       %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

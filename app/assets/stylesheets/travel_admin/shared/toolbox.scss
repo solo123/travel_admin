@@ -1,0 +1,18 @@
+#top_place_holder {height:82px; background-color: #c8e0c0;}
+#toolbox{
+  background-color: #c8e0c0;
+  padding-bottom: 10px;
+}
+.breadcrumb{
+  padding: 4px 0;
+  margin: 0;
+  font-size: 85%;
+  background-color: transparent;
+  & > .active { color:black; }
+  & > li { text-shadow: none; }
+}
+#top_breadcrumbs{
+  top:51px; background-color:#c8e0c0;
+  z-index: 10;
+}
+

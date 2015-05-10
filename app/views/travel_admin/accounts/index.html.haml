@@ -1,9 +1,7 @@
 = content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Accounts
-      %span.divider /
-    %li.active Accounts List
+  %li Accounts
+  %li.active Accounts List
+
 = content_for :search_box do
   = search_form_for(@q, class: 'form-inline') do |f|
     .col-md-4
@@ -11,23 +9,31 @@
         = f.text_field :account_brief_cont, class: 'form-control', placeholder: 'Search account'
         .input-group-btn
           = search_button
+
+%h1.page-header
+  Accounts
+  %small all accounts.
+
 %section
-  = will_paginate(@collection)
-  %table#list_accounts.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.cell-middle
-        %th id
-        %th type
-        %th related id
-        %th name
-        %th brief
-        %th balance
-        %th status
-        %th created_at
-        %th updated_at
-        %th op
-    - @collection.each do |d|
-      = render :partial => 'row', :object => d
-  = will_paginate(@collection)
+  .panel.panel-inverse
+    .panel-heading
+      %h4.panel-title Accounts
+    .panel-body
+      = will_paginate(@collection)
+      %table#list_accounts.data-list.table.table-bordered.table-striped
+        %thead
+          %tr.table-header.cell-middle
+            %th id
+            %th name
+            %th pay method
+            %th brief
+            %th balance
+            %th status
+            %th created_at
+            %th updated_at
+            %th op
+        - @collection.each do |d|
+          = render :partial => 'row', :object => d
+      = will_paginate(@collection)
 
 

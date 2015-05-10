@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  creator_id: 1
+  message_type: 1
+  message_title: MyString
+  message_body: MyText
+  reply_to_id: 1
+  status: 1
+
+two:
+  creator_id: 1
+  message_type: 1
+  message_title: MyString
+  message_body: MyText
+  reply_to_id: 1
+  status: 1

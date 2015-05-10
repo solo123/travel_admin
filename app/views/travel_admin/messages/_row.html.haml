@@ -1,0 +1,23 @@
+%tr{class: "email-list-#{row.status}"}
+  %td.email-select
+    %a{"data-click" => "email-select-single", :href => "#"}
+      %i.fa.fa-square-o.fa-fw
+  %td.email-sender
+    .senders= row.send_to
+  %td.email-subject
+    %a.email-btn{"data-click" => "email-archive", :href => "#"}
+      %i.fa.fa-folder-open
+    %a.email-btn{"data-click" => "email-remove", :href => "#"}
+      %i.fa.fa-trash-o
+    %a.email-btn{"data-click" => "email-highlight", :href => "#"}
+      %i.fa.fa-flag
+    - if params[:m] == 'draft'
+      = link_to row.message_title, edit_message_path(row)
+    - else
+      - if row.instance_of? MessageReceipt
+        = link_to row.message_title, message_path(row.message)
+      - else
+        = link_to row.message_title, message_path(row)
+  %td.email-date= time_ago_in_words row.created_at
+  %td= row.status
+

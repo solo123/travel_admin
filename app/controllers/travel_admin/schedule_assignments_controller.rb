@@ -22,7 +22,7 @@ module TravelAdmin
           seat.seat_number = seat_input[0]
           seat.message = params[:message1]
           seat.customer_name = ei.nickname
-          seat.telephone = ei.default_telephone
+          seat.telephone = ei.telephone
           seat.operator_id = current_employee.id
           seat.state = 'hold'
           seat.order_id = hid

@@ -25,6 +25,7 @@ module TravelAdmin
         return
       else
         load_object
+        @schedules = @object.schedules.ready_schedules.map {|s| s.departure_date.strftime('%Y-%m-%d') + '|' + s.id.to_s}.join(',')
       end
     end
 
@@ -50,7 +51,7 @@ module TravelAdmin
     end
     def gen
       @tour = Tour.find(params[:id])
-      default_days = cfg.get_config(:max_reservation_days).to_i
+      default_days = $redis.get(:max_reservation_days).to_i
       @gen_count = 0
       if @tour.ready_to_gen?
         days = @tour.tour_setting.days_in_advance.to_i

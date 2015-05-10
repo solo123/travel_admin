@@ -41,8 +41,7 @@ module Biz
       end
       if (a_pay.is_a? PayCash) || (a_pay.is_a? PayCheck)
         unless a_pay.received_by
-          @errors << "Please select received by"
-          return
+					a_pay.received_by = operator
         end
         a_pay.account = get_employee_account(a_pay.received_by, a_pay.class.name)
       elsif (a_pay.is_a? PayCompany)
@@ -314,6 +313,29 @@ module Biz
       op.balance_amount = op.total_amount + op.adjustment_amount - op.payment_amount
       op.save
     end
+
+		def do_transfer(transfer, operator)
+			return unless transfer.status == 0 && transfer.from_account && transfer.to_account
+			ActiveRecord::Base.transaction do
+				p = Payment.new(payment_data: transfer, pay_from: transfer.from_account, account: transfer.to_account, pay_method_type: transfer.from_account.account_type, operator: operator, amount: transfer.amount)
+				h1 = transfer.from_account.account_histories.build
+				h1.sub_balance(transfer.from_account.balance, transfer.amount)
+				h1.payment = p
+				transfer.from_account.balance = h1.balance_after
+
+				h2 = transfer.to_account.account_histories.build
+				h2.add_balance(transfer.from_account.balance, transfer.amount)
+				h2.payment = p
+				transfer.to_account.balance = h2.balance_after
+
+				transfer.status = 1
+				h1.save
+				h2.save
+				transfer.from_account.save
+				transfer.to_account.save
+				transfer.save
+			end
+		end
 
   end
 end

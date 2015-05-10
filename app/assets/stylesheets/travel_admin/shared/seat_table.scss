@@ -1,0 +1,47 @@
+table.seat-table-intro{
+  width: 380px;
+  border:solid 1px darkgreen;
+  float: right;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.diagram-exp{
+  font-size:12px;
+  td {padding: 5px;}
+  .block {
+    width:16px;height:16px;margin-right:4px;float:left;border:solid 1px grey;
+  }
+}
+.blnk { background-color:#339966; }
+.hold { background-color:#ffff80; }
+.sold { background-color:#ff99cc; }
+.paid { background-color:#ffc0e0; }
+.fpaid { background-color:#ffcc99; }
+.unav { background-color:#eee; color: #aaa; }
+.agent {background-color:#78c7c2;}
+
+
+.seat-table {
+  border:solid 1px green; margin:2px;
+  border-collapse: separate;
+  width: 100%;
+  margin-top: 6px;
+  .seat {
+    padding:4px;position:relative;
+    border: solid 1px transparent;
+    &:hover {border:solid 1px red;}
+  }
+  .error { border:solid 1px red; }
+  .clear {clear:both;}
+  .space {width:3%;}
+  .seat-check {
+    position:absolute;
+    bottom:4px;
+    .checkbox { margin-bottom: 1px;padding-left: 20px;}
+  }
+  .seat-pickup {float:left;}
+  .seat-info {text-align: right;}
+  td.seat-td {border-width: 0 1px 1px 0; border-style:solid; border-color: #ccc;}
+}
+
+#assignment_tab {background-color: white;padding: 8px;}

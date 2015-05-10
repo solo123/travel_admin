@@ -1,7 +1,7 @@
 - @object.build_order_detail unless @object.order_detail
 - @object.build_order_price unless @object.order_price
 
-.modal-dialog
+.modal-dialog.modal-lg
   .modal-content
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
@@ -9,7 +9,7 @@
         %i.icon-edit.icon-3
         Edit Order# #{@object.order_number}
     .modal-body
-      = form_for(@object, :remote => true, :html => {:class => 'small-form'}) do |f|
+      = form_for(@object, :remote => true, :html => {:class => 'form-horizontal'}) do |f|
         .row
           .col-md-6
             = f.hidden_field :schedule_id
@@ -29,28 +29,6 @@
                 - else
                   = label_tag nil, '(no agent)', :id => 'agent_name'
               = detail.hidden_field :from_agent_id
-              = icon_link_to 'Customer', '#', :onclick => 'goto_find_user()', :icon => 'icon-user icon-white', :class => 'btn btn-mini btn-success'
-              %br/
-              = autocomplete_field_tag 'user_search_field', '', autocomplete_user_info_search_user_infos_path, :update_elements => {:id => '#customer_id' }, class: ''
-              %br/
-              = detail.text_field :user_info_id, :readonly => true
-              %br/
-              Full name:
-              %br/
-              = detail.text_field :full_name, :readonly => true
-              %br/
-              Telephone:
-              %br/
-              = detail.text_field :telephone, :readonly => true
-              %br/
-              Email:
-              %br/
-              = detail.text_field :email, :readonly => true
-              %br/
-              Bill address:
-              %br/
-              = detail.text_field :bill_address, :readonly => true
-              %br/
               Pickup:
               %br/
               = detail.text_field :pickup
@@ -67,9 +45,10 @@
             %span#order_price4= @object.schedule.price.price4
             )
             .row
-              .span1 Adult
-              .span1 Child
-              .span1 Amount
+              .col-md-3.btn-line Adult
+              .col-md-3.btn-line Child
+              .col-md-3.btn-line Amount
+              .col-md-2.btn-line ..
             #rooms
               = f.fields_for :order_items do |item|
                 = render 'form_room', :f => item
@@ -78,6 +57,7 @@
               %span#total_amount.strong{:style => "font-size: 120%"}= number_with_precision(@object.order_price.total_amount, :precision => 2)
           :javascript
             var tmp = " generate_template f, :order_items, :partial => 'form_room'  ";
+          = f.submit class: 'hidden'
     .modal-footer
       = icon_link_to 'Payment', order_path(@object.id), :class => 'pull-left btn btn-small btn-info', :icon => 'icon-shopping-cart' if @object.ready_to_payment?
       %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close

@@ -6,7 +6,18 @@ module TravelAdmin
       else
         super
       end 
-    end 
+    end
+    def new
+      if params[:tour_id] && params[:date]
+        tour = Tour.find(params[:tour_id])
+        s =tour.add_schedule(Date.parse(params[:date]))
+        if s
+          @msg = "Add Schedule: #{s.id}"
+        else
+          @msg = "Add schedule FAILED!"
+        end
+      end
+    end
 
     def orders
       load_object

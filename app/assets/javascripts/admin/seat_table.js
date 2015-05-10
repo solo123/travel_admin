@@ -24,8 +24,8 @@ function release(){
 	}
 }
 function order(){
-  if (validate_order_seats()){
-    $('<form action="/ewtt/orders" method="POST">' + 
+  if (validate_order_seats()){		
+    $('<form action="' + admin_root + '/orders" method="POST">' +
       '<input type="hidden" name="assignment_id" value="' + $('#assignment_id').val() + '">' +
       '<input type="hidden" name="seats" value="' + get_selected_seats() + '">' +
       '</form>').submit();

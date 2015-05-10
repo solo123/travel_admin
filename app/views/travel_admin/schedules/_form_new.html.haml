@@ -6,16 +6,18 @@
       %h4.modal-title#myModalLabel New Schedule *
     .modal-body
       = form_tag tour_schedules_path(tour), :method => :post, :remote => true do
-        %p
+        .form-group
           Tour:
           %br/
           = tour.description.title
           %br/
           %span.text-success= tour.description.title_cn
-        %p
+        .form-group
           Departure at:
           %br/
-          = text_field_tag :departure_date, '', :class => 'date-picker'
+          = text_field_tag :departure_date, '', :class => 'date date-picker'
+        = submit_tag '', class: 'hidden'
+
     .modal-footer
       %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
       %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes

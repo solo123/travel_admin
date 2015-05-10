@@ -4,25 +4,24 @@ module TravelAdmin
     def set_no_log
       @no_log = 1
     end
-    autocomplete :user_info, :search, :column_name => 'full_name', display_value: 'full_info'
+    autocomplete :user_info, :search, :column_name => 'full_name', display_value: 'full_info', id_element: 'full_name'
+
     def get_autocomplete_items(params)
-      items = UserInfo.all
+			ptn = "%#{params[:term]}%"
+      items = UserInfo.where("(full_name like :ptn) or (telephone like :ptn) or (email like :ptn)", {ptn: ptn}).order('full_name').limit(100)
     end
+
     def find
       @no_log = 1
     end
 	  def search
-      fields = 'user_infos.id, user_infos.full_name, telephones.tel, emails.email_address'
+      fields = 'id, full_name, telephone, email'
       max_count = 100
-	    r = []
       @collection = []
       if params[:q] && params[:q].length > 1
         ptn = "%#{params[:q]}%"
-        r += Telephone.select(fields).where('tel_number_type="UserInfo" and tel like ?', ptn).order(:tel).joins('left outer join user_infos on tel_number_id=user_infos.id').joins('left outer join emails on tel_number_id=emails.email_data_id').limit(max_count).map{|t| [t.id, t.full_name, t.tel, t.email_address]}
-        r += UserInfo.select(fields).where("full_name like ?", ptn).order('full_name').joins('left outer join telephones on tel_number_type="UserInfo" and tel_number_id=user_infos.id').joins('left outer join emails on email_data_type="UserInfo" and email_data_id=user_infos.id').limit(max_count - r.count).map{|t| [t.id, t.full_name, t.tel, t.email_address]} if r.count < max_count
-        r += Email.select(fields).where('email_address like ?', ptn).where(:email_data_type => 'UserInfo').order(:email_address).joins('left outer join user_infos on email_data_id=user_infos.id').joins('left outer join telephones on telephones.tel_number_type="UserInfo" and telephones.tel_number_id=emails.email_data_id').limit(max_count - r.count).map{|t| [t.id, t.full_name, t.tel, t.email_address]} if r.count < max_count
+				@collection = UserInfo.select(fields).where("(full_name like :ptn) or (telephone like :ptn) or (email like :ptn)", {ptn: ptn}).order('full_name').limit(max_count)
       end
-      @collection = r
       render 'search_result', :layout => nil
 	  end
     def brief
@@ -61,7 +60,7 @@ module TravelAdmin
     end
     private
       def user_info_params
-        params.require(:user_info).permit(:full_name, :status, :telephones, :emails, :addresses)
+        params.require(:user_info).permit(:full_name, :status, :telephone, :email, :address)
       end
 
   end

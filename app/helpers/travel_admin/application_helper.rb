@@ -36,7 +36,7 @@ module TravelAdmin
       link_to(raw('<i class="fa fa-external-link"></i>'), website_url(resource), options)
     end
     def link_to_new(resource_label, resource_url)
-      link_to raw("<i class=\"fa fa-plus-square-o\"></i> #{resource_label}"), resource_url, :remote => true,
+      link_to raw("<i class=\"fa fa-plus\"></i> #{resource_label}"), resource_url, :remote => true,
               :class => 'btn btn-primary btn-xs'
     end
 
@@ -66,7 +66,7 @@ module TravelAdmin
       options['data-method'] = 'delete'
       options[:remote] = true
       options['data-confirm'] = "Make this data Show/Hide from website.\n\nAre you sure?"
-      link_to(raw('<i class="fa fa-trash-o"></i>'), object_url(resource), options)
+      link_to(raw('<i class="fa fa-power-off"></i>'), object_url(resource), options)
     end
 
     def icon_link_to(label_text, to_url, options = {})
@@ -97,7 +97,7 @@ module TravelAdmin
       end
     end
     def search_button
-      button_tag raw('<i class="icon-search"></i>'), :class => 'btn btn-default'
+      button_tag raw('<i class="fa fa-search"></i>'), :class => 'btn btn-default'
     end
 
     def edit_object_url(object, options = {})
@@ -123,6 +123,9 @@ module TravelAdmin
 var new_object_id = new Date().getTime(); 
 var html = $("#{generate_template(form, method, :partial => partial)}".replace(/NEW_RECORD/g, new_object_id)).hide();html.appendTo($("#{where}")).slideDown('slow')}
     end    
+		def link_to_function(name, js)
+			link_to name, '#', onclick: js 
+		end
 
     def website_url(object, options ={})
       "/#{object.class.name.underscore.split('/').last.pluralize}/#{object.id}"
@@ -184,18 +187,37 @@ var html = $("#{generate_template(form, method, :partial => partial)}".replace(/
     end
 
     def current_path
-      if controller_name == 'destinations'
-        "Data/Destinations"
-      elsif controller_name == 'tours'
-        "Data/Tours"
-      elsif controller_name == 'companies'
-        "Data/Companies"
-      elsif controller_name == 'photos'
-        "Data/#{request.fullpath.split('/')[2].capitalize}"
-      elsif controller_name == 'employees'
-        "Data/Employees"
-      else
-        controller_name
+			case controller_name
+				when 'destinations'
+        	"Data/Destinations"
+      	when 'tours'
+        	"Data/Tours"
+      	when 'companies'
+        	"Manage/Companies"
+      	when 'photos'
+        	"Data/#{request.fullpath.split('/')[2].capitalize}"
+      	when 'employees'
+        	"Manage/My Account"
+      	when 'employee_infos'
+        	"Manage/Employees"
+      	when 'schedules'
+        	"Data/Schedules"
+				when 'schedule_assignments'
+        	"Data/Schedules"
+      	when 'buses'
+        	"Data/Vehicles"
+				when 'user_infos'
+					"Data/Users"
+				when 'orders'
+					"Orders/Orders"
+				when 'app_configurations'
+					"Manage/Configurations"
+				when 'input_types'
+					"Manage/Presettings"
+				when 'accounts'
+					"Accounts/Accounts"
+      	else
+        	controller_name
       end
     end
 

@@ -1,24 +1,35 @@
-%h1
-  Account: #{@object.account_type}
-%p.note-text
-  current balance:
-  %span.strong= @object.balance
-%table.data-list
-  %thead
-    %tr
-      %th Method
-      %th before
-      %th Amount
-      %th after
-      %th Operator
-      %th Date
-  %tbody
-    - @object.payments.each do |p|
-      %tr{:id => dom_id(p)}
-        %td= p.pay_method_type
-        %td= p.account_balance_before
-        %td= p.amount
-        %td= p.account_current_balance
-        %td
-          = p.operator.nickname if p.operator
-        %td= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at
+%h1.page-header
+  Account
+  %small
+    method:
+    = @object.account_type
+    ,
+    current balance: 
+    = @object.balance
+
+%section
+  .panel.panel-inverse
+    .panel-heading
+      %h4.panel-title Account
+    .panel-body
+      %table.data-list.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th Pay
+            %th Method
+            %th before
+            %th Amount
+            %th after
+            %th Operator
+            %th Date
+        %tbody
+          - @object.account_histories.each do |h|
+            %tr{:id => dom_id(h)}
+              %td= link_to h.payment.payment_data, object_url(h.payment.payment_data)
+              %td= h.payment.pay_method_type
+              %td= h.balance_before
+              %td= h.amount
+              %td= h.balance_after
+              %td
+                = h.payment.operator.nickname if h.payment.operator
+              %td= time_tag h.updated_at, :class => 'local-datetime' if h.updated_at

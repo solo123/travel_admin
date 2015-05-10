@@ -1,0 +1,15 @@
+.small-form {
+  font-size: 12px;
+  input[type='text'], input[type='number'] {
+   height: 14px;
+   font-size: 10px;
+   line-height: 14px;
+   margin-bottom: 2px;
+  }
+
+  input[type="text"][readonly] {
+    background-color: white;
+    border:none;
+    border-bottom: solid 1px;
+  }
+}

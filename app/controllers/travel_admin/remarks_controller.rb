@@ -5,6 +5,7 @@ module TravelAdmin
       @object = @parent.remarks.build
     end
     def create
+		  params.permit!
       load_parent
       @object = @parent.remarks.build(params[:remark])
       @object.employee_info = current_employee.employee_info

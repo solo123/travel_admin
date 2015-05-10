@@ -18,19 +18,31 @@
           %i.fa.fa-minus
         %a.btn.btn-xs.btn-icon.btn-circle.btn-danger{"data-click" => "panel-remove", :href => "javascript:;"}
           %i.fa.fa-times
-      %h4.panel-title Destinations
+      %h4.panel-title Employees
     .panel-body
       %table#list_employee_infos.data-list.table.table-hover.table-striped
         %thead
           %tr.table-header
-            %th= Company
+            %th
+              .dropdown
+                %a.email-header-link{"data-toggle" => "dropdown", :href => "#"}
+                  All company
+                  %i.fa.fa-angle-down.m-l-5
+                %ul.dropdown-menu
+                  %li.active
+                    %a{:href => "#"} All
+                  %li
+                    %a{:href => "#"} AETravel
+                  %li
+                    %a{:href => "#"} Flushing
             %th= t("id")
             %th= t("login")
             %th= t("name")
             %th= t("roles")
             %th= t('telephone')
             %th= t('email')
-            %th
+            %th Status
+            %th op
         %tbody
           - @collection.each do |e|
             = render partial: "row", object: e

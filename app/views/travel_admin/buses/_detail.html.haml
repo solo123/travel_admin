@@ -2,7 +2,7 @@
   Bus: #{detail.name}
 .row
   .col-md-6
-    = image_tag detail.title_photo.pic.url(:small) if detail.title_photo
+    = cl_image_tag(detail.title_photo.public_id, width:320, height: 180, crop: :fill) if detail.title_photo
   .col-md-6
     - if detail.company
       %p

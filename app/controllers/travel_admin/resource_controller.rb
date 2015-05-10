@@ -27,15 +27,24 @@ module TravelAdmin
           @no_log = 1
         end
       end
+			respond_to do |format|
+        format.html { redirect_to action: :index }
+				format.js
+			end
     end
     def create
 		  params.permit!
       @object = object_name.classify.constantize.new(params[object_name.singularize.parameterize('_')])
+			@object.creator = current_employee.employee_info if @object.has_attribute? :creator_id
       if @object.save
       else
         flash[:error] = @object.errors.full_messages.to_sentence
         @no_log = 1
       end
+			respond_to do |format|
+        format.html { redirect_to action: :index }
+				format.js
+			end
     end
     def destroy
       load_object

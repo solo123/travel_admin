@@ -1,0 +1,7 @@
+one:
+  id: 1
+  order_number: ord_001
+  schedule_id: 1
+  schedule_assignment_id: 1
+  order_method: 'web'
+  status: 0

@@ -21,7 +21,8 @@
   .panel.panel-inverse
     .panel-heading
       .btn-group.pull-right
-        = link_to_new 'New', new_tour_path
+        = link_to_new 'New Tour', new_tour_path
+        = icon_link_to "Generate schedules", generate_tours_path, :icon => 'fa fa-gears', :class => 'btn btn-info btn-xs'
       %h4.panel-title Tours
     .panel-body
       .data-pager

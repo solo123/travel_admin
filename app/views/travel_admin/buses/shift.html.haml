@@ -1,13 +1,34 @@
-- gen_cal_table
-%h3
+- content_for :foot_js do
+  :javascript
+    $(function(){
+      $.each("#{@shifts}".split(','), function(i, s){
+        var dt = s.split('|');
+        $('#' + dt[0]).addClass('event').attr('title', 'Schedule: #' + dt[1]).attr('schedule', dt[1]);
+      });
+
+    });
+    function cal_day_event(day_id){
+      var sid = $('#' + day_id).attr('schedule');
+      if (sid != undefined){
+        location.href = "#{schedules_path}/" + sid;
+      }
+    }
+= content_for :breadcrumbs do
+  %li Data
+  %li= link_to 'Tours', tours_path
+  %li.active Tour schedules
+
+%h1.page-header
   Shifts: Bus ##{@bus.id}: #{@bus.name} (#{@bus.company.short_name if @bus.company})
-%h2
-  %a.btn.btn-success.btn-mini{:href => @lnk_prev}
-    %i.icon-arrow-left
-    Prev year
-  = @year
-  %a.btn.btn-success.btn-mini{:href => @lnk_next}
-    Next year
-    %i.icon-arrow-right
-.calendar
-  = raw @r.join()
+  %small bus shift.
+
+%section
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'New', new_tour_path
+      %h4.panel-title
+        \##{@bus.id}: #{@bus.name}
+    .panel-body.bg-gray
+      %section
+        = render 'travel_admin/shared/calendar'

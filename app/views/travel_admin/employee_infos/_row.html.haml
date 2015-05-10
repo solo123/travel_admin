@@ -12,4 +12,5 @@
   %td.actions
     .btn-group
       = row_link_to_edit row
+      = link_to raw('<i class="fa fa-pencil"></i>'), edit_info_employee_info_path(row), remote: true, class: 'btn btn-info'
       = row_link_to_photo employee_info_photos_path(row)

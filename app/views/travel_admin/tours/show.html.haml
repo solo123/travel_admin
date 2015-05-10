@@ -1,0 +1,44 @@
+- content_for :foot_js do
+  :javascript
+    $(function(){
+      $.each("#{@schedules}".split(','), function(i, s){
+        var dt = s.split('|');
+        $('#' + dt[0]).addClass('event').attr('title', 'Schedule: #' + dt[1]).attr('schedule', dt[1]);
+      });
+
+    });
+    function cal_day_event(day_id){
+      var sid = $('#' + day_id).attr('schedule');
+      if (sid != undefined){
+        location.href = "#{schedules_path}/" + sid;
+      } else {
+        if ($('#' + day_id).hasClass('past-day')) return;
+        if (confirm("Are you sure to ADD a schedule on day:" + day_id + "?")){
+          $.post('#{tour_path(params[:id])}/schedules', {date: day_id});
+        }
+      }
+    }
+= content_for :breadcrumbs do
+  %li Data
+  %li= link_to 'Tours', tours_path
+  %li.active Tour schedules
+
+%h1.page-header
+  Tour: #{@object.description.title}
+  %small Schedules of #{@object.description.title}
+%section
+  .panel.panel-inverse
+    .panel-heading
+      .btn-group.pull-right
+        = link_to_new 'New', new_tour_path
+      %h4.panel-title
+        Schedules of #{@object.description.title}
+        (Schedules days in advance:
+        - if @object.tour_setting && @object.tour_setting.days_in_advance && @object.tour_setting.days_in_advance > 0
+          = @object.tour_setting.days_in_advance
+        - else
+          default #{$redis.get(:max_reservation_days)} days
+        )
+    .panel-body.bg-gray
+      %section
+        = render 'travel_admin/shared/calendar'

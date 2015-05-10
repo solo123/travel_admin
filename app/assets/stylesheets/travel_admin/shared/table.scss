@@ -1,0 +1,22 @@
+@import '../vars';
+
+.table-header{background-color: $default_header_color;}
+
+.deleted {
+	text-decoration: line-through;
+  color: #aaa;
+}
+.cell-middle {text-align: center; vertical-align: middle;}
+td.cell-middle {text-align: center; vertical-align: middle;}
+td.cell-right {text-align:right;}
+
+.data-list {
+  tr {cursor: pointer; }
+}
+.center {text-align: center;}
+
+.table-hover tr:hover > td { cursor:pointer; }
+.table-hover > tbody > tr:hover > td, 
+.table-hover > tbody > tr:hover > th {
+    background-color: $high_light_color !important;
+}

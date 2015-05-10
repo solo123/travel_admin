@@ -4,7 +4,7 @@ class AccountHistory < ActiveRecord::Base
 
   def sub_balance(last_balance, current_amount)
     self.balance_before = last_balance
-    self.amount = current_amount
+    self.amount = - current_amount
     self.balance_after = last_balance - current_amount
   end
   def add_balance(last_balance, current_amount)

@@ -1,0 +1,15 @@
+.email-sender{
+	width: 204px;
+	div.senders{
+		width: 200px;
+		overflow:hidden;
+		display:inline-block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+  }
+}
+
+.email-list-0 {
+	font-weight: bold;
+}
+.dropdown-menu.media-list {width: 280px;}

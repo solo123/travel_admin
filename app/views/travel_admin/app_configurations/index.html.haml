@@ -1,31 +1,34 @@
-= content_for :breadcrumbs do
-  %ul.breadcrumb
-    %li
-      Manage
-      %span.divider /
-    %li.active Configurations
-= content_for :search_box do
-  = search_form_for @q, class: 'form-inline' do |f|
-    .col-md-4
-      .input-group
-        = f.text_field :key_cont
-        .input-group-btn
-          = search_button
-          = link_to_new 'Add', new_app_configuration_path
-          = icon_link_to 'Reload', app_configurations_path + '/reload', :icon => 'icon-refresh', :remote => true
+- content_for :breadcrumbs do
+  %li Manage
+  %li.active Configurations
+
+- content_for :head_js do
+  %link{:href => "/admin/assets/plugins/bootstrap3-editable/css/bootstrap-editable.css", :rel => "stylesheet"}/
+
+- content_for :foot_js do
+  %script{:src => "/admin/assets/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"}
+  :javascript
+    $(function(){
+      $('.editable').editable();
+    });
+
+%h1.page-header
+  Configurations
+  %small system configuration values.
+
 %section
-  = will_paginate(@collection)
-  %table#list_app_configurations.data-list.table.table-bordered.table-striped
-    %thead
-      %tr.table-header
-        %th id
-        %th key
-        %th title
-        %th val
-        %th parent
-        %th created_at
-        %th updated_at
-        %th op
-    - @collection.each do |d|
-      = render :partial => 'row', :object => d
-  = will_paginate(@collection)
+  .panel.panel-inverse
+    .panel-heading
+      %h4.panel-title Configurations
+    .panel-body
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr.table-header
+            %th name
+            %th val
+        %tbody
+          - @keys.each do |k|
+            %tr
+              %td= k.humanize
+              %td= link_to $redis.get(k), 'javascript:void(0);', class: 'editable', 'data-type': "text", 'data-pk': "1", 'data-name': k, 'data-url': "app_configurations", 'data-title': k.humanize
+

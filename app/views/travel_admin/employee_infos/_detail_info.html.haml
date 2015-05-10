@@ -6,6 +6,7 @@
       .panel-heading
         %h4.panel-title Employee info
       .panel-body
+        = cl_image_tag(detail_info.title_photo.public_id, :width => 90, :height => 90, :crop => :thumb, :gravity => :face, :radius => :max) if detail_info.title_photo
         = cl_image_tag(detail_info.title_photo.public_id, width:320, height: 180, crop: :fill) if detail_info.title_photo
         %table.table.table-strip
           %tr

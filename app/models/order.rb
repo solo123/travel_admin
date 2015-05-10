@@ -53,4 +53,8 @@ class Order < ActiveRecord::Base
     change_status_after_payment
     self.save
   end
+
+	def to_s
+		"Order ##{self.order_number}"
+	end
 end

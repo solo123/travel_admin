@@ -1,4 +1,11 @@
-%h4 Payment
+- fn_class = 'btn btn-sm btn-info'
+- cn_class = 'btn btn-sm btn-warning'
+- if payments.status && payments.status > 2
+  - fn_class += ' disabled' 
+- if !payments.status || payments.status < 1 || payments.status > 3
+  - cn_class += ' disabled' 
+- if payments.status && payments.status == 7
+  - 7
 %table.table.table-bordered.table-condensed
   %thead
     %tr.table-header
@@ -7,8 +14,9 @@
       %th Amount
       %th after
       %th account
+      %th Operator
       %th Date
-      %th Op
+      %th ..
   %tbody
     - payments.payments.each do |p|
       - order_hist = p.balance_data('Order')
@@ -21,44 +29,30 @@
           %td.cell-right= order_hist.balance_before
           %td.cell-right= p.amount
           %td.cell-right= order_hist.balance_after
-          %td.cell-middle
-            - if p.account.is_a? EmployeeInfo
-              = p.account.owner.nickname
-            - else
-              = p.operator.nickname if p.operator
+          %td.cell-middle= p.account
+          %td.cell-middle= p.operator
           %td.cell-middle= time_tag p.updated_at, :class => 'local-datetime' if p.updated_at
           %td.cell-middle
-            = icon_link_to '', object_url(p.pay_method), :method => :delete, :remote => true, :icon => 'icon-repeat', :class => 'btn btn-mini', :title => 'Withdraw this payment!', :confirm => "Withdraw when the payment failed. Paid amount will return. \n\nAre you sure to withdraw?" if (p.pay_method.status == 8) && ((p.pay_method.is_a? PayCreditCard) || (p.pay_method.is_a? PayCheck))
-- btn_class = 'btn btn-mini btn-success'
-- btn_class += ' disabled' if payments.status && payments.status > 2
-- fn_class = 'btn btn-mini btn-info'
-- fn_class += ' disabled' if !payments.status || payments.status < 1 || payments.status > 3
-- cn_class = 'btn btn-mini btn-warning'
-- cn_class += ' disabled' if payments.status && payments.status == 7
+            - if (p.pay_method.status == 8) && ((p.pay_method.is_a? PayCreditCard) || (p.pay_method.is_a? PayCheck))
+              = icon_link_to '', object_url(p.pay_method), :method => :delete, :remote => true, :icon => 'fa fa-undo', :class => 'btn btn-xs btn-warning', :title => 'Withdraw this payment!', :confirm => "Withdraw when the payment failed. Paid amount will return. \n\nAre you sure to withdraw?" 
+              - btn_class = 'btn btn-mini btn-success'
+              - btn_class += ' disabled' 
 .pull-right
   %span.note-text Current balance:
   %span.strong= payments.order_price.balance_amount
+
+Pay by:
 .btn-group
-  %a{:class => btn_class, "data-toggle" => "dropdown", :href => "#"}
-    %i.icon-plus
-    Payment
-    %span.caret
-  %ul.dropdown-menu
-    %li= icon_link 'Pay Cash', new_order_pay_cash_path(@order), :remote => true, :icon => 'gicon-7-22'
-    %li= icon_link 'Credit Card', new_order_pay_credit_card_path(@order), :remote => true, :icon => 'gicon-3-15'
-    %li= icon_link 'Pay Check', new_order_pay_check_path(@order), :remote => true, :icon => 'icon-edit'
-    %li.divider
-    %li
-      %a{:href => "#"}
-        %i.icon-pencil
-        Pay Cash
+  = icon_link 'Cash', new_order_pay_cash_path(@order), remote: true, icon: 'fa fa-dollar', class: 'btn btn-success btn-sm' 
+  = icon_link 'Credit Card', new_order_pay_credit_card_path(@order), remote: true, icon: 'fa fa-credit-card', class: 'btn btn-primary btn-sm' 
+  = icon_link 'Check', new_order_pay_check_path(@order), remote: true, icon: 'fa fa-edit', class: 'btn btn-info btn-sm' 
 .btn-group
   %a{:class => fn_class, "data-toggle" => "dropdown", :href => "#"}
-    %i.icon-share
+    %i.fa.fa-undo
     Refund
     %span.caret
   %ul.dropdown-menu
-    %li= icon_link 'Refund by Cash', new_order_refund_cash_path(@order), :icon => 'gicon-7-22', :remote => true
-    %li= icon_link 'Refund to Voucher', '', :icon => 'icon-tag'
+    %li= icon_link 'Refund by Cash', new_order_refund_cash_path(@order), :icon => 'fa fa-times', :remote => true
+    %li= icon_link 'Refund to Voucher', '', :icon => 'fa fa-tag'
     %li.divider
-= icon_link 'Cancel', order_path(@order), :remote => true, :icon => 'icon-trash', :method => :delete, :class => cn_class, :title => 'Cancel this order. Auto create voucher if have un-refunded payments.', :confirm => "Cancel this order. Auto create voucher if have un-refunded payments.\n\nPlease refund to advoid voucher to be create.\n\nAre you sure?"
+  = icon_link 'Cancel', order_path(@order), :remote => true, :icon => 'fa fa-times', :method => :delete, :class => cn_class, :title => 'Cancel this order. Auto create voucher if have un-refunded payments.', 'data-confirm': raw('Cancel this order. Auto create voucher if have un-refunded payments.\n\nPlease refund to advoid voucher to be create.\n\nAre you sure?')

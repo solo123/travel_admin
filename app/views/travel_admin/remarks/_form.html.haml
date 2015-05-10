@@ -1,12 +1,16 @@
-.modal-header
-  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel
-    %i.glyphicon-9-30
-    Add Remark
-.modal-body
-  = form_for( [@parent, @object], :remote => true) do |f|
-    = f.field_container :note_text do
-      = f.text_area :note_text, :rows => '10', :class => 'span8'
-.modal-footer
-  %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
-  %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} &times;
+      %h4.modal-title 
+        %i.fa.fa-file-text-o
+        Add Remark
+    .modal-body
+      = form_for( [@parent, @object], :remote => true) do |f|
+        = f.text_area :note_text, :rows => '10', :class => 'col-md-12'
+        = f.submit class: 'hidden'
+      .clear
+    .modal-footer
+      %button.btn.btn-default{"data-dismiss" => "modal"} Close
+      %button.btn.btn-primary{:onclick => "submit_dialog_form(this)"} Save changes
+ 

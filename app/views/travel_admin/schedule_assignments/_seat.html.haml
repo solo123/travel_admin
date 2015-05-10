@@ -46,7 +46,7 @@
             = number_to_phone(seat.order.order_detail.telephone)
         - else
           - if seat.state == 'hold'
-            = link_to 'check', "javascript:check_hold(#{seat.order_id})"
+            = link_to 'select', "javascript:check_hold(#{seat.order_id})"
             %br/
           = seat.customer_name
           %br/

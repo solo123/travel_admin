@@ -1,0 +1,45 @@
+- content_for :head_js do
+  %link{:href => "/admin/assets/plugins/jquery-tag-it/css/jquery.tagit.css", :rel => "stylesheet"}/
+  %link{:href => "/admin/assets/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css", :rel => "stylesheet"}/
+- content_for :foot_js do
+  %script{:src => "/admin/assets/plugins/jquery-tag-it/js/tag-it.min.js"}
+  %script{:src => "/admin/assets/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"}
+  %script{:src => "/admin/assets/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"} 
+  - name_list = EmployeeInfo.all.map{|e| "\"#{e.name_with_company}\""}.join(',')
+  :javascript
+    $('#email-to').tagit({
+      availableTags: [#{name_list}],
+      autocomplete: {delay: 0, minLength: 0, autoFocus: true},
+      singleField: true,
+      singleFieldNode: $('#message_send_to'),
+      showAutocompleteOnFocus: true
+    });
+    $('#wysihtml5').wysihtml5();
+    $('[autofocus]').select().focus();
+
+= render layout: 'message_layout' do
+  .email-btn-row.hidden-xs
+    = icon_link 'New', new_message_path, class: 'btn btn-sm btn-inverse', icon: 'fa fa-plus m-r-5'
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Reply
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Delete
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Archive
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Junk
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Swwep
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Move to
+    %a.btn.btn-sm.btn-default.disabled{:href => "#"} Categories
+  .email-content.p-30
+    = form_for(@object) do |f|
+      %label.control-label To:
+      .m-b-15
+        %ul#email-to.inverse
+        = f.hidden_field :send_to
+      %label.control-label Subject:
+      .m-b-15
+        = f.text_field :message_title, class: 'form-control'
+      %label.control-label Content:
+      .m-b-15
+        = f.text_area :message_body, class: 'form-control wysihtml5', rows: '12', placeholder: 'Enter message ...'
+
+      = f.submit 'Save Draft'
+      = f.submit 'Send'
+

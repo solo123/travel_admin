@@ -19,15 +19,12 @@
     %link{:href => "/admin/assets/css/style.min.css", :rel => "stylesheet"}/
     %link{:href => "/admin/assets/css/style-responsive.min.css", :rel => "stylesheet"}/
     %link#theme{:href => "/admin/assets/css/theme/default.css", :rel => "stylesheet"}/
+    %link{:href => "/admin/assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
     / ================== END BASE CSS STYLE ==================
     / ================== BEGIN PAGE LEVEL STYLE ==================
-    %link{:href => "/admin/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css", :rel => "stylesheet"}/
-    %link{:href => "/admin/assets/plugins/bootstrap-datepicker/css/datepicker.css", :rel => "stylesheet"}/
-    %link{:href => "/admin/assets/plugins/bootstrap-datepicker/css/datepicker3.css", :rel => "stylesheet"}/
-    %link{:href => "/admin/assets/plugins/gritter/css/jquery.gritter.css", :rel => "stylesheet"}/
-    / ================== END PAGE LEVEL STYLE ==================
     = stylesheet_link_tag "travel_admin/pages"
     = yield :head_js
+    / ================== END PAGE LEVEL STYLE ==================
 
   %body
     #page-loader.fade.in
@@ -59,30 +56,14 @@
       <script src="/admin/assets/crossbrowserjs/excanvas.min.js"></script>
     %script{:src => "/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"}
     %script{:src => "/admin/assets/plugins/jquery-cookie/jquery.cookie.js"}
+    %script{:src => "/admin/assets/plugins/gritter/js/jquery.gritter.js"}
     / ================== END BASE JS ==================
     / ================== BEGIN PAGE LEVEL JS ==================
-    %script{:src => "/admin/assets/plugins/gritter/js/jquery.gritter.js"}
-    %script{:src => "/admin/assets/plugins/flot/jquery.flot.min.js"}
-    %script{:src => "/admin/assets/plugins/flot/jquery.flot.time.min.js"}
-    %script{:src => "/admin/assets/plugins/flot/jquery.flot.resize.min.js"}
-    %script{:src => "/admin/assets/plugins/flot/jquery.flot.pie.min.js"}
-    %script{:src => "/admin/assets/plugins/sparkline/jquery.sparkline.js"}
-    %script{:src => "/admin/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js"}
-    %script{:src => "/admin/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"}
-    %script{:src => "/admin/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"}
-    %script{:src => "/admin/assets/js/dashboard.js"}
     %script{:src => "/admin/assets/js/apps.min.js"}
     = javascript_include_tag 'travel_admin/application'
     = cloudinary_js_config
     = yield :foot_js
     / ================== END PAGE LEVEL JS ==================
-    :javascript
-      $(document).ready(function() {
-        App.init();
-        Dashboard.init();
-      });
-
-    
     - flash.each do |k, v|
       - if v.kind_of?(Array)
         - v.each do |vv|
@@ -104,4 +85,4 @@
               sticky: "#{ k != 'notice' }",
               time: '5000',
               class_name: 'my-sticky-class'
-          });
+          }); 

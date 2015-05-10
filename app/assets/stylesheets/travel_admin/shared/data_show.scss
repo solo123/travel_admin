@@ -1,0 +1,15 @@
+.small-image-left {
+  width: 320px;
+  float: left;
+  padding: 2px;
+  margin: 6px;
+}
+
+.thumb{
+  width: 100px;
+  float: left;
+  padding:4px;
+  text-align: center;
+  & > br {margin-bottom: 10px;}
+  img {width: 80px; height: 80px;margin: 3px; border:solid 1px #ccc; padding:2px;}
+}

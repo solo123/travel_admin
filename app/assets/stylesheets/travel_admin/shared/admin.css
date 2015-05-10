@@ -1,9 +1,12 @@
-.clear{
-    clear: both;
-}
-
+.clear{ clear: both; }
 .modal-body {background-color: #f0f3f5;}
-
 #tab1, #tab2, #tab3 {
     height: 320px;
 }
+.deleted{text-decoration: line-through;}
+.datepicker {z-index: 2000 !important;}
+
+.bg-gray {background-color: #414141;}
+.bg-grn {background-color: #dff0d8;}
+
+.btn-line {border-bottom: solid 1px gray; margin-bottom: 2px;}
